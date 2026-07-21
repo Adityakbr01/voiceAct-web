@@ -6,7 +6,7 @@ import { hero } from "@/modules/home-data";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-36 md:pt-44">
+    <section className="relative overflow-hidden pt-36 md:pt-44 lg:pt-52">
       {/* Aurora ambient background */}
       <AuroraBackground aria-hidden className="pointer-events-none absolute inset-0 z-0" />
 
@@ -15,7 +15,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="glass inline-flex items-center gap-2 rounded-full border border-border/60 px-3 py-1.5 text-xs font-medium tracking-wide text-muted-foreground"
+          className="glass inline-flex items-center gap-2 rounded-full shadow-none! border border-border/60 px-3 py-1.5 text-xs font-medium tracking-wide text-muted-foreground"
         >
           <span className="relative flex size-1.5">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60" />
@@ -28,7 +28,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.05 }}
-          className="mt-8 max-w-4xl text-balance text-5xl font-semibold leading-[1.02] md:text-7xl"
+          className="mt-8 max-w-4xl text-balance text-5xl font-semibold leading-[0.9] md:text-7xl"
         >
           <span className="block">{hero.title[0]}</span>
           <span className="block text-muted-foreground/80">{hero.title[1]}</span>

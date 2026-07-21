@@ -16,19 +16,9 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
 
     const lenis = new Lenis({
-      // Snappier than the 1.15s default — feels immediate but still eased.
-      duration: 0.9,
-      // Classic "expo-out": fast start, gentle settle. Natural on wheel + keys.
-      easing: (t) => 1 - Math.pow(1 - t, 3),
-      // Smooth wheel + trackpad on desktop only.
+      lerp: 0.1,
       smoothWheel: !isTouch,
       syncTouch: false,
-      wheelMultiplier: 1.1,
-      touchMultiplier: 1.6,
-      // Lets the browser handle horizontal scrollers, modals, code blocks, etc.
-      gestureOrientation: "vertical",
-      // Prevent Lenis from hijacking scroll on nested scrollables that opt out.
-      lerp: 0.12,
     });
 
     // Anchor link handling: smooth scroll to hash targets
@@ -44,6 +34,14 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     };
     document.addEventListener("click", onAnchorClick);
 
+    // Handle resizes (images loading, content rendering)
+    const resizeObserver = new ResizeObserver(() => {
+      lenis.resize();
+    });
+    if (document.body) {
+      resizeObserver.observe(document.body);
+    }
+
     let rafId = 0;
     const raf = (time: number) => {
       lenis.raf(time);
@@ -54,6 +52,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelAnimationFrame(rafId);
       document.removeEventListener("click", onAnchorClick);
+      resizeObserver.disconnect();
       lenis.destroy();
     };
   }, []);
