@@ -1,4 +1,4 @@
-import { Section, SectionHeader } from "@/components/section";
+import { Section, SectionHeader } from "@/modules/home/components/section";
 import {
   Accordion,
   AccordionContent,
@@ -17,7 +17,10 @@ export function Faq() {
             title={
               <>
                 Questions we hear
-                <span className="font-display italic tracking-tight text-primary"> before every kickoff.</span>
+                <span className="font-display italic tracking-tight text-primary">
+                  {" "}
+                  before every kickoff.
+                </span>
               </>
             }
             description="Something not covered? Drop us a line — we reply within a business day."
@@ -26,17 +29,11 @@ export function Faq() {
         <div className="md:col-span-7">
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((f, i) => (
-              <AccordionItem
-                key={f.q}
-                value={`item-${i}`}
-                className="border-border/60"
-              >
+              <AccordionItem key={f.q} value={`item-${i}`} className="border-border/60">
                 <AccordionTrigger className="text-left text-base font-medium">
                   {f.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {f.a}
-                </AccordionContent>
+                <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

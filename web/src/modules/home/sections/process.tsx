@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Section, SectionHeader } from "@/components/section";
+import { Section, SectionHeader } from "@/modules/home/components/section";
 import { process, type ProcessStep } from "@/modules/services-data";
 import { illustrations } from "./process-illustrations";
 
@@ -19,10 +19,7 @@ function StepBadge({ step, color }: { step: string; color: string }) {
 
 function ChapterLabel({ children, color }: { children: React.ReactNode; color: string }) {
   return (
-    <p
-      className="text-xs font-medium uppercase tracking-[0.18em]"
-      style={{ color }}
-    >
+    <p className="text-xs font-medium uppercase tracking-[0.18em]" style={{ color }}>
       {children}
     </p>
   );
@@ -38,9 +35,7 @@ function StepTitle({ children }: { children: React.ReactNode }) {
 
 function StepDescription({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-[15px]">
-      {children}
-    </p>
+    <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-[15px]">{children}</p>
   );
 }
 
@@ -95,7 +90,10 @@ export function Process() {
         title={
           <>
             A tight loop from
-            <span className="font-display italic tracking-tight text-primary"> idea to App Store.</span>
+            <span className="font-display italic tracking-tight text-primary">
+              {" "}
+              idea to App Store.
+            </span>
           </>
         }
         description="Five chapters, one product — how we turn an idea into a live, iterating app."

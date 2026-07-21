@@ -13,15 +13,7 @@ import {
   SiStripe,
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa";
-import {
-  Globe,
-  Smartphone,
-  Palette,
-  Rocket,
-  Server,
-  Wrench,
-  Users,
-} from "lucide-react";
+import { Globe, Smartphone, Palette, Rocket, Server, Wrench, Users } from "lucide-react";
 
 export interface Service {
   icon: LucideIcon;
@@ -68,11 +60,7 @@ export const services: Service[] = [
     title: "Product design & UX",
     description:
       "Research, flows, and pixel-precise interfaces from senior designers who ship — not just deliver Figma files.",
-    bullets: [
-      "Discovery & user research",
-      "Interaction & visual design",
-      "Design systems in code",
-    ],
+    bullets: ["Discovery & user research", "Interaction & visual design", "Design systems in code"],
   },
   {
     icon: Rocket,
@@ -108,11 +96,7 @@ export const services: Service[] = [
     title: "APIs & backend engineering",
     description:
       "Scalable Node, Postgres and cloud infra that grows with your product — auth, payments, integrations, all wired in.",
-    bullets: [
-      "Node, tRPC & Postgres",
-      "Auth, payments & webhooks",
-      "AWS, GCP & Cloudflare edge",
-    ],
+    bullets: ["Node, tRPC & Postgres", "Auth, payments & webhooks", "AWS, GCP & Cloudflare edge"],
   },
   {
     icon: Wrench,

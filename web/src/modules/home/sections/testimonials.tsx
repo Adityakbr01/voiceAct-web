@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
-import { Section, SectionHeader } from "@/components/section";
+import { Section, SectionHeader } from "@/modules/home/components/section";
 import { testimonials } from "@/modules/services-data";
 
 export function Testimonials() {
@@ -11,7 +11,10 @@ export function Testimonials() {
         title={
           <>
             The teams we ship with,
-            <span className="font-display italic tracking-tight text-primary"> in their own words.</span>
+            <span className="font-display italic tracking-tight text-primary">
+              {" "}
+              in their own words.
+            </span>
           </>
         }
       />

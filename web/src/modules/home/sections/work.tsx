@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { Section, SectionHeader } from "@/components/section";
+import { Section, SectionHeader } from "@/modules/home/components/section";
 import { work } from "@/modules/services-data";
 
 export function Work() {
@@ -11,7 +11,10 @@ export function Work() {
         title={
           <>
             Shipped products,
-            <span className="font-display italic tracking-tight text-primary"> measured in outcomes.</span>
+            <span className="font-display italic tracking-tight text-primary">
+              {" "}
+              measured in outcomes.
+            </span>
           </>
         }
         description="Apps we designed and built for founders and product teams, running in production today."

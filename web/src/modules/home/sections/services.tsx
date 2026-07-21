@@ -1,16 +1,10 @@
 import { useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { Section, SectionHeader } from "@/components/section";
+import { Section, SectionHeader } from "@/modules/home/components/section";
 import { services } from "@/modules/services-data";
 
-function ServiceCard({
-  service,
-  index,
-}: {
-  service: (typeof services)[number];
-  index: number;
-}) {
+function ServiceCard({ service, index }: { service: (typeof services)[number]; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -85,9 +79,7 @@ function ServiceCard({
           </span>
         </div>
 
-        <h3 className="mt-6 text-xl font-semibold leading-tight md:text-2xl">
-          {service.title}
-        </h3>
+        <h3 className="mt-6 text-xl font-semibold leading-tight md:text-2xl">{service.title}</h3>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-[15px]">
           {service.description}
         </p>
@@ -98,10 +90,7 @@ function ServiceCard({
               key={b}
               className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background/50 px-3 py-1.5 text-xs font-medium text-muted-foreground"
             >
-              <span
-                className="size-1.5 rounded-full"
-                style={{ backgroundColor: service.color }}
-              />
+              <span className="size-1.5 rounded-full" style={{ backgroundColor: service.color }} />
               {b}
             </li>
           ))}
@@ -124,7 +113,10 @@ export function Services() {
         title={
           <>
             One studio for the whole
-            <span className="font-display italic tracking-tight text-primary"> product surface.</span>
+            <span className="font-display italic tracking-tight text-primary">
+              {" "}
+              product surface.
+            </span>
           </>
         }
         description="From first sketch to App Store launch — design, web, mobile, backend and DevOps, under one roof."

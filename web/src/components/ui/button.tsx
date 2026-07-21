@@ -16,12 +16,10 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        glow:
-          "btn-shine relative overflow-hidden text-primary-foreground rounded-full bg-primary shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] ring-1 ring-inset ring-white/15",
+        glow: "btn-shine relative overflow-hidden text-primary-foreground rounded-full bg-primary shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] ring-1 ring-inset ring-white/15",
         glass:
           "glass rounded-full text-foreground hover:bg-foreground/[0.06] transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
-        pill:
-          "glass rounded-full text-foreground/90 hover:bg-foreground/[0.06] hover:text-foreground transition-all duration-200",
+        pill: "glass rounded-full text-foreground/90 hover:bg-foreground/[0.06] hover:text-foreground transition-all duration-200",
       },
       size: {
         default: "h-9 px-4 py-2",

@@ -1,0 +1,55 @@
+import type { Metadata } from "next";
+
+import "./globals.css";
+import { APP, SOCIALS } from "@/config/constants";
+import { Providers } from "./providers";
+
+export const metadata: Metadata = {
+  title: APP.seoTitle,
+  description: APP.seoDescription,
+  authors: [{ name: APP.name }],
+  openGraph: {
+    title: APP.seoTitle,
+    description: APP.seoDescription,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: SOCIALS.twitter.handle,
+  },
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <script
+          // ponytail: flash-free dark mode, kept as-is from TanStack version
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var k='voiceact-theme';var t=localStorage.getItem(k);if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}var r=document.documentElement;if(t==='dark'){r.classList.add('dark');}r.style.colorScheme=t;}catch(e){}})();`,
+          }}
+        />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        />
+      </head>
+      <body>
+        <Providers>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          >
+            Skip to content
+          </a>
+          {children}
+        </Providers>
+      </body>
+    </html>
+  );
+}

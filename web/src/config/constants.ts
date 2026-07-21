@@ -25,9 +25,17 @@ export const OWNER = {
 
 export const SOCIALS = {
   twitter: { label: "Twitter", handle: "@voiceActin", href: "https://twitter.com/voiceActin" },
-  linkedin: { label: "LinkedIn", handle: "voiceact", href: "https://linkedin.com/company/voiceact" },
+  linkedin: {
+    label: "LinkedIn",
+    handle: "voiceact",
+    href: "https://linkedin.com/company/voiceact",
+  },
   github: { label: "GitHub", handle: "voiceact", href: "https://github.com/voiceact" },
-  instagram: { label: "Instagram", handle: "@voiceact.in", href: "https://instagram.com/voiceact.in" },
+  instagram: {
+    label: "Instagram",
+    handle: "@voiceact.in",
+    href: "https://instagram.com/voiceact.in",
+  },
 } as const;
 
 export const SOCIAL_LIST = [

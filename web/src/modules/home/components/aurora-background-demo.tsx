@@ -11,8 +11,7 @@ export default function AuroraBackgroundDemo() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 z-10 h-40"
         style={{
-          background:
-            "linear-gradient(to bottom, var(--color-background) 0%, transparent 100%)",
+          background: "linear-gradient(to bottom, var(--color-background) 0%, transparent 100%)",
         }}
       />
 
@@ -21,8 +20,7 @@ export default function AuroraBackgroundDemo() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40"
         style={{
-          background:
-            "linear-gradient(to top, var(--color-background) 0%, transparent 100%)",
+          background: "linear-gradient(to top, var(--color-background) 0%, transparent 100%)",
         }}
       />
 

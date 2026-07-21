@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Section, SectionHeader } from "@/components/section";
+import { Section, SectionHeader } from "@/modules/home/components/section";
 import { stack } from "@/modules/services-data";
 
 export function Stack() {
@@ -10,7 +10,10 @@ export function Stack() {
         title={
           <>
             The stack we build on,
-            <span className="font-display italic tracking-tight text-primary"> chosen for the long run.</span>
+            <span className="font-display italic tracking-tight text-primary">
+              {" "}
+              chosen for the long run.
+            </span>
           </>
         }
         description="Boring, proven, well-loved tools. We pick the right primitive for your product — not the loudest one on Twitter."

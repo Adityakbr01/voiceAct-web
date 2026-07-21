@@ -13,14 +13,7 @@ export const hero = {
     { value: "94%", label: "Client retention after launch" },
     { value: "4.9/5", label: "App Store & Play Store average" },
   ],
-  trustedBy: [
-    "NORDVEIL",
-    "HELIA",
-    "SIGNAL9",
-    "LATTICE",
-    "OAKRIDGE",
-    "KESTREL",
-  ],
+  trustedBy: ["NORDVEIL", "HELIA", "SIGNAL9", "LATTICE", "OAKRIDGE", "KESTREL"],
 };
 
 export const stats = [

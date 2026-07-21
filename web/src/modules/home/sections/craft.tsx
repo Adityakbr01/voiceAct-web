@@ -43,7 +43,8 @@ export function Craft() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="mt-6 text-balance text-4xl font-semibold leading-[1.05] md:text-5xl"
           >
-            Built keystroke <span className="font-display italic tracking-tight text-primary">by keystroke.</span>
+            Built keystroke{" "}
+            <span className="font-display italic tracking-tight text-primary">by keystroke.</span>
           </motion.h2>
 
           <motion.p
@@ -53,8 +54,8 @@ export function Craft() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="mt-5 text-pretty text-base text-muted-foreground md:text-lg"
           >
-            No templates, no drag-and-drop shortcuts. Every interface we ship is
-            written by senior engineers who care about the details — try the keys.
+            No templates, no drag-and-drop shortcuts. Every interface we ship is written by senior
+            engineers who care about the details — try the keys.
           </motion.p>
         </div>
 

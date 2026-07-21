@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { site, nav } from "@/modules/site";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/modules/home/components/theme-toggle";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -276,12 +276,7 @@ export function NavBar() {
 
           <div ref={ctaRef} className="relative z-10 flex items-center gap-2">
             <ThemeToggle />
-            <Button
-              asChild
-              size="sm"
-              variant="glow"
-              className="group hidden md:inline-flex"
-            >
+            <Button asChild size="sm" variant="glow" className="group hidden md:inline-flex">
               <a href="#contact" className="flex items-center gap-1.5">
                 <span>Book a call</span>
                 <span className="relative inline-flex size-3.5 items-center justify-center overflow-hidden">

@@ -42,7 +42,16 @@ export function DesignArt({ color, ...p }: Props) {
   return (
     <svg viewBox="0 0 200 140" {...p}>
       {/* artboard */}
-      <rect x="20" y="20" width="130" height="100" rx="6" fill="none" stroke="currentColor" strokeOpacity="0.3" />
+      <rect
+        x="20"
+        y="20"
+        width="130"
+        height="100"
+        rx="6"
+        fill="none"
+        stroke="currentColor"
+        strokeOpacity="0.3"
+      />
       <rect x="32" y="34" width="50" height="8" rx="2" fill={color} fillOpacity="0.7" />
       <rect x="32" y="48" width="80" height="6" rx="2" fill="currentColor" fillOpacity="0.25" />
       <rect x="32" y="60" width="60" height="6" rx="2" fill="currentColor" fillOpacity="0.25" />
@@ -70,7 +79,16 @@ export function DesignArt({ color, ...p }: Props) {
 export function BuildArt({ color, ...p }: Props) {
   return (
     <svg viewBox="0 0 200 140" {...p}>
-      <rect x="20" y="20" width="160" height="100" rx="8" fill="none" stroke="currentColor" strokeOpacity="0.3" />
+      <rect
+        x="20"
+        y="20"
+        width="160"
+        height="100"
+        rx="8"
+        fill="none"
+        stroke="currentColor"
+        strokeOpacity="0.3"
+      />
       <g fill="currentColor" fillOpacity="0.4">
         <circle cx="32" cy="32" r="3" />
         <circle cx="42" cy="32" r="3" />
@@ -88,10 +106,22 @@ export function BuildArt({ color, ...p }: Props) {
           <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite" />
         </circle>
         <circle cx="100" cy="110" r="2.5">
-          <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" begin="0.2s" repeatCount="indefinite" />
+          <animate
+            attributeName="opacity"
+            values="0.2;1;0.2"
+            dur="1.2s"
+            begin="0.2s"
+            repeatCount="indefinite"
+          />
         </circle>
         <circle cx="118" cy="110" r="2.5">
-          <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" begin="0.4s" repeatCount="indefinite" />
+          <animate
+            attributeName="opacity"
+            values="0.2;1;0.2"
+            dur="1.2s"
+            begin="0.4s"
+            repeatCount="indefinite"
+          />
         </circle>
       </g>
     </svg>
@@ -128,9 +158,12 @@ export function LaunchArt({ color, ...p }: Props) {
         <path d="M6 6 L14 14 L4 12 Z" fill="currentColor" fillOpacity="0.6" />
         {/* flame */}
         <path d="M-4 14 Q 0 30 4 14 Z" fill="#F38020">
-          <animate attributeName="d"
+          <animate
+            attributeName="d"
             values="M-4 14 Q 0 30 4 14 Z;M-4 14 Q 0 24 4 14 Z;M-4 14 Q 0 30 4 14 Z"
-            dur="0.35s" repeatCount="indefinite" />
+            dur="0.35s"
+            repeatCount="indefinite"
+          />
         </path>
       </g>
     </svg>
@@ -142,7 +175,13 @@ export function IterateArt({ color, ...p }: Props) {
     <svg viewBox="0 0 200 140" {...p}>
       <g transform="translate(100 70)">
         {/* outer orbit */}
-        <circle r="48" fill="none" stroke="currentColor" strokeOpacity="0.2" strokeDasharray="2 5" />
+        <circle
+          r="48"
+          fill="none"
+          stroke="currentColor"
+          strokeOpacity="0.2"
+          strokeDasharray="2 5"
+        />
         {/* refresh arrows */}
         <g fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
           <path className="p-illus-draw" d="M -34 -6 A 34 34 0 0 1 30 -14" />
@@ -154,7 +193,12 @@ export function IterateArt({ color, ...p }: Props) {
         <circle r="8" fill={color} />
         <circle r="8" fill="none" stroke={color} strokeOpacity="0.4">
           <animate attributeName="r" values="8;18;8" dur="2.4s" repeatCount="indefinite" />
-          <animate attributeName="stroke-opacity" values="0.6;0;0.6" dur="2.4s" repeatCount="indefinite" />
+          <animate
+            attributeName="stroke-opacity"
+            values="0.6;0;0.6"
+            dur="2.4s"
+            repeatCount="indefinite"
+          />
         </circle>
       </g>
     </svg>

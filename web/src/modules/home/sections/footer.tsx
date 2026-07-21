@@ -6,9 +6,7 @@ export function Footer() {
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
           <div className="font-display text-xl font-semibold">{site.name}</div>
-          <p className="mt-3 max-w-sm text-sm text-muted-foreground">
-            {site.tagline}
-          </p>
+          <p className="mt-3 max-w-sm text-sm text-muted-foreground">{site.tagline}</p>
           <p className="mt-6 text-xs uppercase tracking-[0.2em] text-muted-foreground">
             {site.location}
           </p>
@@ -54,11 +52,19 @@ export function Footer() {
         </div>
       </div>
       <div className="mx-auto mt-16 flex w-full max-w-7xl flex-col items-center justify-between gap-3 border-t border-border/60 pt-6 text-xs text-muted-foreground md:flex-row">
-        <div>© {new Date().getFullYear()} {site.name}. All rights reserved.</div>
+        <div>
+          © {new Date().getFullYear()} {site.name}. All rights reserved.
+        </div>
         <div className="flex items-center gap-4">
-          <a href="#" className="hover:text-foreground">Privacy</a>
-          <a href="#" className="hover:text-foreground">Terms</a>
-          <a href="#" className="hover:text-foreground">Security</a>
+          <a href="#" className="hover:text-foreground">
+            Privacy
+          </a>
+          <a href="#" className="hover:text-foreground">
+            Terms
+          </a>
+          <a href="#" className="hover:text-foreground">
+            Security
+          </a>
         </div>
       </div>
     </footer>

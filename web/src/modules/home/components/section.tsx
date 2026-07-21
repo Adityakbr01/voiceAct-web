@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { BlurReveal } from "@/components/blur-reveal";
+import { BlurReveal } from "@/modules/home/components/blur-reveal";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
@@ -15,10 +15,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn(
-        "relative mx-auto w-full max-w-7xl px-6 py-24 md:px-10 md:py-32",
-        className,
-      )}
+      className={cn("relative mx-auto w-full max-w-7xl px-6 py-24 md:px-10 md:py-32", className)}
     >
       {children}
     </section>

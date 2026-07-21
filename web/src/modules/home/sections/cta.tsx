@@ -20,9 +20,7 @@ function Chips({
 }) {
   return (
     <div className="flex flex-col gap-2 text-left">
-      <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-        {label}
-      </span>
+      <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
       <div className="flex flex-wrap gap-2">
         {options.map((opt) => {
           const active = opt === value;
@@ -66,12 +64,18 @@ export function Cta() {
   const progress = useMemo(() => {
     const steps = [
       true, // Preferences captured (defaults)
-      projectType !== cta.defaults.projectType || timeline !== cta.defaults.timeline || budget !== cta.defaults.budget,
+      projectType !== cta.defaults.projectType ||
+        timeline !== cta.defaults.timeline ||
+        budget !== cta.defaults.budget,
       name.trim().length > 1,
       /.+@.+\..+/.test(email),
     ];
     const done = steps.filter(Boolean).length;
-    return { done, total: steps.length, pct: Math.max(25, Math.round((done / steps.length) * 100)) };
+    return {
+      done,
+      total: steps.length,
+      pct: Math.max(25, Math.round((done / steps.length) * 100)),
+    };
   }, [projectType, timeline, budget, name, email]);
 
   const mailtoHref = useMemo(() => {
