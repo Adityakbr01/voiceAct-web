@@ -1,0 +1,140 @@
+import { useRef } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { Section, SectionHeader } from "@/components/section";
+import { services } from "@/modules/services-data";
+
+function ServiceCard({
+  service,
+  index,
+}: {
+  service: (typeof services)[number];
+  index: number;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
+
+  const background = useMotionTemplate`
+    radial-gradient(
+      320px circle at ${mouseX}px ${mouseY}px,
+      ${service.color}22,
+      transparent 70%
+    )
+  `;
+
+  const Icon = service.icon;
+  const isWide = service.span === "wide";
+
+  return (
+    <motion.article
+      ref={cardRef}
+      key={service.title}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={handleMouseMove}
+      className={`
+        group relative overflow-hidden rounded-3xl border border-border bg-card p-6
+        transition-all duration-500 ease-out
+        hover:-translate-y-1 hover:shadow-card hover:border-opacity-80
+        md:p-7
+        ${isWide ? "md:col-span-2" : ""}
+      `}
+    >
+      {/* Mouse-following glow */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{ background }}
+      />
+
+      {/* Soft orb */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-20 -top-20 size-48 rounded-full opacity-[0.08] blur-3xl transition-all duration-700 group-hover:opacity-[0.15] group-hover:scale-110"
+        style={{ backgroundColor: service.color }}
+      />
+
+      <div className="relative flex h-full flex-col">
+        <div className="flex items-start justify-between gap-4">
+          <span
+            className="inline-flex size-12 items-center justify-center rounded-2xl transition-all duration-500 group-hover:scale-105 group-hover:rounded-xl"
+            style={{
+              backgroundColor: `${service.color}15`,
+              color: service.color,
+            }}
+          >
+            <Icon className="size-6" style={{ color: service.color }} />
+          </span>
+          <span
+            className="mt-1 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em]"
+            style={{
+              backgroundColor: `${service.color}10`,
+              color: service.color,
+            }}
+          >
+            {service.tag}
+          </span>
+        </div>
+
+        <h3 className="mt-6 text-xl font-semibold leading-tight md:text-2xl">
+          {service.title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-[15px]">
+          {service.description}
+        </p>
+
+        <ul className="mt-5 flex flex-wrap gap-2">
+          {service.bullets.map((b) => (
+            <li
+              key={b}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background/50 px-3 py-1.5 text-xs font-medium text-muted-foreground"
+            >
+              <span
+                className="size-1.5 rounded-full"
+                style={{ backgroundColor: service.color }}
+              />
+              {b}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto flex items-center gap-1 pt-5 text-sm font-medium text-foreground/70 opacity-0 transition-all duration-500 group-hover:opacity-100">
+          <span>Explore</span>
+          <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+export function Services() {
+  return (
+    <Section id="services">
+      <SectionHeader
+        eyebrow="Services"
+        title={
+          <>
+            One studio for the whole
+            <span className="font-display italic tracking-tight text-primary"> product surface.</span>
+          </>
+        }
+        description="From first sketch to App Store launch — design, web, mobile, backend and DevOps, under one roof."
+      />
+
+      <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((s, i) => (
+          <ServiceCard key={s.title} service={s} index={i} />
+        ))}
+      </div>
+    </Section>
+  );
+}
