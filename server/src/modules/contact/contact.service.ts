@@ -1,8 +1,13 @@
 import * as contactDao from "./contact.dao.js";
 import { AppError } from "../../utils/AppError.js";
+import { saveLeadAttribution } from "../tracking/tracking.service.js";
 
-export async function submitContact(data: any) {
-  return contactDao.create(data);
+export async function submitContact(data: any, tracking?: any) {
+  const contact = await contactDao.create(data);
+  if (tracking) {
+    await saveLeadAttribution(tracking, "contact", String(contact._id)).catch(() => {});
+  }
+  return contact;
 }
 
 export async function getContacts({ status, skip = 0, limit = 20 }: { status?: string; skip?: number; limit?: number } = {}) {

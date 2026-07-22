@@ -3,7 +3,7 @@ import * as contactService from "./contact.service.js";
 import { parsePagination } from "../../utils/pagination.js";
 
 export async function submit(req: Request, res: Response) {
-  const contact = await contactService.submitContact(req.body);
+  const contact = await contactService.submitContact(req.body, req.tracking);
   res.status(201).json({ success: true, message: "Inquiry submitted", data: contact });
 }
 
