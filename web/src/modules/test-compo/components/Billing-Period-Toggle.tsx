@@ -10,7 +10,7 @@ function BillingPeriodToggle() {
   return (
     <div className="flex flex-col items-center text-center gap-8 relative z-20">
       <div className="space-y-5 flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50/80 border border-indigo-100 text-indigo-600 text-xs font-light tracking-widest shadow-sm uppercase font-[Oswald]">
+        <div className="inline-flex items-center my-3 gap-2 px-3 py-1.5 rounded-full bg-indigo-50/80 border border-indigo-100 text-indigo-600 text-xs font-light tracking-widest shadow-sm uppercase font-[Oswald]">
           <IconCalendar className="text-sm" />
           Clear Cost Structure
         </div>
