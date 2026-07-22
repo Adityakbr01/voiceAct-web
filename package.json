@@ -1,0 +1,10 @@
+{
+  "name": "voiceact",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --filter 'voiceact-*' dev",
+    "dev:web": "bun run --filter 'voiceact-web' dev",
+    "dev:server": "bun run --filter 'voiceact-server' dev"
+  },
+  "workspaces": ["web", "server"]
+}
