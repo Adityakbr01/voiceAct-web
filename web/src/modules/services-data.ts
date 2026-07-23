@@ -286,3 +286,35 @@ export const faqs = [
     a: "Fixed-scope for discovery and design sprints, then a flat monthly rate for build and post-launch iteration. No hourly billing, no surprise invoices.",
   },
 ];
+
+export interface ShowcaseProject {
+  image: string;
+  text: string;
+}
+
+export const showcaseProjects: ShowcaseProject[] = [
+  {
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+    text: "SaaS Analytics Dashboard",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    text: "Fintech Mobile Wallet",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+    text: "E-Commerce Platform",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80",
+    text: "AI Productivity Tool",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?auto=format&fit=crop&w=800&q=80",
+    text: "Healthcare Patient Portal",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=800&q=80",
+    text: "Real Estate Marketplace",
+  },
+];

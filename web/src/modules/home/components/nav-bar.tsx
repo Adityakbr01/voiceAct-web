@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { site, nav } from "@/modules/site";
@@ -38,7 +40,7 @@ export function NavBar() {
       tl.from(pillRef.current, { y: -40, opacity: 0, duration: 0.9 })
         .from(logoRef.current, { x: -12, opacity: 0, duration: 0.6 }, "-=0.55")
         .from(
-          linksRef.current?.querySelectorAll("a") ?? [],
+          linksRef.current?.querySelectorAll("[data-pill-item]") ?? [],
           { y: -10, opacity: 0, duration: 0.5, stagger: 0.06 },
           "-=0.5",
         )
@@ -98,7 +100,7 @@ export function NavBar() {
     { dependencies: [scrolled] },
   );
 
-  // Active section tracking — only used for text color.
+  // Active section tracking
   useEffect(() => {
     const ids = nav.map((n) => n.href.replace(/^#/, ""));
     const els = ids
@@ -118,7 +120,7 @@ export function NavBar() {
     return () => io.disconnect();
   }, []);
 
-  // Drawer open/close with animated backdrop-filter
+  // Drawer open/close
   useGSAP(
     () => {
       const drawer = drawerRef.current;
@@ -161,13 +163,7 @@ export function NavBar() {
         )
           .to(
             drawer,
-            {
-              opacity: 0,
-              y: -12,
-              scale: 0.98,
-              backdropFilter: "blur(0px)",
-              duration: 0.35,
-            },
+            { opacity: 0, y: -12, scale: 0.98, backdropFilter: "blur(0px)", duration: 0.35 },
             0.05,
           )
           .to(scrim, { opacity: 0, backdropFilter: "blur(0px)", duration: 0.35 }, 0.05);
@@ -260,15 +256,21 @@ export function NavBar() {
                   key={item.href}
                   href={item.href}
                   data-href={item.href}
+                  data-pill-item
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "relative rounded-full px-3.5 py-1.5 text-sm transition-colors focus-visible:outline-none",
-                    isActive
-                      ? "font-medium text-foreground"
-                      : "text-muted-foreground hover:text-foreground",
+                    "nav-pill-flip group relative overflow-hidden rounded-full px-3.5 py-1.5 text-sm focus-visible:outline-none",
+                    isActive ? "font-medium text-foreground" : "text-muted-foreground",
                   )}
                 >
-                  {item.label}
+                  <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap overflow-hidden">
+                    <span className="nav-pill-flip-current relative block transition-transform duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
+                      {item.label}
+                    </span>
+                    <span className="nav-pill-flip-next absolute inset-x-0 top-0 block translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0">
+                      {item.label}
+                    </span>
+                  </span>
                 </a>
               );
             })}

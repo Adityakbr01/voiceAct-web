@@ -465,3 +465,29 @@ html.lenis body {
   content-visibility: auto;
   contain-intrinsic-size: 800px;
 }
+
+/* Nav pill text flip hover */
+.nav-pill-flip {
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-pill-flip-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.nav-pill-flip-current,
+.nav-pill-flip-next {
+  color: inherit;
+}
+
+.nav-pill-flip:hover .nav-pill-flip-current {
+  color: var(--foreground);
+  transform: translateY(-100%);
+}
+
+.nav-pill-flip:hover .nav-pill-flip-next {
+  color: var(--foreground);
+  transform: translateY(0);
+}

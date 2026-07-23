@@ -11,7 +11,7 @@ import { Craft } from "@/modules/home/sections/craft";
 import { Testimonials } from "@/modules/home/sections/testimonials";
 import { Faq } from "@/modules/home/sections/faq";
 import { Cta } from "@/modules/home/sections/cta";
-import { Footer } from "@/modules/home/sections/footer";
+import { Footer } from "@/components/layouts/footer";
 
 export default function Home() {
   return (
