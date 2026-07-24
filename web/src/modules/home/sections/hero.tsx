@@ -7,7 +7,7 @@ import { hero } from "@/modules/home-data";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-36 md:pt-44 lg:pt-52">
+    <section className="relative overflow-hidden pt-36 md:pt-44">
       {/* Aurora ambient background */}
       <AuroraBackground aria-hidden className="pointer-events-none absolute inset-0 z-0" />
 

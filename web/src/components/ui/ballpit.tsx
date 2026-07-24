@@ -53,7 +53,7 @@ class ThreeApp {
   maxPixelRatio?: number;
   minPixelRatio?: number;
   scene!: Scene;
-  renderer!: WebGLRenderer;
+  renderer!: WebGLRenderer | null;
   postprocessingInstance: any;
   size: { width: number; height: number; wWidth: number; wHeight: number; ratio: number; pixelRatio: number } = {
     width: 0,
@@ -102,14 +102,20 @@ class ThreeApp {
     } else {
       console.error("Three: Missing canvas or id parameter");
     }
+    if (!this.canvas) return;
     this.canvas.style.display = "block";
     const rendererOptions = {
       canvas: this.canvas,
       powerPreference: "high-performance",
       ...(this.options.rendererOptions ?? {}),
     };
-    this.renderer = new WebGLRenderer(rendererOptions);
-    this.renderer.outputColorSpace = SRGBColorSpace;
+    try {
+      const renderer = new WebGLRenderer(rendererOptions);
+      renderer.outputColorSpace = SRGBColorSpace;
+      this.renderer = renderer;
+    } catch {
+      this.renderer = null;
+    }
   }
 
   initObservers() {
@@ -207,6 +213,7 @@ class ThreeApp {
   }
 
   updateRendererSize() {
+    if (!this.renderer) return;
     this.renderer.setSize(this.size.width, this.size.height);
     this.postprocessingInstance?.setSize(this.size.width, this.size.height);
     let dpr = window.devicePixelRatio;
@@ -220,6 +227,7 @@ class ThreeApp {
   }
 
   render() {
+    if (!this.renderer) return;
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -268,8 +276,9 @@ class ThreeApp {
     this.timer.dispose();
     this.clear();
     this.postprocessingInstance?.dispose();
-    this.renderer.dispose();
-    this.renderer.forceContextLoss();
+    if (this.renderer) {
+      this.renderer.dispose();
+    }
     this.isDisposed = true;
   }
 }
@@ -344,7 +353,9 @@ function onGlobalClick(e: MouseEvent) {
   for (const [elem, target] of interactionTargets) {
     const rect = elem.getBoundingClientRect();
     updateCoordinates(target, rect);
-    if (isInsideRect(rect)) target.onClick(target);
+    if (isInsideRect(rect) && typeof target.onClick === "function") {
+      target.onClick(target);
+    }
   }
 }
 
@@ -702,8 +713,10 @@ function createBallpit(canvas: HTMLCanvasElement, params: any = {}) {
     size: "parent",
     rendererOptions: { antialias: true, alpha: true },
   });
+  const renderer = app.renderer;
+  if (!renderer) return null;
   let spheres: InstancedSpheres;
-  app.renderer.toneMapping = ACESFilmicToneMapping;
+  renderer.toneMapping = ACESFilmicToneMapping;
   app.camera.position.set(0, 0, 20);
   app.camera.lookAt(0, 0, 0);
   app.cameraMaxAspect = 1.5;
@@ -714,7 +727,7 @@ function createBallpit(canvas: HTMLCanvasElement, params: any = {}) {
       app.clear();
       app.scene.remove(spheres);
     }
-    spheres = new InstancedSpheres(app.renderer, p);
+    spheres = new InstancedSpheres(renderer!, p);
     app.scene.add(spheres);
   }
   initialize(params);
@@ -810,6 +823,7 @@ const Ballpit = ({ className = "", followCursor = true, ...props }: BallpitProps
     if (!canvas) return;
 
     spheresInstanceRef.current = createBallpit(canvas, { followCursor, ...props });
+    if (!spheresInstanceRef.current) return;
 
     return () => {
       if (spheresInstanceRef.current) {

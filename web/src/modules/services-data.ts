@@ -11,6 +11,10 @@ import {
   SiTrpc,
   SiCloudflare,
   SiStripe,
+  SiPhp,
+  SiWordpress,
+  SiShopify,
+  SiRazorpay,
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa";
 import { Globe, Smartphone, Palette, Rocket, Server, Wrench, Users } from "lucide-react";
@@ -226,11 +230,15 @@ export const stack: StackItem[] = [
   { name: "Swift", category: "iOS", icon: SiSwift, color: "#F05138" },
   { name: "Kotlin", category: "Android", icon: SiKotlin, color: "#7F52FF" },
   { name: "Node.js", category: "Backend", icon: SiNodedotjs, color: "#5FA04E" },
+  { name: "PHP", category: "Backend", icon: SiPhp, color: "#777BB4" },
   { name: "Postgres", category: "Database", icon: SiPostgresql, color: "#4169E1" },
   { name: "tRPC", category: "API", icon: SiTrpc, color: "#398CCB" },
+  { name: "WordPress", category: "CMS", icon: SiWordpress, color: "#21759B" },
+  { name: "Shopify", category: "E-Commerce", icon: SiShopify, color: "#96BF48" },
   { name: "AWS", category: "Cloud", icon: FaAws, color: "#FF9900" },
   { name: "Cloudflare", category: "Edge", icon: SiCloudflare, color: "#F38020" },
   { name: "Stripe", category: "Payments", icon: SiStripe, color: "#635BFF" },
+  { name: "Razorpay", category: "Payments", icon: SiRazorpay, color: "#072654" },
 ];
 
 export interface Testimonial {

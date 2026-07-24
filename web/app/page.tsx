@@ -1,6 +1,5 @@
 "use client";
 
-import { NavBar } from "@/modules/home/components/nav-bar";
 import { Hero } from "@/modules/home/sections/hero";
 import { Showcase } from "@/modules/home/sections/showcase";
 import { Services } from "@/modules/home/sections/services";
@@ -11,7 +10,6 @@ import { Craft } from "@/modules/home/sections/craft";
 import { Testimonials } from "@/modules/home/sections/testimonials";
 import { Faq } from "@/modules/home/sections/faq";
 import { Cta } from "@/modules/home/sections/cta";
-import { Footer } from "@/components/layouts/footer";
 
 export default function Home() {
   return (
@@ -19,7 +17,6 @@ export default function Home() {
       id="main-content"
       className="relative min-h-screen overflow-x-clip bg-background text-foreground"
     >
-      <NavBar />
       <Hero />
       <Showcase />
       <Services />
@@ -30,7 +27,6 @@ export default function Home() {
       <Testimonials />
       <Faq />
       <Cta />
-      <Footer />
     </main>
   );
 }

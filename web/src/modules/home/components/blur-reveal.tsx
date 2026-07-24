@@ -24,7 +24,7 @@ export function BlurReveal({
   once = true,
   as: Component = "div",
 }: BlurRevealProps) {
-  const MotionComponent = motion(Component) as typeof motion.div;
+  const MotionComponent = motion.create(Component) as typeof motion.div;
 
   return (
     <MotionComponent

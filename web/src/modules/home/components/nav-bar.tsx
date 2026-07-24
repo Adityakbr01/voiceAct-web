@@ -240,7 +240,6 @@ export function NavBar() {
             href="#"
             className="group relative z-10 flex items-center gap-2 rounded-full font-display text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           >
-            <LogoMark />
             <span className="tracking-tight">{site.shortName}</span>
           </a>
 
@@ -364,11 +363,3 @@ export function NavBar() {
   );
 }
 
-function LogoMark() {
-  return (
-    <span className="relative inline-flex size-7 items-center justify-center rounded-lg border border-white/10 bg-gradient-to-br from-primary/25 to-accent/25">
-      <span className="absolute inset-1 rounded-md bg-[var(--gradient-accent)] opacity-90 blur-[6px]" />
-      <span className="relative size-2 rounded-full bg-foreground" />
-    </span>
-  );
-}

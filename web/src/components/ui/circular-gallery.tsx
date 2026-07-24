@@ -637,7 +637,7 @@ class App {
       width: this.container.clientWidth,
       height: this.container.clientHeight,
     };
-    this.renderer.setSize(this.screen.width, this.screen.height);
+    this.renderer?.setSize(this.screen.width, this.screen.height);
     this.camera.perspective({
       aspect: this.screen.width / this.screen.height,
     });
@@ -656,7 +656,7 @@ class App {
     if (this.medias) {
       this.medias.forEach((media) => media.update(this.scroll, direction));
     }
-    this.renderer.render({ scene: this.scene, camera: this.camera });
+    this.renderer?.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
     this.raf = window.requestAnimationFrame(this.update.bind(this));
   }
@@ -693,8 +693,18 @@ class App {
     window.removeEventListener("touchstart", this.boundOnTouchDown);
     window.removeEventListener("touchmove", this.boundOnTouchMove);
     window.removeEventListener("touchend", this.boundOnTouchUp);
-    if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
-      this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+    if (this.renderer && this.renderer.gl) {
+      try {
+        const loseCtx = this.renderer.gl.getExtension("WEBGL_lose_context");
+        if (loseCtx) {
+          loseCtx.loseContext();
+        }
+      } catch (e) {
+        console.error("Error losing WebGL context for CircularGallery:", e);
+      }
+      if (this.renderer.gl.canvas.parentNode) {
+        this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
+      }
     }
 
     if (this.container) {
