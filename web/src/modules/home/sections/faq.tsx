@@ -1,11 +1,13 @@
+"use client";
+
 import { Section, SectionHeader } from "@/modules/home/components/section";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { faqs } from "@/modules/services-data";
+import { MotionAccordion, type MotionAccordionItem } from "@/components/ui/motion-accordion";
+
+const items: MotionAccordionItem[] = faqs.map((f) => ({
+  question: f.q,
+  answer: f.a,
+}));
 
 export function Faq() {
   return (
@@ -27,16 +29,7 @@ export function Faq() {
           />
         </div>
         <div className="md:col-span-7">
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((f, i) => (
-              <AccordionItem key={f.q} value={`item-${i}`} className="border-border/60">
-                <AccordionTrigger className="text-left text-base font-medium">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <MotionAccordion items={items} gap={1} />
         </div>
       </div>
     </Section>
