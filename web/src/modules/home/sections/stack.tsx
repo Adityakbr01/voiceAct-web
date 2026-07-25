@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Section, SectionHeader } from "@/modules/home/components/section";
 import { stack } from "@/modules/services-data";
+import { cn } from "@/lib/utils";
 
-export function Stack() {
+export default function Stack() {
   return (
     <Section id="stack">
       <SectionHeader
@@ -19,38 +20,33 @@ export function Stack() {
         description="Boring, proven, well-loved tools. We pick the right primitive for your product — not the loudest one on Twitter."
       />
 
-      <div className="mt-16 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+      <div className="relative mt-16 grid grid-cols-2 border-x md:grid-cols-4">
+        <div className="-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t" />
+
         {stack.map((s, i) => {
           const Icon = s.icon;
+          const isLastRow = i >= stack.length - (stack.length % 4 || 4);
+          const isLastCol = i % 4 === 3;
           return (
             <motion.div
               key={s.name}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.4, delay: i * 0.035 }}
-              whileHover={{ y: -5, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="glass group relative overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-foreground/[0.06] hover:shadow-[0_8px_30px_-10px_oklch(0.66_0.19_42/0.35)]"
+              whileHover={{ y: -3 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className={cn(
+                "flex items-center justify-center overflow-hidden bg-background px-4 py-8 md:p-8 transition-colors hover:bg-muted",
+                !isLastRow && "border-b",
+                !isLastCol && "border-r",
+              )}
             >
-              <div className="flex items-start justify-between gap-3">
-                <span className="glass inline-flex size-10 items-center justify-center rounded-full transition-all duration-300 group-hover:scale-115 group-hover:bg-foreground/[0.06]">
-                  <Icon size={20} color={s.color} />
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground transition-colors group-hover:text-white/80">
-                  {s.category}
-                </span>
+              <div className="flex flex-col items-center gap-2">
+                <Icon size={32} color={s.color} />
+                <span className="text-xs font-medium text-muted-foreground">{s.name}</span>
               </div>
-              <div className="mt-4 font-display text-lg font-semibold transition-colors group-hover:text-white">
-                {s.name}
-              </div>
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-[var(--color-primary)]/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-              />
             </motion.div>
           );
         })}
+
+        <div className="-translate-x-1/2 -bottom-px pointer-events-none absolute left-1/2 w-screen border-b" />
       </div>
     </Section>
   );
