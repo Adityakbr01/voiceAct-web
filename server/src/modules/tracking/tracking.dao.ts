@@ -19,7 +19,7 @@ export async function getVisitor(visitorId: string) {
 export async function upsertSession(sessionId: string, data: any) {
   return Session.findOneAndUpdate(
     { sessionId },
-    { $set: data, $setOnInsert: { sessionId, visitorId: data.visitorId } },
+    { $set: data, $setOnInsert: { sessionId } },
     { upsert: true, new: true }
   );
 }

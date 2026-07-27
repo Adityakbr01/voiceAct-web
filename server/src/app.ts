@@ -23,7 +23,7 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json({ strict: false }));
 app.use(requestLogger);
 app.use(generalLimiter);
 app.use(trackingMiddleware);
