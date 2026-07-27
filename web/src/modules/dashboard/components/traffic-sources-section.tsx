@@ -2,17 +2,19 @@
 
 import React from "react";
 import { PieChart as PieIcon, Globe } from "lucide-react";
-import { MOCK_TRAFFIC_SOURCES, MOCK_REFERRERS } from "@/constants/analytics-mock-data";
+import { MOCK_TRAFFIC_SOURCES, MOCK_REFERRERS, type TrafficSourceItem } from "@/constants/analytics-mock-data";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 interface TrafficSourcesSectionProps {
   themeMode?: "dark" | "light";
+  sources?: TrafficSourceItem[];
 }
 
-export function TrafficSourcesSection({ themeMode = "dark" }: TrafficSourcesSectionProps) {
+export function TrafficSourcesSection({ themeMode = "dark", sources }: TrafficSourcesSectionProps) {
   const isDark = themeMode === "dark";
 
-  const sanitizedSources = MOCK_TRAFFIC_SOURCES.map((src) => ({
+  const baseSources = sources?.length ? sources : MOCK_TRAFFIC_SOURCES;
+  const sanitizedSources = baseSources.map((src) => ({
     ...src,
     color:
       src.color.toLowerCase() === "#a855f7" || src.color.toLowerCase().includes("purple")

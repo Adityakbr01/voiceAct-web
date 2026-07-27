@@ -1,9 +1,11 @@
+"use client";
+
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Clock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cta } from "@/modules/home-data";
-import { OWNER } from "@/config/constants";
+import { submitContact } from "@/lib/api/contacts";
 
 type Choice = { label: string; options: string[]; value: string };
 
@@ -52,6 +54,9 @@ export function Cta() {
   const [budget, setBudget] = useState(cta.defaults.budget);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const choices: Choice[] = [
     { label: "Project", options: cta.projectTypes, value: projectType },
@@ -78,22 +83,34 @@ export function Cta() {
     };
   }, [projectType, timeline, budget, name, email]);
 
-  const mailtoHref = useMemo(() => {
-    const subject = `Discovery slot — ${projectType}`;
-    const body = [
-      `Hi ${OWNER.name.split(" ")[0] || "team"},`,
-      "",
-      `I'd like to claim a discovery slot.`,
-      "",
-      `• Project: ${projectType}`,
-      `• Timeline: ${timeline}`,
-      `• Budget: ${budget}`,
-      `• Name: ${name || "—"}`,
-      "",
-      "Please send the scoped roadmap within 24h.",
-    ].join("\n");
-    return `mailto:${OWNER.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }, [projectType, timeline, budget, name]);
+  const canSubmit = name.trim().length > 1 && /.+@.+\..+/.test(email);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!canSubmit || submitting) return;
+    setSubmitError("");
+    setSubmitting(true);
+    try {
+      const message = [
+        "Discovery slot request",
+        "",
+        `Project: ${projectType}`,
+        `Timeline: ${timeline}`,
+        `Budget: ${budget}`,
+      ].join("\n");
+      await submitContact({
+        name: name.trim(),
+        email: email.trim(),
+        service: projectType,
+        message,
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitError("Something went wrong. Please try again in a moment.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <section id="contact" className="relative px-6 pb-32 md:px-10">
@@ -160,6 +177,15 @@ export function Cta() {
 
           {/* Right — pre-filled form (Smart Defaults + IKEA + Goal Gradient) */}
           <div className="glass rounded-2xl border border-border/60 bg-card/40 p-6 md:p-7">
+            {submitted ? (
+              <div className="space-y-3 py-8 text-center">
+                <p className="text-lg font-semibold text-foreground">You&apos;re on the list.</p>
+                <p className="text-sm text-muted-foreground">
+                  We&apos;ll send your scoped roadmap within 24 hours.
+                </p>
+              </div>
+            ) : (
+            <>
             {/* Goal gradient */}
             <div className="flex items-center justify-between text-xs">
               <span className="inline-flex items-center gap-1.5 text-muted-foreground">
@@ -217,16 +243,26 @@ export function Cta() {
                 </label>
               </div>
 
-              <Button asChild size="lg" variant="default" className="mt-1 rounded-full">
-                <a href={mailtoHref}>
-                  {cta.primary.label}
-                  <ArrowRight className="ml-1 size-4" />
-                </a>
+              <Button
+                type="button"
+                size="lg"
+                variant="default"
+                className="mt-1 rounded-full"
+                disabled={!canSubmit || submitting}
+                onClick={handleSubmit}
+              >
+                {submitting ? "Sending…" : cta.primary.label}
+                <ArrowRight className="ml-1 size-4" />
               </Button>
+              {submitError && (
+                <p className="text-center text-xs text-destructive">{submitError}</p>
+              )}
               <p className="text-center text-[11px] text-muted-foreground">
                 Slots reset the 1st of each month · roadmap yours to keep
               </p>
             </div>
+            </>
+            )}
           </div>
         </div>
       </div>

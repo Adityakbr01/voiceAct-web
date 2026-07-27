@@ -1,7 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // ponytail: no special config needed, defaults work
+  // Docker standalone output
+  output: "standalone",
+  
+  // Allow external images from project URLs
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -12,9 +12,14 @@ if (typeof window !== "undefined") {
 
 interface KPISummaryCardsProps {
   themeMode?: "dark" | "light";
+  liveMetrics?: {
+    visitors: number;
+    sessions: number;
+    inquiries: number;
+  };
 }
 
-export function KPISummaryCards({ themeMode = "dark" }: KPISummaryCardsProps) {
+export function KPISummaryCards({ themeMode = "dark", liveMetrics }: KPISummaryCardsProps) {
   const isDark = themeMode === "dark";
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -55,6 +60,46 @@ export function KPISummaryCards({ themeMode = "dark" }: KPISummaryCardsProps) {
     { scope: sectionRef }
   );
 
+  const liveCards = liveMetrics
+    ? [
+        {
+          id: "live-visitors",
+          title: "Unique Visitors",
+          value: liveMetrics.visitors.toLocaleString(),
+          numericValue: liveMetrics.visitors,
+          change: 0,
+          isPositive: true,
+          periodLabel: "Live",
+          sparkline: [liveMetrics.visitors, liveMetrics.visitors],
+          category: "traffic" as const,
+        },
+        {
+          id: "live-sessions",
+          title: "Sessions",
+          value: liveMetrics.sessions.toLocaleString(),
+          numericValue: liveMetrics.sessions,
+          change: 0,
+          isPositive: true,
+          periodLabel: "Live",
+          sparkline: [liveMetrics.sessions, liveMetrics.sessions],
+          category: "traffic" as const,
+        },
+        {
+          id: "live-inquiries",
+          title: "Contact Inquiries",
+          value: liveMetrics.inquiries.toLocaleString(),
+          numericValue: liveMetrics.inquiries,
+          change: 0,
+          isPositive: true,
+          periodLabel: "Live",
+          sparkline: [liveMetrics.inquiries, liveMetrics.inquiries],
+          category: "lead" as const,
+        },
+      ]
+    : [];
+
+  const kpiCards = [...liveCards, ...MOCK_KPI_CARDS];
+
   return (
     <section ref={sectionRef} className="space-y-4 font-['Space_Grotesk',sans-serif]">
       <div className="flex items-center justify-between">
@@ -65,7 +110,7 @@ export function KPISummaryCards({ themeMode = "dark" }: KPISummaryCardsProps) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {MOCK_KPI_CARDS.map((kpi) => {
+        {kpiCards.map((kpi) => {
           const maxSpark = Math.max(...kpi.sparkline);
           const minSpark = Math.min(...kpi.sparkline);
           const range = maxSpark - minSpark || 1;

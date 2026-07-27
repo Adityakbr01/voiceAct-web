@@ -5,7 +5,10 @@ import * as trackingController from "./tracking.controller.js";
 
 const router = Router();
 
-router.post("/pageview", asyncHandler((req, res) => trackingController.pageview(req, res)));
-router.get("/analytics", protect, asyncHandler((req, res) => trackingController.analytics(req, res)));
+// Public — called by client on every page navigation
+router.post("/pageview", asyncHandler(trackingController.pageview));
+
+// Admin
+router.get("/analytics", protect, asyncHandler(trackingController.analytics));
 
 export default router;

@@ -14,7 +14,8 @@ import {
   ChevronRight,
   Zap,
   PhoneCall,
-  SlidersHorizontal,
+  Briefcase,
+  Layers,
 } from "lucide-react";
 
 interface DashboardSidebarProps {
@@ -22,17 +23,32 @@ interface DashboardSidebarProps {
   onToggleTheme: () => void;
   isCollapsed: boolean;
   setIsCollapsed: (collapsed: boolean) => void;
+  adminName?: string;
+  onLogout?: () => void;
+  activePath?: string;
 }
 
 export function DashboardSidebar({
   themeMode,
   isCollapsed,
   setIsCollapsed,
+  adminName = "Admin",
+  onLogout,
+  activePath,
 }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const currentPath = activePath || pathname || "";
   const isDark = themeMode === "dark";
 
   const navItems = [
+    {
+      group: "CONTENT",
+      items: [
+        { id: "contacts", label: "Contacts", icon: Users, href: "/admin/contacts" },
+        { id: "projects", label: "Projects", icon: Briefcase, href: "/admin/projects" },
+        { id: "services", label: "Services", icon: Layers, href: "/admin/services" },
+      ],
+    },
     {
       group: "ANALYTICS",
       items: [
@@ -48,7 +64,6 @@ export function DashboardSidebar({
       group: "MANAGEMENT",
       items: [
         { id: "calls", label: "Voice AI Calls", icon: PhoneCall, href: "/admin/analytics/calls" },
-        { id: "settings", label: "Dashboard Settings", icon: SlidersHorizontal, href: "/admin/analytics/settings" },
       ],
     },
   ];
@@ -111,7 +126,9 @@ export function DashboardSidebar({
               <div className="space-y-2">
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = pathname === item.href || (pathname === "/admin/analytics" && item.id === "overview");
+                  const isActive =
+                    currentPath === item.href ||
+                    (currentPath === "/admin/analytics" && item.id === "overview");
                   return (
                     <Link
                       key={item.id}
@@ -150,11 +167,26 @@ export function DashboardSidebar({
           </div>
           {!isCollapsed && (
             <div className="flex-1 overflow-hidden">
-              <span className={`text-xs font-bold block truncate ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}>Aditya Admin</span>
-              <span className={`text-[10px] block truncate ${isDark ? "text-slate-400" : "text-slate-500"}`}>Super Admin</span>
+              <span className={`text-xs font-bold block truncate ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}>
+                {adminName}
+              </span>
+              <span className={`text-[10px] block truncate ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                Admin
+              </span>
             </div>
           )}
         </div>
+        {onLogout && !isCollapsed && (
+          <button
+            type="button"
+            onClick={onLogout}
+            className={`w-full rounded-xl px-3 py-2 text-xs font-semibold transition-colors ${
+              isDark ? "bg-[#212630] hover:bg-slate-700 text-slate-300" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+            }`}
+          >
+            Sign out
+          </button>
+        )}
       </div>
     </aside>
   );

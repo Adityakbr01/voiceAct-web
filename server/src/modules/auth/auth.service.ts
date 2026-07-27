@@ -13,11 +13,14 @@ export async function login(email: string, password: string) {
     expiresIn: config.jwtExpiresIn,
   });
 
-  return { token, admin: { id: admin._id, email: admin.email, name: admin.name } };
+  return {
+    token,
+    admin: { id: admin._id, email: admin.email, name: admin.name, role: admin.role },
+  };
 }
 
 export async function getMe(adminId: string) {
   const admin = await adminDao.findById(adminId);
   if (!admin) throw new AppError("Admin not found", 404);
-  return { id: admin._id, email: admin.email, name: admin.name };
+  return { id: admin._id, email: admin.email, name: admin.name, role: admin.role };
 }

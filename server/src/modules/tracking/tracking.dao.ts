@@ -125,3 +125,50 @@ export async function getCountryBreakdown(since?: Date) {
     { $sort: { count: -1 } },
   ]);
 }
+
+export async function getDailyTimeSeries(since?: Date) {
+  const match = since ? { createdAt: { $gte: since } } : {};
+  const [sessions, visitors] = await Promise.all([
+    Session.aggregate([
+      { $match: match },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          sessions: { $sum: 1 },
+          pageViews: { $sum: "$pagesViewed" },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]),
+    Visitor.aggregate([
+      { $match: match },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          visitors: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]),
+  ]);
+
+  const visitorMap = new Map(visitors.map((v: { _id: string; visitors: number }) => [v._id, v.visitors]));
+  return sessions.map((row: { _id: string; sessions: number; pageViews: number }) => ({
+    date: row._id,
+    sessions: row.sessions,
+    pageViews: row.pageViews,
+    visitors: visitorMap.get(row._id) ?? 0,
+    uniqueVisitors: visitorMap.get(row._id) ?? 0,
+  }));
+}
+
+export async function getActiveSessionCount(minutes = 5) {
+  const since = new Date(Date.now() - minutes * 60 * 1000);
+  return Session.countDocuments({ lastVisit: { $gte: since } });
+}
+
+export async function getEngagedSessionCount(since?: Date) {
+  const match: Record<string, unknown> = since ? { createdAt: { $gte: since } } : {};
+  match.pagesViewed = { $gt: 1 };
+  return Session.countDocuments(match);
+}

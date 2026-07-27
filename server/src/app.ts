@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import { config } from "./config/index.js";
 import { requestLogger } from "./middleware/logger.js";
 import { generalLimiter } from "./middleware/rateLimit.js";
 import { errorHandler } from "./middleware/error.js";
@@ -10,10 +12,17 @@ import contactRoutes from "./modules/contact/contact.routes.js";
 import serviceRoutes from "./modules/service/service.routes.js";
 import projectRoutes from "./modules/project/project.routes.js";
 import trackingRoutes from "./modules/tracking/tracking.routes.js";
+import adminRoutes from "./modules/admin/admin.routes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: config.corsOrigins,
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.use(express.json());
 app.use(requestLogger);
 app.use(generalLimiter);
@@ -28,6 +37,7 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/tracking", trackingRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use(errorHandler);
 

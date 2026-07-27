@@ -8,3 +8,7 @@ export const serviceSchema = z.object({
   order: z.number().int().optional(),
   active: z.boolean().optional(),
 });
+
+export const serviceReorderSchema = z.object({
+  items: z.array(z.object({ id: z.string().min(1), order: z.number().int() })).min(1),
+});

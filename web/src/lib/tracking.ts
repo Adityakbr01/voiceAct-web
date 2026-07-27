@@ -54,12 +54,17 @@ export function getSessionId(): string {
   return getOrCreateSessionId();
 }
 
-export async function trackPageView() {
+export async function trackPageView(path?: string) {
   if (typeof window === "undefined") return;
   const sessionId = getSessionId();
+  const td = getTrackingData();
   try {
     await api.post("/tracking/pageview", null, {
-      params: { tz: Intl.DateTimeFormat().resolvedOptions().timeZone, lp: window.location.pathname },
+      params: {
+        tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        lp: path ?? window.location.pathname,
+        ...td,
+      },
       headers: { "X-Session-Id": sessionId },
     });
   } catch {

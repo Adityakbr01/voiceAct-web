@@ -1,33 +1,19 @@
 import { Router } from "express";
 import { asyncHandler } from "../../utils/asyncHandler.js";
-import { protect } from "../../middleware/auth.js";
+import { validate } from "../../utils/validate.js";
+import { protect, requireRole } from "../../middleware/auth.js";
 import { projectSchema } from "./project.validation.js";
 import * as projectController from "./project.controller.js";
 
 const router = Router();
 
-router.get("/", asyncHandler((req, res) => projectController.list(req, res)));
+// Public
+router.get("/", asyncHandler(projectController.list));
+router.get("/:slug", asyncHandler(projectController.getBySlug));
 
-router.get("/:slug", asyncHandler((req, res) => projectController.getBySlug(req, res)));
-
-router.post(
-  "/",
-  protect,
-  asyncHandler(async (req, res) => {
-    req.body = projectSchema.parse(req.body);
-    await projectController.create(req, res);
-  })
-);
-
-router.put(
-  "/:id",
-  protect,
-  asyncHandler(async (req, res) => {
-    req.body = projectSchema.partial().parse(req.body);
-    await projectController.update(req, res);
-  })
-);
-
-router.delete("/:id", protect, asyncHandler((req, res) => projectController.remove(req, res)));
+// Admin
+router.post("/", protect, validate(projectSchema), asyncHandler(projectController.create));
+router.put("/:id", protect, validate(projectSchema.partial()), asyncHandler(projectController.update));
+router.delete("/:id", protect, requireRole("super_admin"), asyncHandler(projectController.remove));
 
 export default router;

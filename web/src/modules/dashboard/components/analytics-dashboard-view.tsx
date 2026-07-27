@@ -19,6 +19,9 @@ import { ProgressPillChartCard } from "./progress-pill-chart-card";
 import { UpcomingMeetingsCard } from "./upcoming-meetings-card";
 import { BillingPeriodToggleCard } from "./billing-period-toggle-card";
 import { MOCK_CAMPAIGNS, MOCK_TRAFFIC_SOURCES } from "@/constants/analytics-mock-data";
+import { mapTrafficSources } from "@/lib/analytics-mappers";
+import { useAdminDashboardStats } from "@/hooks/use-admin-analytics";
+import { useAdminAuth } from "@/modules/admin/admin-auth-provider";
 import { Globe, TrendingUp } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -33,6 +36,7 @@ interface AnalyticsDashboardViewProps {
 
 export function AnalyticsDashboardView({ activeTabRoute = "overview" }: AnalyticsDashboardViewProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { admin, logout } = useAdminAuth();
 
   // Global Persistent Theme Provider
   const { theme, toggleTheme } = useTheme();
@@ -41,6 +45,7 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
 
   // --- Filter States ---
   const [dateRange, setDateRange] = useState("30d");
+  const { data: dashboardStats, refetch: refetchStats } = useAdminDashboardStats(dateRange);
   const [selectedSource, setSelectedSource] = useState("All Sources");
   const [selectedCountry, setSelectedCountry] = useState("All Countries");
   const [selectedDevice, setSelectedDevice] = useState("All Devices");
@@ -111,12 +116,30 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
 
   const handleRefresh = () => {
     setIsRefreshing(true);
-    setTimeout(() => {
-      setRealtimeCount(Math.floor(Math.random() * 15) + 38);
+    void refetchStats().finally(() => {
+      setRealtimeCount(dashboardStats?.tracking.stats.totalSessions ?? realtimeCount);
       setLastRefreshed(new Date().toLocaleTimeString());
       setIsRefreshing(false);
-    }, 600);
+    });
   };
+
+  const liveMetrics = dashboardStats
+    ? {
+        visitors: dashboardStats.tracking.stats.totalVisitors,
+        sessions: dashboardStats.tracking.stats.totalSessions,
+        inquiries: dashboardStats.contacts.total,
+      }
+    : undefined;
+
+  const liveTrafficSources = dashboardStats?.tracking.sources.length
+    ? mapTrafficSources(dashboardStats.tracking.sources)
+    : undefined;
+
+  const liveRecentContacts = dashboardStats?.recentContacts;
+
+  // Top ROI campaign for quick summary card
+  const topRoiCampaign = MOCK_CAMPAIGNS[0];
+  const topSource = liveTrafficSources?.[0] ?? MOCK_TRAFFIC_SOURCES[0];
 
   const handleExportJSON = () => {
     const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(JSON.stringify(MOCK_CAMPAIGNS, null, 2));
@@ -128,10 +151,6 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
     document.body.removeChild(link);
     setIsExportOpen(false);
   };
-
-  // Top ROI campaign for quick summary card
-  const topRoiCampaign = MOCK_CAMPAIGNS[0];
-  const topSource = MOCK_TRAFFIC_SOURCES[0];
 
   return (
     <div
@@ -145,6 +164,8 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
         onToggleTheme={toggleTheme}
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
+        adminName={admin?.name}
+        onLogout={logout}
       />
 
       {/* 2. Main Content Area */}
@@ -197,7 +218,7 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
 
               <TrafficOverviewChart themeMode={themeMode} />
 
-                 <KPISummaryCards themeMode={themeMode} />
+                 <KPISummaryCards themeMode={themeMode} liveMetrics={liveMetrics} />
               
               
               {/* Executive Summary Cards */}
@@ -242,7 +263,7 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
             <>
               <ProgressPillChartCard themeMode={themeMode} />
               <TrafficOverviewChart themeMode={themeMode} />
-              <TrafficSourcesSection themeMode={themeMode} />
+              <TrafficSourcesSection themeMode={themeMode} sources={liveTrafficSources} />
             </>
           )}
 
@@ -272,7 +293,7 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
           {/* 6. LEADS & CONVERSIONS */}
           {activeTabRoute === "conversions" && (
             <>
-              <RecentConversionsTable themeMode={themeMode} />
+              <RecentConversionsTable themeMode={themeMode} contacts={liveRecentContacts} />
             </>
           )}
 

@@ -16,8 +16,8 @@ export function Providers({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     captureUTMParams();
-    trackPageView();
-  }, []);
+    trackPageView(pathname ?? "/");
+  }, [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>

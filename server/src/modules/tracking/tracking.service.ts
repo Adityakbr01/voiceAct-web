@@ -1,8 +1,11 @@
 import * as trackingDao from "./tracking.dao.js";
 import type { TrackingData } from "./tracking.middleware.js";
+import { lookupCountry } from "../../utils/geoip.js";
+import Contact from "../contact/contact.model.js";
 
 export async function processPageView(tracking: TrackingData) {
   const now = new Date();
+  const geo = lookupCountry(tracking.ip);
 
   await trackingDao.upsertVisitor(tracking.visitorId, {
     ip: tracking.ip,
@@ -12,6 +15,8 @@ export async function processPageView(tracking: TrackingData) {
     os: tracking.os,
     language: tracking.language,
     timezone: tracking.timezone,
+    country: geo.country,
+    city: geo.city,
     lastVisit: now,
   });
 
@@ -91,16 +96,57 @@ function parseSince(period?: string): Date | undefined {
 export async function getAnalytics(period?: string) {
   const since = parseSince(period);
 
-  const [sources, campaigns, stats, landingPages, devices, browsers, countries] =
-    await Promise.all([
-      trackingDao.getTrafficSources(since),
-      trackingDao.getTopCampaigns(since),
-      trackingDao.getVisitorStats(since),
-      trackingDao.getTopLandingPages(since),
-      trackingDao.getDeviceBreakdown(since),
-      trackingDao.getBrowserBreakdown(since),
-      trackingDao.getCountryBreakdown(since),
-    ]);
+  const [
+    sources,
+    campaigns,
+    stats,
+    landingPages,
+    devices,
+    browsers,
+    countries,
+    timeSeries,
+    activeSessions,
+    engagedSessions,
+    contactSubmissions,
+  ] = await Promise.all([
+    trackingDao.getTrafficSources(since),
+    trackingDao.getTopCampaigns(since),
+    trackingDao.getVisitorStats(since),
+    trackingDao.getTopLandingPages(since),
+    trackingDao.getDeviceBreakdown(since),
+    trackingDao.getBrowserBreakdown(since),
+    trackingDao.getCountryBreakdown(since),
+    trackingDao.getDailyTimeSeries(since),
+    trackingDao.getActiveSessionCount(5),
+    trackingDao.getEngagedSessionCount(since),
+    since ? Contact.countDocuments({ createdAt: { $gte: since } }) : Contact.countDocuments(),
+  ]);
 
-  return { sources, campaigns, stats, landingPages, devices, browsers, countries };
+  const totalSessions = stats.totalSessions || 1;
+  const funnel = [
+    { step: "Sessions", count: stats.totalSessions, percentage: 100 },
+    {
+      step: "Engaged (2+ pages)",
+      count: engagedSessions,
+      percentage: Math.round((engagedSessions / totalSessions) * 100),
+    },
+    {
+      step: "Contact submitted",
+      count: contactSubmissions,
+      percentage: Math.round((contactSubmissions / totalSessions) * 100),
+    },
+  ];
+
+  return {
+    sources,
+    campaigns,
+    stats,
+    landingPages,
+    devices,
+    browsers,
+    countries,
+    timeSeries,
+    realtime: { activeSessions },
+    funnel,
+  };
 }

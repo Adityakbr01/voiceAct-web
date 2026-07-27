@@ -1,31 +1,25 @@
 import { Router } from "express";
 import { asyncHandler } from "../../utils/asyncHandler.js";
+import { validate } from "../../utils/validate.js";
 import { contactLimiter } from "../../middleware/rateLimit.js";
 import { protect } from "../../middleware/auth.js";
-import { contactSchema } from "./contact.validation.js";
+import { contactSchema, contactStatusSchema } from "./contact.validation.js";
 import * as contactController from "./contact.controller.js";
 
 const router = Router();
 
+// Public
 router.post(
   "/",
   contactLimiter,
-  asyncHandler(async (req, res) => {
-    req.body = contactSchema.parse(req.body);
-    await contactController.submit(req, res);
-  })
+  validate(contactSchema),
+  asyncHandler(contactController.submit)
 );
 
-router.get(
-  "/",
-  protect,
-  asyncHandler((req, res) => contactController.list(req, res))
-);
-
-router.patch(
-  "/:id",
-  protect,
-  asyncHandler((req, res) => contactController.updateStatus(req, res))
-);
+// Admin — order matters: /export before /:id
+router.get("/export", protect, asyncHandler(contactController.exportCsv));
+router.get("/", protect, asyncHandler(contactController.list));
+router.get("/:id", protect, asyncHandler(contactController.getById));
+router.patch("/:id", protect, validate(contactStatusSchema), asyncHandler(contactController.updateStatus));
 
 export default router;

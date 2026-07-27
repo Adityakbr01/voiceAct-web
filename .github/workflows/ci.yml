@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # ─── Server (Bun + TypeScript) ────────────────────────────────────────────
+  server:
+    name: Server — typecheck & lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun tsc --noEmit
+
+  # ─── Web (Next.js + TypeScript + ESLint) ──────────────────────────────────
+  web:
+    name: Web — typecheck, lint & build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        # Use npm ci if a package-lock exists, fall back to npm install
+        run: |
+          if [ -f package-lock.json ]; then npm ci
+          elif [ -f bun.lock ]; then npm install
+          else npm install; fi
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:5000/api
+        run: npm run build

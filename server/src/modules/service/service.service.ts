@@ -21,6 +21,14 @@ export async function update(id: string, data: any) {
   return service;
 }
 
+export async function getAllAdmin() {
+  return serviceDao.findAll();
+}
+
+export async function reorder(items: { id: string; order: number }[]) {
+  return serviceDao.bulkUpdateOrder(items);
+}
+
 export async function remove(id: string) {
   const service = await serviceDao.findByIdAndDelete(id);
   if (!service) throw new AppError("Service not found", 404);

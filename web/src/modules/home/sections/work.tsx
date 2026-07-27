@@ -1,9 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
-import { work } from "@/modules/services-data";
+import { usePublicProjects } from "@/hooks/use-public-cms";
 import ScrollStack, { ScrollStackItem } from "@/components/ui/scroll-stack";
 
 export function Work() {
+  const { data: work = [] } = usePublicProjects();
+
   return (
     <Section id="work">
       <SectionHeader

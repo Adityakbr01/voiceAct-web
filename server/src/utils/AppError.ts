@@ -1,7 +1,13 @@
-export function AppError(message: string, statusCode: number) {
-  const err = new Error(message) as Error & { statusCode: number; isOperational: boolean };
-  err.statusCode = statusCode;
-  err.isOperational = true;
-  Error.captureStackTrace(err, AppError);
-  return err;
+export class AppError extends Error {
+  statusCode: number;
+  isOperational: boolean;
+
+  constructor(message: string, statusCode: number) {
+    super(message);
+    this.statusCode = statusCode;
+    this.isOperational = true;
+    // Maintains proper prototype chain in transpiled ES5
+    Object.setPrototypeOf(this, AppError.prototype);
+    Error.captureStackTrace(this, this.constructor);
+  }
 }

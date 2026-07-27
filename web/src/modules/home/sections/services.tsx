@@ -2,9 +2,10 @@ import { useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
-import { services } from "@/modules/services-data";
+import type { Service } from "@/modules/services-data";
+import { usePublicServices } from "@/hooks/use-public-cms";
 
-function ServiceCard({ service, index }: { service: (typeof services)[number]; index: number }) {
+function ServiceCard({ service, index }: { service: Service; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
   const mouseX = useMotionValue(0);
@@ -119,6 +120,8 @@ function ServiceCard({ service, index }: { service: (typeof services)[number]; i
 }
 
 export function Services() {
+  const { data: services = [] } = usePublicServices();
+
   return (
     <Section id="services">
       <SectionHeader
@@ -136,7 +139,7 @@ export function Services() {
       />
 
       <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((s, i) => (
+        {services.map((s: Service, i: number) => (
           <ServiceCard key={s.title} service={s} index={i} />
         ))}
       </div>

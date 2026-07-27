@@ -7,3 +7,7 @@ export const contactSchema = z.object({
   service: z.string().max(100).optional(),
   message: z.string().min(10).max(2000),
 });
+
+export const contactStatusSchema = z.object({
+  status: z.enum(["new", "read", "replied"]),
+});

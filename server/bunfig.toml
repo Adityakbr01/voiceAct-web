@@ -1,0 +1,12 @@
+[test]
+# Test timeout in milliseconds
+timeout = 30000
+
+# Run tests in serial (one at a time) to avoid database conflicts
+serial = true
+
+# Test environment variables
+[test.env]
+NODE_ENV = "test"
+JWT_SECRET = "test-secret-for-testing-only"
+TEST_MONGODB_URI = "mongodb://localhost:27017/voiceact-test"
