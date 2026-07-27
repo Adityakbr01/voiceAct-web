@@ -465,8 +465,9 @@ class App {
   mediasImages!: Array<{ image: string; text: string }>;
   medias!: Media[];
   isDown: boolean = false;
-  start: number = 0;
+  touchStartPos: number = 0;
   raf!: number;
+
 
   boundOnResize!: any;
   boundOnWheel!: any;
@@ -578,15 +579,16 @@ class App {
   onTouchDown(e: any) {
     this.isDown = true;
     this.scroll.position = this.scroll.current;
-    this.start = e.touches ? e.touches[0].clientX : e.clientX;
+    this.touchStartPos = e.touches ? e.touches[0].clientX : e.clientX;
   }
 
   onTouchMove(e: any) {
     if (!this.isDown) return;
     const x = e.touches ? e.touches[0].clientX : e.clientX;
-    const distance = (this.start - x) * (this.scrollSpeed * 0.025);
+    const distance = (this.touchStartPos - x) * (this.scrollSpeed * 0.025);
     this.scroll.target = (this.scroll.position ?? 0) + distance;
   }
+
 
   onTouchUp() {
     this.isDown = false;
@@ -651,6 +653,7 @@ class App {
   }
 
   update() {
+    if (!this.isRunning) return;
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? "right" : "left";
     if (this.medias) {
@@ -661,6 +664,23 @@ class App {
     this.raf = window.requestAnimationFrame(this.update.bind(this));
   }
 
+  start() {
+    if (this.isRunning) return;
+    this.isRunning = true;
+    this.update();
+  }
+
+  stop() {
+    if (!this.isRunning) return;
+    this.isRunning = false;
+    if (this.raf) {
+      window.cancelAnimationFrame(this.raf);
+      this.raf = 0;
+    }
+  }
+
+  isRunning: boolean = true;
+
   addEventListeners() {
     this.boundOnResize = this.onResize.bind(this);
     this.boundOnWheel = this.onWheel.bind(this);
@@ -670,22 +690,20 @@ class App {
     this.boundOnKeyDown = this.onKeyDown.bind(this);
 
     window.addEventListener("resize", this.boundOnResize);
-    window.addEventListener("mousewheel", this.boundOnWheel);
-    window.addEventListener("wheel", this.boundOnWheel);
+    window.addEventListener("wheel", this.boundOnWheel, { passive: true });
     window.addEventListener("mousedown", this.boundOnTouchDown);
     window.addEventListener("mousemove", this.boundOnTouchMove);
     window.addEventListener("mouseup", this.boundOnTouchUp);
-    window.addEventListener("touchstart", this.boundOnTouchDown);
-    window.addEventListener("touchmove", this.boundOnTouchMove);
-    window.addEventListener("touchend", this.boundOnTouchUp);
+    window.addEventListener("touchstart", this.boundOnTouchDown, { passive: true });
+    window.addEventListener("touchmove", this.boundOnTouchMove, { passive: true });
+    window.addEventListener("touchend", this.boundOnTouchUp, { passive: true });
 
     this.container?.addEventListener("keydown", this.boundOnKeyDown);
   }
 
   destroy() {
-    window.cancelAnimationFrame(this.raf);
+    this.stop();
     window.removeEventListener("resize", this.boundOnResize);
-    window.removeEventListener("mousewheel", this.boundOnWheel);
     window.removeEventListener("wheel", this.boundOnWheel);
     window.removeEventListener("mousedown", this.boundOnTouchDown);
     window.removeEventListener("mousemove", this.boundOnTouchMove);
@@ -731,6 +749,8 @@ export default function CircularGallery({
     if (!containerRef.current) return;
     let app: App;
     let isMounted = true;
+    let observer: IntersectionObserver;
+
     resolveFont(font, fontUrl).then((resolvedFont) => {
       if (!isMounted || !containerRef.current) return;
       app = new App(containerRef.current, {
@@ -742,10 +762,23 @@ export default function CircularGallery({
         scrollSpeed,
         scrollEase,
       });
+
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            app.start();
+          } else {
+            app.stop();
+          }
+        },
+        { threshold: 0 }
+      );
+      observer.observe(containerRef.current);
     });
 
     return () => {
       isMounted = false;
+      if (observer) observer.disconnect();
       if (app) app.destroy();
     };
   }, [items, bend, textColor, borderRadius, font, fontUrl, scrollSpeed, scrollEase]);
@@ -759,3 +792,4 @@ export default function CircularGallery({
     />
   );
 }
+

@@ -1,7 +1,10 @@
 "use client";
 
-import CircularGallery from "@/components/ui/circular-gallery";
+import dynamic from "next/dynamic";
 import { showcaseProjects } from "@/modules/services-data";
+
+const CircularGallery = dynamic(() => import("@/components/ui/circular-gallery"), { ssr: false });
+
 
 export function Showcase() {
   return (

@@ -6,11 +6,22 @@ import { services } from "@/modules/services-data";
 
 function ServiceCard({ service, index }: { service: (typeof services)[number]; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  const handleMouseEnter = () => {
+    if (cardRef.current) {
+      rectRef.current = cardRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = cardRef.current?.getBoundingClientRect();
+    let rect = rectRef.current;
+    if (!rect && cardRef.current) {
+      rect = cardRef.current.getBoundingClientRect();
+      rectRef.current = rect;
+    }
     if (!rect) return;
     mouseX.set(e.clientX - rect.left);
     mouseY.set(e.clientY - rect.top);
@@ -35,7 +46,9 @@ function ServiceCard({ service, index }: { service: (typeof services)[number]; i
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
+
       className={`
         group relative overflow-hidden rounded-3xl border border-border bg-card p-6
         transition-all duration-500 ease-out

@@ -2,10 +2,14 @@
 
 import { useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
@@ -20,6 +24,21 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       smoothWheel: !isTouch,
       syncTouch: false,
     });
+
+    (window as any).lenis = lenis;
+
+    // Synchronize Lenis scroll updates with GSAP ScrollTrigger
+    const handleScroll = () => {
+      ScrollTrigger.update();
+    };
+    lenis.on("scroll", handleScroll);
+
+    // Drive Lenis RAF loop through GSAP's single synchronized ticker
+    const updateTicker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
 
     // Anchor link handling: smooth scroll to hash targets
     const onAnchorClick = (e: MouseEvent) => {
@@ -37,23 +56,19 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
     // Handle resizes (images loading, content rendering)
     const resizeObserver = new ResizeObserver(() => {
       lenis.resize();
+      ScrollTrigger.refresh();
     });
     if (document.body) {
       resizeObserver.observe(document.body);
     }
 
-    let rafId = 0;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
-    rafId = requestAnimationFrame(raf);
-
     return () => {
-      cancelAnimationFrame(rafId);
+      gsap.ticker.remove(updateTicker);
+      lenis.off("scroll", handleScroll);
       document.removeEventListener("click", onAnchorClick);
       resizeObserver.disconnect();
       lenis.destroy();
+      delete (window as any).lenis;
     };
   }, []);
 

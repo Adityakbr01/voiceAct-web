@@ -2,10 +2,13 @@
 
 import { Component, useState, useEffect, type ReactNode } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { company } from "@/modules/company-data";
 import { site } from "@/modules/site";
-import Grainient from "@/components/grainient";
-import Ballpit from "@/components/ui/ballpit";
+
+const Grainient = dynamic(() => import("@/components/grainient"), { ssr: false });
+const Ballpit = dynamic(() => import("@/components/ui/ballpit"), { ssr: false });
+
 
 interface SafeBallpitProps {
   children?: ReactNode;

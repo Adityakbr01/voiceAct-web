@@ -61,7 +61,10 @@ export function Hero() {
           </motion.svg>
           <span className="block">{hero.title[0]}</span>
           <span className="block text-muted-foreground/80">
-            designed to <Highlighter action="underline" color="#FF9800">convert,</Highlighter>
+            designed to
+            <Highlighter action="underline" color="#FF9800">
+              convert,
+            </Highlighter>
           </span>{" "}
           <span className="block font-display italic tracking-tight text-primary">
             {hero.title[2]}
