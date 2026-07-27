@@ -120,43 +120,43 @@ class ThreeApp {
 
   initObservers() {
     if (!(this.options.size instanceof Object)) {
-      window.addEventListener("resize", this.onWindowResize.bind(this));
+      window.addEventListener("resize", this.onWindowResize);
       if (this.options.size === "parent" && this.canvas.parentNode) {
-        this.resizeObserver = new ResizeObserver(this.onWindowResize.bind(this));
+        this.resizeObserver = new ResizeObserver(this.onWindowResize);
         this.resizeObserver.observe(this.canvas.parentNode as Element);
       }
     }
-    this.intersectionObserver = new IntersectionObserver(this.onIntersection.bind(this), {
+    this.intersectionObserver = new IntersectionObserver(this.onIntersection, {
       root: null,
       rootMargin: "0px",
       threshold: 0,
     });
     this.intersectionObserver.observe(this.canvas);
-    document.addEventListener("visibilitychange", this.onVisibilityChange.bind(this));
+    document.addEventListener("visibilitychange", this.onVisibilityChange);
   }
 
   removeObservers() {
-    window.removeEventListener("resize", this.onWindowResize.bind(this));
+    window.removeEventListener("resize", this.onWindowResize);
     this.resizeObserver?.disconnect();
     this.intersectionObserver?.disconnect();
-    document.removeEventListener("visibilitychange", this.onVisibilityChange.bind(this));
+    document.removeEventListener("visibilitychange", this.onVisibilityChange);
   }
 
-  onIntersection(entries: IntersectionObserverEntry[]) {
+  onIntersection = (entries: IntersectionObserverEntry[]) => {
     this.isIntersecting = entries[0].isIntersecting;
     this.isIntersecting ? this.startLoop() : this.stopLoop();
-  }
+  };
 
-  onVisibilityChange() {
+  onVisibilityChange = () => {
     if (this.isIntersecting) {
       document.hidden ? this.stopLoop() : this.startLoop();
     }
-  }
+  };
 
-  onWindowResize() {
+  onWindowResize = () => {
     if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
-    this.resizeTimeout = setTimeout(this.resize.bind(this), 100);
-  }
+    this.resizeTimeout = setTimeout(() => this.resize(), 100);
+  };
 
   resize() {
     let width = 0, height = 0;

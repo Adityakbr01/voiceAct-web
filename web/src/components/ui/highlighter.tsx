@@ -45,7 +45,7 @@ export function Highlighter({
   useLayoutEffect(() => {
     const element = elementRef.current;
     let annotation: RoughAnnotation | null = null;
-    let resizeObserver: ResizeObserver | null = null;
+    let handleResize: (() => void) | null = null;
 
     if (shouldShow && element) {
       const annotationConfig = {
@@ -62,19 +62,18 @@ export function Highlighter({
       annotation = currentAnnotation;
       currentAnnotation.show();
 
-      resizeObserver = new ResizeObserver(() => {
+      handleResize = () => {
         currentAnnotation.hide();
         currentAnnotation.show();
-      });
+      };
 
-      resizeObserver.observe(element);
-      resizeObserver.observe(document.body);
+      window.addEventListener("resize", handleResize);
     }
 
     return () => {
       annotation?.remove();
-      if (resizeObserver) {
-        resizeObserver.disconnect();
+      if (handleResize) {
+        window.removeEventListener("resize", handleResize);
       }
     };
   }, [shouldShow, action, color, strokeWidth, animationDuration, iterations, padding, multiline]);

@@ -6,7 +6,6 @@ import { Services } from "@/modules/home/sections/services";
 import { Work } from "@/modules/home/sections/work";
 import { Process } from "@/modules/home/sections/process";
 import Stack from "@/modules/home/sections/Stack";
-import { Craft } from "@/modules/home/sections/craft";
 import { Testimonials } from "@/modules/home/sections/testimonials";
 import { Faq } from "@/modules/home/sections/faq";
 import { Cta } from "@/modules/home/sections/cta";
@@ -23,7 +22,6 @@ export default function Home() {
       <Work />
       <Process />
       <Stack />
-      <Craft />
       <Testimonials />
       <Faq />
       <Cta />
