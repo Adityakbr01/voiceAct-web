@@ -275,7 +275,7 @@ export function Footer() {
             <div className="mt-6 flex flex-wrap gap-2.5">
               {site.socials.map((s: any) => (
                 <a
-                  key={s.label}
+                  key={s.href}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"

@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { getConsent } from "@/lib/cookie-consent";
 
 export type Theme = "light" | "dark";
 
@@ -34,17 +35,22 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     applyTheme(initial);
   }, []);
 
-  const setTheme = (t: Theme) => {
+  const setTheme = useCallback((t: Theme) => {
     setThemeState(t);
     applyTheme(t);
     try {
-      window.localStorage.setItem(STORAGE_KEY, t);
+      const consent = getConsent();
+      if (consent?.preferences) {
+        window.localStorage.setItem(STORAGE_KEY, t);
+      }
     } catch {
       /* ignore */
     }
-  };
+  }, []);
 
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+  const toggleTheme = useCallback(() => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  }, [theme, setTheme]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>

@@ -5,8 +5,8 @@ import { sendSuccess } from "../../utils/response.js";
 
 const cookieOptions = {
   httpOnly: true,
-  secure: config.isProduction,
-  sameSite: "lax" as const,
+  secure: config.cookieSecure,
+  sameSite: config.cookieSameSite,
   maxAge: 7 * 24 * 60 * 60 * 1000,
   path: "/",
   ...(config.cookieDomain ? { domain: config.cookieDomain } : {}),

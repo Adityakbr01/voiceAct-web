@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useCallback, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useCallback, useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
 import "./scroll-stack.css";
 
@@ -98,8 +98,10 @@ const ScrollStack = ({
 
     isUpdatingRef.current = true;
 
-    const scrollTop = useWindowScroll ? window.scrollY : scrollerRef.current?.scrollTop ?? 0;
-    const containerHeight = useWindowScroll ? window.innerHeight : scrollerRef.current?.clientHeight ?? window.innerHeight;
+    const scrollTop = useWindowScroll ? window.scrollY : (scrollerRef.current?.scrollTop ?? 0);
+    const containerHeight = useWindowScroll
+      ? window.innerHeight
+      : (scrollerRef.current?.clientHeight ?? window.innerHeight);
 
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
@@ -210,7 +212,7 @@ const ScrollStack = ({
     const wrappers = Array.from(
       useWindowScroll
         ? document.querySelectorAll(".scroll-stack-card-wrapper")
-        : scroller.querySelectorAll(".scroll-stack-card-wrapper")
+        : scroller.querySelectorAll(".scroll-stack-card-wrapper"),
     ) as HTMLElement[];
 
     wrappersRef.current = wrappers;
@@ -289,13 +291,23 @@ const ScrollStack = ({
       transformsCache.clear();
       isUpdatingRef.current = false;
     };
-  }, [
-    itemDistance,
-    useWindowScroll,
-    measureLayout,
-    updateCardTransforms,
-    handleScroll,
-  ]);
+  }, [itemDistance, useWindowScroll, measureLayout, updateCardTransforms, handleScroll]);
+
+  // Re-measure when children are added/removed (e.g. API data loads after mount)
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    const observer = new MutationObserver(() => {
+      requestAnimationFrame(() => {
+        measureLayout();
+        updateCardTransforms();
+      });
+    });
+
+    observer.observe(scroller, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [measureLayout, updateCardTransforms]);
 
   return (
     <div

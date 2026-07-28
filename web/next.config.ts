@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   // Docker standalone output
   output: "standalone",
-  
+
   // Allow external images from project URLs
   images: {
     remotePatterns: [
@@ -15,4 +16,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig);

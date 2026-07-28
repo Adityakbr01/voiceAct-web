@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import * as Sentry from "@sentry/node";
+import { PostHog } from "posthog-node";
 import { config } from "./config/index.js";
 import { requestLogger } from "./middleware/logger.js";
 import { generalLimiter } from "./middleware/rateLimit.js";
@@ -15,7 +17,20 @@ import trackingRoutes from "./modules/tracking/tracking.routes.js";
 import adminRoutes from "./modules/admin/admin.routes.js";
 import uploadRoutes from "./modules/upload/upload.routes.js";
 
+export const posthog = new PostHog(config.posthogKey || "dummy");
+
 const app = express();
+
+app.set("trust proxy", 1);
+
+if (config.sentryDsn) {
+  Sentry.init({
+    dsn: config.sentryDsn,
+    environment: config.nodeEnv,
+    tracesSampleRate: config.isProduction ? 0.1 : 0,
+    integrations: [Sentry.expressIntegration()],
+  });
+}
 
 app.use(
   cors({
@@ -42,6 +57,7 @@ app.use("/api/tracking", trackingRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 
+if (config.sentryDsn) Sentry.setupExpressErrorHandler(app);
 app.use(errorHandler);
 
 export default app;

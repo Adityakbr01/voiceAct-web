@@ -8,6 +8,25 @@ import { captureUTMParams, trackPageView } from "@/lib/tracking";
 import { usePathname } from "next/navigation";
 import { NavBar } from "@/modules/home/components/nav-bar";
 import { Footer } from "@/components/layouts/footer";
+import { CookieConsentProvider, useCookieConsent } from "@/components/cookie-consent/provider";
+import CookieConsent from "@/components/ui/CookieConsent";
+import posthog from "posthog-js";
+import { PostHogProvider } from "posthog-js/react";
+
+function PostHogInit() {
+  const { consent } = useCookieConsent();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !process.env.NEXT_PUBLIC_POSTHOG_KEY) return;
+    if (!consent.analytics) return;
+
+    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+    });
+  }, [consent.analytics]);
+
+  return null;
+}
 
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -20,14 +39,20 @@ export function Providers({ children }: { children: ReactNode }) {
   }, [pathname]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <SmoothScrollProvider>
-          {!isAdmin && <NavBar />}
-          {children}
-          {!isAdmin && <Footer />}
-        </SmoothScrollProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <CookieConsentProvider>
+      <PostHogInit />
+      <PostHogProvider client={posthog}>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider>
+            <SmoothScrollProvider>
+              {!isAdmin && <NavBar />}
+              {children}
+              {!isAdmin && <Footer />}
+            </SmoothScrollProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </PostHogProvider>
+      <CookieConsent />
+    </CookieConsentProvider>
   );
 }
