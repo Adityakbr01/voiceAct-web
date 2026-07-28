@@ -1,14 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Hero } from "@/modules/home/sections/hero";
-import { Showcase } from "@/modules/home/sections/showcase";
-import { Services } from "@/modules/home/sections/services";
-import { Work } from "@/modules/home/sections/work";
-import { Process } from "@/modules/home/sections/process";
-import Stack from "@/modules/home/sections/Stack";
-import { Testimonials } from "@/modules/home/sections/testimonials";
-import { Faq } from "@/modules/home/sections/faq";
-import { Cta } from "@/modules/home/sections/cta";
+
+const Showcase = dynamic(() => import("@/modules/home/sections/showcase").then(m => m.Showcase));
+const Services = dynamic(() => import("@/modules/home/sections/services").then(m => m.Services));
+const Work = dynamic(() => import("@/modules/home/sections/work").then(m => m.Work));
+const Process = dynamic(() => import("@/modules/home/sections/process").then(m => m.Process));
+const Stack = dynamic(() => import("@/modules/home/sections/Stack"));
+const Testimonials = dynamic(() => import("@/modules/home/sections/testimonials").then(m => m.Testimonials));
+const Faq = dynamic(() => import("@/modules/home/sections/faq").then(m => m.Faq));
+const Cta = dynamic(() => import("@/modules/home/sections/cta").then(m => m.Cta));
 
 export default function Home() {
   return (

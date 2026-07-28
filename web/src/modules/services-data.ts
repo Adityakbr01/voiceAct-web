@@ -1,22 +1,22 @@
 import type { LucideIcon } from "lucide-react";
-import type { IconType } from "react-icons";
+import type { TablerIcon } from "@tabler/icons-react";
 import {
-  SiReact,
-  SiNextdotjs,
-  SiTypescript,
-  SiSwift,
-  SiKotlin,
-  SiNodedotjs,
-  SiPostgresql,
-  SiTrpc,
-  SiCloudflare,
-  SiStripe,
-  SiPhp,
-  SiWordpress,
-  SiShopify,
-  SiRazorpay,
-} from "react-icons/si";
-import { FaAws } from "react-icons/fa";
+  IconBrandReact as SiReact,
+  IconBrandNextjs as SiNextdotjs,
+  IconBrandTypescript as SiTypescript,
+  IconBrandSwift as SiSwift,
+  IconBrandKotlin as SiKotlin,
+  IconBrandNodejs as SiNodedotjs,
+  IconBrandCloudflare as SiCloudflare,
+  IconBrandStripe as SiStripe,
+  IconBrandPhp as SiPhp,
+  IconBrandWordpress as SiWordpress,
+  IconBrandAws as FaAws,
+  IconDatabase,
+  IconApi,
+  IconBuildingStore,
+  IconCreditCard,
+} from "@tabler/icons-react";
 import { Globe, Smartphone, Palette, Rocket, Server, Wrench, Users } from "lucide-react";
 
 export interface Service {
@@ -218,7 +218,7 @@ export const process: ProcessStep[] = [
 export interface StackItem {
   name: string;
   category: string;
-  icon: IconType;
+  icon: TablerIcon;
   color: string;
 }
 
@@ -231,14 +231,14 @@ export const stack: StackItem[] = [
   { name: "Kotlin", category: "Android", icon: SiKotlin, color: "#7F52FF" },
   { name: "Node.js", category: "Backend", icon: SiNodedotjs, color: "#5FA04E" },
   { name: "PHP", category: "Backend", icon: SiPhp, color: "#777BB4" },
-  { name: "Postgres", category: "Database", icon: SiPostgresql, color: "#4169E1" },
-  { name: "tRPC", category: "API", icon: SiTrpc, color: "#398CCB" },
+  { name: "Postgres", category: "Database", icon: IconDatabase, color: "#4169E1" },
+  { name: "tRPC", category: "API", icon: IconApi, color: "#398CCB" },
   { name: "WordPress", category: "CMS", icon: SiWordpress, color: "#21759B" },
-  { name: "Shopify", category: "E-Commerce", icon: SiShopify, color: "#96BF48" },
+  { name: "Shopify", category: "E-Commerce", icon: IconBuildingStore, color: "#96BF48" },
   { name: "AWS", category: "Cloud", icon: FaAws, color: "#FF9900" },
   { name: "Cloudflare", category: "Edge", icon: SiCloudflare, color: "#F38020" },
   { name: "Stripe", category: "Payments", icon: SiStripe, color: "#635BFF" },
-  { name: "Razorpay", category: "Payments", icon: SiRazorpay, color: "#072654" },
+  { name: "Razorpay", category: "Payments", icon: IconCreditCard, color: "#072654" },
 ];
 
 export interface Testimonial {
