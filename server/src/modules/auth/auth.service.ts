@@ -5,12 +5,12 @@ import { AppError } from "../../utils/AppError.js";
 
 export async function login(email: string, password: string) {
   const admin = await adminDao.findByEmail(email);
-  if (!admin || !(await admin.comparePassword(password))) {
+  if (!admin || !(await (admin as any).comparePassword(password))) {
     throw new AppError("Invalid email or password", 401);
   }
 
   const token = jwt.sign({ id: admin._id }, config.jwtSecret, {
-    expiresIn: config.jwtExpiresIn,
+    expiresIn: config.jwtExpiresIn as any,
   });
 
   return {

@@ -1,10 +1,13 @@
 "use client";
 
-import { Component, useState, useEffect, type ReactNode } from "react";
+import { Component, useState, useEffect, useMemo, type ReactNode } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useQuery } from "@tanstack/react-query";
 import { company } from "@/modules/company-data";
 import { site } from "@/modules/site";
+import { listServices } from "@/lib/api/cms";
+import { queryKeys } from "@/lib/api/query-keys";
 
 const Grainient = dynamic(() => import("@/components/grainient"), { ssr: false });
 const Ballpit = dynamic(() => import("@/components/ui/ballpit"), { ssr: false });
@@ -29,27 +32,71 @@ class SafeBallpit extends Component<SafeBallpitProps> {
   }
 }
 
-const footerLinks = {
+interface FooterLinkItem {
+  label: string;
+  href: string;
+  badge?: {
+    text: string;
+    color: string;
+  };
+}
+
+const staticFooterLinks: { company: FooterLinkItem[]; legal: FooterLinkItem[] } = {
   company: [
     { label: "About", href: "/about" },
     { label: "Services", href: "/#services" },
     { label: "Work", href: "/#work" },
-    { label: "Portfolio", href: "/#work" },
-    { label: "Careers", href: "/about#contact" },
+    {
+      label: "Portfolio",
+      href: "/#work",
+      badge: { text: "Soon", color: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30" },
+    },
+    {
+      label: "Careers",
+      href: "/about#contact",
+      badge: { text: "Soon", color: "bg-amber-500/15 text-amber-400 border-amber-500/30" },
+    },
   ],
-  services: company.services.map((s) => ({
-    label: s,
-    href: "/#services",
-  })),
   legal: [
     { label: "Privacy Policy", href: company.legal.privacyPolicyUrl },
     { label: "Terms & Conditions", href: company.legal.termsUrl },
     { label: "Cookie Policy", href: company.legal.cookiePolicyUrl },
+    {
+      label: "Contact",
+      href: "/contact",
+      badge: { text: "24/7", color: "bg-rose-500/15 text-rose-400 border-rose-500/30" },
+    },
   ],
 };
 
 export function Footer() {
   const [isMobile, setIsMobile] = useState(false);
+
+  // Fetch live active services from backend API
+  const { data: activeServices = [] } = useQuery({
+    queryKey: queryKeys.public.services,
+    queryFn: listServices,
+  });
+
+  const servicesList: FooterLinkItem[] = useMemo(() => {
+    if (activeServices.length > 0) {
+      return activeServices.map((s, idx) => ({
+        label: s.title,
+        href: s.slug ? `/services/${s.slug}` : "/#services",
+        badge:
+          idx === 0
+            ? { text: "Popular", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" }
+            : idx === 1
+            ? { text: "New", color: "bg-blue-500/15 text-blue-400 border-blue-500/30" }
+            : undefined,
+      }));
+    }
+    return company.services.map((s, idx) => ({
+      label: s,
+      href: "/#services",
+      badge: idx === 0 ? { text: "Popular", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" } : undefined,
+    }));
+  }, [activeServices]);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -148,13 +195,18 @@ export function Footer() {
               Company
             </div>
             <ul className="mt-4 space-y-2 text-sm">
-              {footerLinks.company.map((n) => (
+              {staticFooterLinks.company.map((n) => (
                 <li key={n.label}>
                   <Link
                     href={n.href}
-                    className="text-white/80 transition-colors hover:text-white"
+                    className="inline-flex items-center text-white/80 transition-colors hover:text-white"
                   >
-                    {n.label}
+                    <span>{n.label}</span>
+                    {n.badge && (
+                      <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${n.badge.color}`}>
+                        {n.badge.text}
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
@@ -167,13 +219,18 @@ export function Footer() {
               Services
             </div>
             <ul className="mt-4 space-y-2 text-sm">
-              {footerLinks.services.map((s) => (
+              {servicesList.map((s) => (
                 <li key={s.label}>
                   <Link
                     href={s.href}
-                    className="text-white/80 transition-colors hover:text-white"
+                    className="inline-flex items-center text-white/80 transition-colors hover:text-white"
                   >
-                    {s.label}
+                    <span>{s.label}</span>
+                    {s.badge && (
+                      <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${s.badge.color}`}>
+                        {s.badge.text}
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
@@ -186,24 +243,21 @@ export function Footer() {
               Legal
             </div>
             <ul className="mt-4 space-y-2 text-sm">
-              {footerLinks.legal.map((l) => (
-                <li key={l.href}>
+              {staticFooterLinks.legal.map((l) => (
+                <li key={l.label}>
                   <Link
                     href={l.href}
-                    className="text-white/80 transition-colors hover:text-white"
+                    className="inline-flex items-center text-white/80 transition-colors hover:text-white"
                   >
-                    {l.label}
+                    <span>{l.label}</span>
+                    {l.badge && (
+                      <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${l.badge.color}`}>
+                        {l.badge.text}
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/#contact"
-                  className="text-white/80 transition-colors hover:text-white"
-                >
-                  Contact
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -218,14 +272,21 @@ export function Footer() {
             >
               {site.email}
             </a>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {site.socials.map((s) => (
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              {site.socials.map((s: any) => (
                 <a
                   key={s.label}
                   href={s.href}
-                  className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/70 backdrop-blur-sm transition-colors hover:text-white hover:border-white/40"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-none border border-white/20 px-3 py-1 text-xs text-white/80 backdrop-blur-sm transition-colors hover:text-white hover:border-white/40"
                 >
-                  {s.label}
+                  <span>{s.label}</span>
+                  {s.badge && (
+                    <span className={`inline-flex items-center rounded-none border px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider ${s.badge.color}`}>
+                      {s.badge.text}
+                    </span>
+                  )}
                 </a>
               ))}
             </div>

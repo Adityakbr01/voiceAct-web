@@ -50,7 +50,17 @@ export const company = {
       handle: "voiceact",
       href: "https://linkedin.com/company/voiceact",
     },
-    github: { label: "GitHub", handle: "voiceact", href: "https://github.com/voiceact" },
+    github: {
+      label: "GitHub",
+      handle: "voiceAct-web",
+      href: "https://github.com/Adityakbr01/voiceAct-web",
+    },
+    developer: {
+      label: "GitHub",
+      handle: "Adityakbr01",
+      href: "https://github.com/Adityakbr01",
+      badge: { text: "Developer", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+    },
     instagram: {
       label: "Instagram",
       handle: "@voiceact.in",
@@ -61,7 +71,17 @@ export const company = {
   socialList: [
     { label: "Twitter", handle: "@voiceactin", href: "https://twitter.com/voiceactin" },
     { label: "LinkedIn", handle: "voiceact", href: "https://linkedin.com/company/voiceact" },
-    { label: "GitHub", handle: "voiceact", href: "https://github.com/voiceact" },
+    {
+      label: "GitHub",
+      handle: "voiceAct-web",
+      href: "https://github.com/Adityakbr01/voiceAct-web",
+    },
+    {
+      label: "GitHub",
+      handle: "Adityakbr01",
+      href: "https://github.com/Adityakbr01",
+      badge: { text: "Developer", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+    },
     { label: "Instagram", handle: "@voiceact.in", href: "https://instagram.com/voiceact.in" },
   ],
 
@@ -78,7 +98,7 @@ export const company = {
     tech: { label: "Tech", href: "/#stack" },
     faq: { label: "FAQ", href: "/#faq" },
     about: { label: "About", href: "/about" },
-    contact: { label: "Contact", href: "/#contact" },
+    contact: { label: "Contact", href: "/contact" },
     privacy: { label: "Privacy Policy", href: "/privacy-policy" },
     terms: { label: "Terms & Conditions", href: "/terms-and-conditions" },
     cookie: { label: "Cookie Policy", href: "/cookie-policy" },

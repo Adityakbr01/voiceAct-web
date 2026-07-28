@@ -29,17 +29,17 @@ export const cta = {
   description:
     "Free 30-minute product audit + scoped roadmap delivered within 24 hours. No sales call, no obligation — you keep the roadmap either way.",
   anchor: {
-    typical: { label: "Typical agency engagement", value: "6 months · $150k+" },
-    ours: { label: "Our sprint", value: "8 weeks · from $25k" },
+    typical: { label: "Typical agency engagement", value: "6 months · ₹150k+" },
+    ours: { label: "Our sprint", value: "8 weeks · from ₹25k" },
   },
   defaults: {
     projectType: "Mobile + Web app",
     timeline: "8 weeks",
-    budget: "$25k – $50k",
+    budget: "₹25k – ₹50k",
   },
   projectTypes: ["Mobile app", "Web app", "Mobile + Web app", "CRM / internal tool"],
   timelines: ["4 weeks", "8 weeks", "12 weeks", "Flexible"],
-  budgets: ["$10k – $25k", "$25k – $50k", "$50k – $100k", "$100k+"],
+  budgets: ["₹10k – ₹25k", "₹25k – ₹50k", "₹50k – ₹100k", "₹100k+"],
   primary: { label: "Claim my discovery slot", href: "#contact" },
   secondary: { label: "Email the studio", href: `mailto:${OWNER.email}` },
 };

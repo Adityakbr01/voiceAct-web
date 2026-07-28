@@ -1,11 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Clock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cta } from "@/modules/home-data";
 import { submitContact } from "@/lib/api/contacts";
+import { listServices } from "@/lib/api/cms";
+import { queryKeys } from "@/lib/api/query-keys";
 
 type Choice = { label: string; options: string[]; value: string };
 
@@ -49,6 +52,19 @@ function Chips({
 }
 
 export function Cta() {
+  // Fetch live active services from backend CMS
+  const { data: activeServices = [] } = useQuery({
+    queryKey: queryKeys.public.services,
+    queryFn: listServices,
+  });
+
+  const projectTypeOptions = useMemo(() => {
+    if (activeServices.length > 0) {
+      return activeServices.map((s) => s.title);
+    }
+    return cta.projectTypes;
+  }, [activeServices]);
+
   const [projectType, setProjectType] = useState(cta.defaults.projectType);
   const [timeline, setTimeline] = useState(cta.defaults.timeline);
   const [budget, setBudget] = useState(cta.defaults.budget);
@@ -57,19 +73,49 @@ export function Cta() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [countdown, setCountdown] = useState(10);
+
+  // Auto-reset form after 10 seconds of successful submission
+  useEffect(() => {
+    if (!submitted) return;
+    setCountdown(10);
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setSubmitted(false);
+          setName("");
+          setEmail("");
+          setProjectType(projectTypeOptions[0] || cta.defaults.projectType);
+          setTimeline(cta.defaults.timeline);
+          setBudget(cta.defaults.budget);
+          return 10;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [submitted, projectTypeOptions]);
+
+  // Sync default selection when live active services load
+  useEffect(() => {
+    if (projectTypeOptions.length > 0 && !projectTypeOptions.includes(projectType)) {
+      setProjectType(projectTypeOptions[0]);
+    }
+  }, [projectTypeOptions, projectType]);
 
   const choices: Choice[] = [
-    { label: "Project", options: cta.projectTypes, value: projectType },
+    { label: "Project Service", options: projectTypeOptions, value: projectType },
     { label: "Timeline", options: cta.timelines, value: timeline },
     { label: "Budget", options: cta.budgets, value: budget },
   ];
 
   // Goal Gradient: seed progress with the pre-filled preferences.
-  // Never show 0%.
   const progress = useMemo(() => {
     const steps = [
       true, // Preferences captured (defaults)
-      projectType !== cta.defaults.projectType ||
+      projectType !== (projectTypeOptions[0] || cta.defaults.projectType) ||
         timeline !== cta.defaults.timeline ||
         budget !== cta.defaults.budget,
       name.trim().length > 1,
@@ -81,7 +127,7 @@ export function Cta() {
       total: steps.length,
       pct: Math.max(25, Math.round((done / steps.length) * 100)),
     };
-  }, [projectType, timeline, budget, name, email]);
+  }, [projectType, projectTypeOptions, timeline, budget, name, email]);
 
   const canSubmit = name.trim().length > 1 && /.+@.+\..+/.test(email);
 
@@ -91,12 +137,13 @@ export function Cta() {
     setSubmitError("");
     setSubmitting(true);
     try {
+      const cleanBudget = budget.replace(/[₹$]/g, "").trim();
       const message = [
-        "Discovery slot request",
+        "Discovery slot request submitted via homepage CTA",
         "",
-        `Project: ${projectType}`,
-        `Timeline: ${timeline}`,
-        `Budget: ${budget}`,
+        `Selected Service: ${projectType}`,
+        `Target Timeline: ${timeline}`,
+        `Estimated Budget: ${cleanBudget}`,
       ].join("\n");
       await submitContact({
         name: name.trim(),
@@ -178,12 +225,60 @@ export function Cta() {
           {/* Right — pre-filled form (Smart Defaults + IKEA + Goal Gradient) */}
           <div className="glass rounded-2xl border border-border/60 bg-card/40 p-6 md:p-7">
             {submitted ? (
-              <div className="space-y-3 py-8 text-center">
-                <p className="text-lg font-semibold text-foreground">You&apos;re on the list.</p>
-                <p className="text-sm text-muted-foreground">
-                  We&apos;ll send your scoped roadmap within 24 hours.
-                </p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="flex flex-col items-center justify-center space-y-6 py-8 px-4 text-center"
+              >
+                {/* Animated Green Checkmark Badge SVG */}
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full bg-emerald-500/20 blur-xl animate-pulse" />
+                  <div className="relative grid size-16 place-items-center rounded-full border-2 border-emerald-500/40 bg-emerald-500/10 text-emerald-400 shadow-lg">
+                    <svg className="w-8 h-8 stroke-emerald-400 fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold tracking-tight text-foreground">
+                    You&apos;re on the list.
+                  </h3>
+                  <p className="text-sm md:text-base text-muted-foreground max-w-sm mx-auto leading-relaxed">
+                    We&apos;ll send your scoped roadmap within 24 hours.
+                  </p>
+                </div>
+
+                {/* Perk Badges */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 w-full pt-2">
+                  <div className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-border/50 bg-background/50 text-[11px] font-semibold text-foreground">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" /> Audit Locked
+                  </div>
+                  <div className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-border/50 bg-background/50 text-[11px] font-semibold text-foreground">
+                    <Sparkles className="w-3 h-3 text-emerald-400" /> Roadmap 24h
+                  </div>
+                  <div className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-border/50 bg-background/50 text-[11px] font-semibold text-foreground">
+                    <Clock className="w-3 h-3 text-blue-400" /> No Obligation
+                  </div>
+                </div>
+
+                {/* 10-Second Reset Progress Bar */}
+                <div className="w-full pt-4 space-y-2">
+                  <div className="flex items-center justify-between text-[11px] font-medium text-muted-foreground">
+                    <span>Auto-resetting form</span>
+                    <span className="font-mono text-foreground font-bold">{countdown}s</span>
+                  </div>
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-border/60">
+                    <motion.div
+                      className="h-full rounded-full bg-emerald-500"
+                      initial={{ width: "100%" }}
+                      animate={{ width: `${(countdown / 10) * 100}%` }}
+                      transition={{ duration: 0.9, ease: "linear" }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
             ) : (
             <>
             {/* Goal gradient */}

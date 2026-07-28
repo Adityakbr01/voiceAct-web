@@ -1,5 +1,14 @@
 import type { TrafficSourceRow } from "@/lib/types/cms";
-import type { TrafficSourceItem } from "@/constants/analytics-mock-data";
+
+export interface TrafficSourceItem {
+  name: string;
+  visitors: number;
+  conversions: number;
+  revenue: number;
+  percentage: number;
+  trend: number;
+  color: string;
+}
 
 const SOURCE_COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4", "#64748b"];
 

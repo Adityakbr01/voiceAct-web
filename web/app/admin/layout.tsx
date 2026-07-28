@@ -7,13 +7,8 @@ import { usePathname } from "next/navigation";
 function AdminLayoutInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isLogin = pathname === "/admin/login";
-  const isAnalytics = pathname?.startsWith("/admin/analytics");
 
   if (isLogin) return <>{children}</>;
-
-  if (isAnalytics) {
-    return <AdminAuthGate>{children}</AdminAuthGate>;
-  }
 
   return (
     <AdminAuthGate>

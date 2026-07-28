@@ -22,7 +22,7 @@ export async function list(req: Request, res: Response) {
 }
 
 export async function getBySlug(req: Request, res: Response) {
-  const project = await projectService.getBySlug(req.params.slug);
+  const project = await projectService.getBySlug(req.params.slug as string);
   sendSuccess(res, project);
 }
 
@@ -32,11 +32,11 @@ export async function create(req: Request, res: Response) {
 }
 
 export async function update(req: Request, res: Response) {
-  const project = await projectService.update(req.params.id, req.body);
+  const project = await projectService.update(req.params.id as string, req.body);
   sendSuccess(res, project);
 }
 
 export async function remove(req: Request, res: Response) {
-  await projectService.remove(req.params.id);
+  await projectService.remove(req.params.id as string);
   sendSuccess(res, null, "Project deleted");
 }

@@ -1,10 +1,10 @@
-import { AnalyticsDashboardView } from "@/modules/dashboard";
+import { redirect } from "next/navigation";
 
-export default async function AnalyticsTabSubroutePage({
+export default async function AnalyticsTabRedirectPage({
   params,
 }: {
   params: Promise<{ tab: string }>;
 }) {
   const { tab } = await params;
-  return <AnalyticsDashboardView activeTabRoute={tab} />;
+  redirect(`/admin/${tab}`);
 }

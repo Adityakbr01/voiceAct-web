@@ -13,6 +13,7 @@ import serviceRoutes from "./modules/service/service.routes.js";
 import projectRoutes from "./modules/project/project.routes.js";
 import trackingRoutes from "./modules/tracking/tracking.routes.js";
 import adminRoutes from "./modules/admin/admin.routes.js";
+import uploadRoutes from "./modules/upload/upload.routes.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json({ strict: false }));
+app.use("/uploads", express.static(config.uploadDir));
 app.use(requestLogger);
 app.use(generalLimiter);
 app.use(trackingMiddleware);
@@ -38,6 +40,7 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/tracking", trackingRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.use(errorHandler);
 

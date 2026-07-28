@@ -13,7 +13,7 @@ export async function listAdmin(_req: Request, res: Response) {
 }
 
 export async function getBySlug(req: Request, res: Response) {
-  const service = await serviceService.getBySlug(req.params.slug);
+  const service = await serviceService.getBySlug(req.params.slug as string);
   sendSuccess(res, service);
 }
 
@@ -23,7 +23,7 @@ export async function create(req: Request, res: Response) {
 }
 
 export async function update(req: Request, res: Response) {
-  const service = await serviceService.update(req.params.id, req.body);
+  const service = await serviceService.update(req.params.id as string, req.body);
   sendSuccess(res, service);
 }
 
@@ -33,6 +33,6 @@ export async function reorder(req: Request, res: Response) {
 }
 
 export async function remove(req: Request, res: Response) {
-  await serviceService.remove(req.params.id);
+  await serviceService.remove(req.params.id as string);
   sendSuccess(res, null, "Service deleted");
 }

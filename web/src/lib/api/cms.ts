@@ -66,3 +66,24 @@ export async function updateProject(id: string, payload: Partial<ProjectRecord>)
 export async function deleteProject(id: string) {
   await api.delete(`/projects/${id}`);
 }
+
+export async function uploadImage(file: File) {
+  const reader = new FileReader();
+  const base64Data = await new Promise<string>((resolve, reject) => {
+    reader.onload = () => {
+      const res = reader.result as string;
+      const base64 = res.split(",")[1];
+      resolve(base64);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  const { data } = await api.post<ApiSuccess<{ url: string; filename: string }>>("/upload/image", {
+    filename: file.name,
+    mimeType: file.type,
+    data: base64Data,
+  });
+
+  return data.data;
+}

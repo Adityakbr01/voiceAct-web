@@ -1,5 +1,5 @@
-import { AnalyticsDashboardView } from "@/modules/dashboard";
+import { redirect } from "next/navigation";
 
-export default function MarketingAnalyticsOverviewPage() {
-  return <AnalyticsDashboardView activeTabRoute="overview" />;
+export default function AnalyticsRedirectPage() {
+  redirect("/admin/overview");
 }

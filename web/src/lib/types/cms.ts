@@ -75,6 +75,9 @@ export interface DashboardStats {
     devices: { _id: string; count: number }[];
     browsers: { _id: string; count: number }[];
     countries: { _id: string; count: number }[];
+    timeSeries?: { _id: string; count: number }[];
+    realtime?: { activeSessions: number };
+    funnel?: { step: string; count: number; percentage: number }[];
   };
 }
 

@@ -20,7 +20,7 @@ export async function list(req: Request, res: Response) {
 }
 
 export async function getById(req: Request, res: Response) {
-  const contact = await contactService.getContactById(req.params.id);
+  const contact = await contactService.getContactById(req.params.id as string);
   sendSuccess(res, contact);
 }
 
@@ -50,6 +50,6 @@ export async function exportCsv(req: Request, res: Response) {
 }
 
 export async function updateStatus(req: Request, res: Response) {
-  const contact = await contactService.updateContactStatus(req.params.id, req.body.status);
+  const contact = await contactService.updateContactStatus(req.params.id as string, req.body.status);
   sendSuccess(res, contact);
 }

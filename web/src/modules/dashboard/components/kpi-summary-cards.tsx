@@ -2,20 +2,20 @@
 
 import React, { useRef } from "react";
 import { Zap, TrendingUp, TrendingDown } from "lucide-react";
-import { MOCK_KPI_CARDS } from "@/constants/analytics-mock-data";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(useGSAP);
 }
-
 interface KPISummaryCardsProps {
   themeMode?: "dark" | "light";
   liveMetrics?: {
     visitors: number;
     sessions: number;
     inquiries: number;
+    services?: number;
+    projects?: number;
   };
 }
 
@@ -60,56 +60,69 @@ export function KPISummaryCards({ themeMode = "dark", liveMetrics }: KPISummaryC
     { scope: sectionRef }
   );
 
-  const liveCards = liveMetrics
-    ? [
-        {
-          id: "live-visitors",
-          title: "Unique Visitors",
-          value: liveMetrics.visitors.toLocaleString(),
-          numericValue: liveMetrics.visitors,
-          change: 0,
-          isPositive: true,
-          periodLabel: "Live",
-          sparkline: [liveMetrics.visitors, liveMetrics.visitors],
-          category: "traffic" as const,
-        },
-        {
-          id: "live-sessions",
-          title: "Sessions",
-          value: liveMetrics.sessions.toLocaleString(),
-          numericValue: liveMetrics.sessions,
-          change: 0,
-          isPositive: true,
-          periodLabel: "Live",
-          sparkline: [liveMetrics.sessions, liveMetrics.sessions],
-          category: "traffic" as const,
-        },
-        {
-          id: "live-inquiries",
-          title: "Contact Inquiries",
-          value: liveMetrics.inquiries.toLocaleString(),
-          numericValue: liveMetrics.inquiries,
-          change: 0,
-          isPositive: true,
-          periodLabel: "Live",
-          sparkline: [liveMetrics.inquiries, liveMetrics.inquiries],
-          category: "lead" as const,
-        },
-      ]
-    : [];
-
-  const kpiCards = [...liveCards, ...MOCK_KPI_CARDS];
+  const kpiCards = [
+    {
+      id: "live-visitors",
+      title: "Unique Visitors",
+      value: (liveMetrics?.visitors ?? 0).toLocaleString(),
+      numericValue: liveMetrics?.visitors ?? 0,
+      periodLabel: "Live",
+      badgeColor: isDark ? "bg-blue-500/10 text-blue-400 border-blue-500/30" : "bg-blue-50 text-blue-700 border-blue-200",
+      strokeColor: "#3b82f6",
+      sparkline: [liveMetrics?.visitors ?? 0, liveMetrics?.visitors ?? 0],
+    },
+    {
+      id: "live-sessions",
+      title: "Total Sessions",
+      value: (liveMetrics?.sessions ?? 0).toLocaleString(),
+      numericValue: liveMetrics?.sessions ?? 0,
+      periodLabel: "Live",
+      badgeColor: isDark ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" : "bg-emerald-50 text-emerald-700 border-emerald-200",
+      strokeColor: "#10b981",
+      sparkline: [liveMetrics?.sessions ?? 0, liveMetrics?.sessions ?? 0],
+    },
+    {
+      id: "live-inquiries",
+      title: "Contact Inquiries",
+      value: (liveMetrics?.inquiries ?? 0).toLocaleString(),
+      numericValue: liveMetrics?.inquiries ?? 0,
+      periodLabel: "Live",
+      badgeColor: isDark ? "bg-amber-500/10 text-amber-400 border-amber-500/30" : "bg-amber-50 text-amber-700 border-amber-200",
+      strokeColor: "#f59e0b",
+      sparkline: [liveMetrics?.inquiries ?? 0, liveMetrics?.inquiries ?? 0],
+    },
+    {
+      id: "live-projects",
+      title: "Portfolio Projects",
+      value: (liveMetrics?.projects ?? 0).toLocaleString(),
+      numericValue: liveMetrics?.projects ?? 0,
+      periodLabel: "Live",
+      badgeColor: isDark ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" : "bg-cyan-50 text-cyan-700 border-cyan-200",
+      strokeColor: "#06b6d4",
+      sparkline: [liveMetrics?.projects ?? 0, liveMetrics?.projects ?? 0],
+    },
+    {
+      id: "live-services",
+      title: "Active Services",
+      value: (liveMetrics?.services ?? 0).toLocaleString(),
+      numericValue: liveMetrics?.services ?? 0,
+      periodLabel: "Live",
+      badgeColor: isDark ? "bg-rose-500/10 text-rose-400 border-rose-500/30" : "bg-rose-50 text-rose-700 border-rose-200",
+      strokeColor: "#f43f5e",
+      sparkline: [liveMetrics?.services ?? 0, liveMetrics?.services ?? 0],
+    },
+  ];
 
   return (
-    <section ref={sectionRef} className="space-y-4 font-['Space_Grotesk',sans-serif]">
+    <section ref={sectionRef} className="space-y-4 font-sans">
       <div className="flex items-center justify-between">
-        <h2 className={`text-lg font-extrabold tracking-tight flex items-center gap-2 ${isDark ? "text-[#F4F2F2]" : "text-[#1D2128]"}`}>
-          <Zap className="w-5 h-5 text-[#d6f14a]" /> Key Performance Indicators (KPIs)
+        <h2 className={`text-lg font-bold tracking-tight flex items-center gap-2 ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>
+          <Zap className="w-5 h-5 text-emerald-500" /> Key Performance Indicators (KPIs)
         </h2>
-        <span className={`text-xs font-medium ${isDark ? "text-slate-400" : "text-slate-500"}`}>13 metrics tracked</span>
+        <span className={`text-xs font-semibold ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>{kpiCards.length} metrics live</span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
         {kpiCards.map((kpi) => {
           const maxSpark = Math.max(...kpi.sparkline);
           const minSpark = Math.min(...kpi.sparkline);
@@ -118,39 +131,31 @@ export function KPISummaryCards({ themeMode = "dark", liveMetrics }: KPISummaryC
           return (
             <div
               key={kpi.id}
-              className={`kpi-card-item group relative p-5 rounded-2xl transition-all duration-300 flex flex-col justify-between ${
+              className={`kpi-card-item group relative p-6 rounded-none transition-all duration-300 flex flex-col justify-between border ${
                 isDark
-                  ? "bg-[#15181E] hover:bg-[#181C22]"
-                  : "bg-white hover:bg-slate-50"
+                  ? "bg-[#0a0a0a] border-[#1f1f1f] hover:bg-[#111111]"
+                  : "bg-white border-slate-200 hover:bg-slate-50"
               }`}
             >
               <div>
-                <div className="flex items-center justify-between">
-                  <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                <div className="flex items-center justify-between gap-2">
+                  <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>
                     {kpi.title}
                   </span>
-                  <span
-                    className={`inline-flex items-center gap-1 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full ${
-                      kpi.isPositive
-                        ? "bg-emerald-500/10 text-emerald-500"
-                        : "bg-rose-500/10 text-rose-500"
-                    }`}
-                  >
-                    {kpi.isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                    {kpi.change > 0 ? `+${kpi.change}%` : `${kpi.change}%`}
+                  <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-none border ${kpi.badgeColor}`}>
+                    {kpi.periodLabel}
                   </span>
                 </div>
 
-                <div className="mt-3 flex items-baseline justify-between">
-                  <span className={`text-2xl md:text-3xl font-extrabold tracking-tight font-mono ${isDark ? "text-[#F4F2F2]" : "text-[#1D2128]"}`}>
+                <div className="mt-4 flex items-baseline justify-between">
+                  <span className={`text-3xl font-extrabold tracking-tight font-mono ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>
                     {kpi.value}
                   </span>
-                  <span className={`text-[10px] font-medium ${isDark ? "text-slate-400" : "text-slate-500"}`}>{kpi.periodLabel}</span>
                 </div>
               </div>
 
               {/* Enhanced SVG Sparkline */}
-              <div className="mt-4 pt-3 flex items-center justify-between">
+              <div className={`mt-5 pt-3.5 flex items-center justify-between border-t ${isDark ? "border-[#1f1f1f]" : "border-slate-100"}`}>
                 <div className="w-28 h-7">
                   <svg className="w-full h-full overflow-visible" viewBox="0 0 100 25">
                     <path
@@ -162,14 +167,14 @@ export function KPISummaryCards({ themeMode = "dark", liveMetrics }: KPISummaryC
                         )
                         .join(" ")}`}
                       fill="none"
-                      stroke={kpi.isPositive ? "#10B981" : "#EF4444"}
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                      stroke={kpi.strokeColor}
+                      strokeWidth="2.5"
+                      strokeLinecap="square"
+                      strokeLinejoin="miter"
                     />
                   </svg>
                 </div>
-                <span className={`text-[10px] font-mono font-medium ${isDark ? "text-slate-400" : "text-slate-500"}`}>Trend</span>
+                <span className={`text-[10px] font-mono font-bold ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>Live</span>
               </div>
             </div>
           );

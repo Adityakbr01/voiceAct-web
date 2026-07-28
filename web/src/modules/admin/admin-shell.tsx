@@ -15,19 +15,21 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className={`min-h-screen font-['Space_Grotesk',sans-serif] ${
-        isDark ? "bg-[#0F1115] text-slate-200" : "bg-slate-50 text-slate-900"
+      className={`min-h-screen font-sans ${
+        isDark ? "bg-[#000000] text-[#ededed]" : "bg-slate-50 text-slate-900"
       }`}
     >
-      <DashboardSidebar
-        themeMode={theme}
-        onToggleTheme={toggleTheme}
-        isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-        adminName={admin?.name}
-        onLogout={logout}
-        activePath={pathname ?? ""}
-      />
+      <React.Suspense fallback={<div className="w-64 h-screen bg-[#0a0a0a]" />}>
+        <DashboardSidebar
+          themeMode={theme}
+          onToggleTheme={toggleTheme}
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+          adminName={admin?.name}
+          onLogout={logout}
+          activePath={pathname ?? ""}
+        />
+      </React.Suspense>
       <main
         className={`transition-all duration-300 ${isCollapsed ? "ml-20" : "ml-64"} min-h-screen p-6 md:p-8`}
       >

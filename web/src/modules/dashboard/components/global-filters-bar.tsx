@@ -1,13 +1,18 @@
 "use client";
 
 import React from "react";
-import {
-  FILTER_DATE_RANGES,
-  FILTER_TRAFFIC_SOURCES,
-  FILTER_COUNTRIES,
-  FILTER_DEVICES,
-} from "@/constants/analytics-mock-data";
 import { Filter } from "lucide-react";
+
+const FILTER_DATE_RANGES = [
+  { label: "24 Hours", value: "24h" },
+  { label: "7 Days", value: "7d" },
+  { label: "30 Days", value: "30d" },
+  { label: "90 Days", value: "90d" },
+];
+
+const FILTER_TRAFFIC_SOURCES = ["All Sources", "Direct", "Organic Search", "Paid Ads", "Social", "Referral"];
+const FILTER_COUNTRIES = ["All Countries", "United States", "India", "United Kingdom", "Germany", "Canada"];
+const FILTER_DEVICES = ["All Devices", "Desktop", "Mobile", "Tablet"];
 
 interface GlobalFiltersBarProps {
   dateRange: string;
@@ -35,22 +40,24 @@ export function GlobalFiltersBar({
   const isDark = themeMode === "dark";
 
   return (
-    <section className={`p-4 rounded-2xl backdrop-blur-xl flex flex-wrap items-center gap-4 justify-between font-['Space_Grotesk',sans-serif] ${
-      isDark ? "bg-[#15181E]/90" : "bg-white"
+    <section className={`p-4 rounded-none border flex flex-wrap items-center gap-4 justify-between font-sans ${
+      isDark ? "bg-[#0a0a0a] border-[#1f1f1f]" : "bg-white border-slate-200"
     }`}>
       <div className="flex flex-wrap items-center gap-2">
-        <span className={`text-xs font-semibold flex items-center gap-1.5 mr-2 ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-          <Filter className="w-3.5 h-3.5 text-lime-500" /> Date Range:
+        <span className={`text-xs font-semibold flex items-center gap-1.5 mr-2 ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>
+          <Filter className="w-3.5 h-3.5 text-white" /> Date Range:
         </span>
         {FILTER_DATE_RANGES.map((item) => (
           <button
             key={item.value}
             onClick={() => setDateRange(item.value)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 ease-out cursor-pointer hover:scale-105 active:scale-95 ${
+            className={`px-3 py-1.5 rounded-none text-xs font-bold transition-all duration-200 cursor-pointer ${
               dateRange === item.value
-                ? "bg-[#d6f14a] text-slate-950"
+                ? isDark
+                  ? "bg-white text-black"
+                  : "bg-black text-white"
                 : isDark
-                ? "bg-[#212630] hover:bg-slate-700 text-[#F4F2F2]"
+                ? "bg-[#111111] border border-[#1f1f1f] hover:bg-[#1f1f1f] text-[#ededed]"
                 : "bg-slate-100 hover:bg-slate-200 text-slate-800"
             }`}
           >
@@ -64,10 +71,10 @@ export function GlobalFiltersBar({
         <select
           value={selectedSource}
           onChange={(e) => setSelectedSource(e.target.value)}
-          className={`text-xs font-medium px-3 py-2 rounded-xl focus:outline-none cursor-pointer transition-all duration-200 ${
+          className={`text-xs font-medium px-3 py-2 rounded-none focus:outline-none cursor-pointer border transition-all duration-200 ${
             isDark
-              ? "bg-[#212630] text-[#F4F2F2]"
-              : "bg-slate-100 text-slate-800"
+              ? "bg-[#111111] border-[#1f1f1f] text-[#ededed]"
+              : "bg-slate-100 border-slate-200 text-slate-800"
           }`}
         >
           {FILTER_TRAFFIC_SOURCES.map((src) => (
@@ -80,10 +87,10 @@ export function GlobalFiltersBar({
         <select
           value={selectedCountry}
           onChange={(e) => setSelectedCountry(e.target.value)}
-          className={`text-xs font-medium px-3 py-2 rounded-xl focus:outline-none cursor-pointer transition-all duration-200 ${
+          className={`text-xs font-medium px-3 py-2 rounded-none focus:outline-none cursor-pointer border transition-all duration-200 ${
             isDark
-              ? "bg-[#212630] text-[#F4F2F2]"
-              : "bg-slate-100 text-slate-800"
+              ? "bg-[#111111] border-[#1f1f1f] text-[#ededed]"
+              : "bg-slate-100 border-slate-200 text-slate-800"
           }`}
         >
           {FILTER_COUNTRIES.map((cnt) => (
@@ -96,10 +103,10 @@ export function GlobalFiltersBar({
         <select
           value={selectedDevice}
           onChange={(e) => setSelectedDevice(e.target.value)}
-          className={`text-xs font-medium px-3 py-2 rounded-xl focus:outline-none cursor-pointer transition-all duration-200 ${
+          className={`text-xs font-medium px-3 py-2 rounded-none focus:outline-none cursor-pointer border transition-all duration-200 ${
             isDark
-              ? "bg-[#212630] text-[#F4F2F2]"
-              : "bg-slate-100 text-slate-800"
+              ? "bg-[#111111] border-[#1f1f1f] text-[#ededed]"
+              : "bg-slate-100 border-slate-200 text-slate-800"
           }`}
         >
           {FILTER_DEVICES.map((dev) => (
