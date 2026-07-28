@@ -38,7 +38,7 @@ export function Hero() {
             initial={{ opacity: 0, pathLength: 0 }}
             animate={{ opacity: 0.5, pathLength: 1 }}
             transition={{ duration: 1.2, delay: 1.3, ease: "easeOut" }}
-            className="pointer-events-none absolute -left-20 size-28 -rotate-36 brightness-0 invert max-md:hidden"
+            className="pointer-events-none absolute -left-20 size-28 -rotate-36 text-foreground max-md:hidden"
           >
             <motion.path
               d="M55.15 15.87C51.38 15.07 47.33 14.86 43.52 15.56C35.03 17.12 28.45 22.06 24.24 29.58C20.54 36.18 18.63 44.15 18.75 51.71C18.78 53.5 19.17 55.49 19.83 57.11"

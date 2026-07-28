@@ -2,10 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useQuery } from "@tanstack/react-query";
-import { showcaseProjects } from "@/modules/services-data";
 import { listProjects } from "@/lib/api/cms";
 import { queryKeys } from "@/lib/api/query-keys";
-import type { ShowcaseProject } from "@/modules/services-data";
 
 const CircularGallery = dynamic(() => import("@/components/ui/circular-gallery"), { ssr: false });
 
@@ -16,14 +14,15 @@ export function Showcase() {
     staleTime: 60_000,
   });
 
-  // Map API projects to showcase format — use project.image if available, else fallback to static
-  const showcaseItems: ShowcaseProject[] =
-    apiProjects && apiProjects.length > 0
-      ? apiProjects.map((p, i) => ({
-          image: p.image ?? showcaseProjects[i % showcaseProjects.length]?.image ?? "",
-          text: p.title ?? p.client ?? "Project",
-        }))
-      : showcaseProjects;
+  const showcaseItems =
+    apiProjects
+      ?.filter((p) => p.image)
+      .map((p) => ({
+        image: p.image!,
+        text: p.title ?? p.client ?? "Project",
+      })) ?? [];
+
+  if (showcaseItems.length === 0) return null;
 
   return (
     <section id="showcase" className="relative overflow-hidden bg-background py-20">

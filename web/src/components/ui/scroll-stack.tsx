@@ -72,10 +72,21 @@ const ScrollStack = ({
   }, []);
 
   const measureLayout = useCallback(() => {
-    if (!wrappersRef.current.length) return;
     const isWin = useWindowScroll;
 
-    wrapperOffsetsRef.current = wrappersRef.current.map((w) => {
+    // Re-query wrappers on every measure to handle async data loading
+    const wrappers = isWin
+      ? (Array.from(document.querySelectorAll(".scroll-stack-card-wrapper")) as HTMLElement[])
+      : (Array.from(
+          scrollerRef.current?.querySelectorAll(".scroll-stack-card-wrapper") ?? [],
+        ) as HTMLElement[]);
+
+    if (!wrappers.length) return;
+
+    wrappersRef.current = wrappers;
+    cardsRef.current = wrappers.map((w) => w.querySelector(".scroll-stack-card") as HTMLElement);
+
+    wrapperOffsetsRef.current = wrappers.map((w) => {
       if (isWin) {
         return w.getBoundingClientRect().top + window.scrollY;
       }
@@ -209,15 +220,9 @@ const ScrollStack = ({
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
-    const wrappers = Array.from(
-      useWindowScroll
-        ? document.querySelectorAll(".scroll-stack-card-wrapper")
-        : scroller.querySelectorAll(".scroll-stack-card-wrapper"),
-    ) as HTMLElement[];
+    measureLayout();
 
-    wrappersRef.current = wrappers;
-    cardsRef.current = wrappers.map((w) => w.querySelector(".scroll-stack-card") as HTMLElement);
-
+    const wrappers = wrappersRef.current;
     const transformsCache = lastTransformsRef.current;
 
     wrappers.forEach((wrapper, i) => {
@@ -299,10 +304,8 @@ const ScrollStack = ({
     if (!scroller) return;
 
     const observer = new MutationObserver(() => {
-      requestAnimationFrame(() => {
-        measureLayout();
-        updateCardTransforms();
-      });
+      measureLayout();
+      updateCardTransforms();
     });
 
     observer.observe(scroller, { childList: true, subtree: true });
