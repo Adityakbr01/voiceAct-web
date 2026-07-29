@@ -19,6 +19,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME:-adityakbr}/voiceact-server:latest
     container_name: voiceact-server
     restart: unless-stopped
     environment:
@@ -67,6 +68,7 @@ services:
         SENTRY_AUTH_TOKEN: ${SENTRY_AUTH_TOKEN:-}
         SENTRY_ORG: ${SENTRY_ORG:-voice-act-solution}
         SENTRY_PROJECT: ${SENTRY_PROJECT:-javascript-nextjs}
+    image: ${DOCKERHUB_USERNAME:-adityakbr}/voiceact-web:latest
     container_name: voiceact-web
     restart: unless-stopped
     environment:

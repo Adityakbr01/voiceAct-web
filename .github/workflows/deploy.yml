@@ -1,12 +1,50 @@
-name: Continuous Deployment
+name: Docker Hub Build & VPS Deployment
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
+  # ─── Job 1: Build Docker Images & Push to Docker Hub ───────────────────────
+  build-and-push:
+    name: Build & Push to Docker Hub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push Server Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          file: ./server/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/voiceact-server:latest
+
+      - name: Build and Push Web Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./web
+          file: ./web/Dockerfile
+          push: true
+          build-args: |
+            NEXT_PUBLIC_API_URL=https://voiceact.tech/api
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/voiceact-web:latest
+
+  # ─── Job 2: Pull Latest Images & Deploy on VPS ─────────────────────────────
   deploy:
-    name: Build & Deploy on VPS
+    name: Deploy to VPS
+    needs: build-and-push
     runs-on: self-hosted
 
     steps:
@@ -15,8 +53,17 @@ jobs:
         with:
           clean: false
 
-      - name: Deploy Docker Stack
+      - name: Log in to Docker Hub on VPS
         run: |
-          docker compose build
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Deploy Latest Container Stack
+        run: |
+          # Pull latest pre-built images from Docker Hub
+          docker compose pull
+
+          # Replace running containers with latest images
           docker compose up -d --remove-orphans
-          docker image prune -f
+
+          # Clean up old unused images
+          docker image prune -af
