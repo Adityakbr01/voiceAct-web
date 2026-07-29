@@ -112,19 +112,25 @@ See **[TESTING-BUN-GUIDE.md](docs/TESTING-BUN-GUIDE.md)** for detailed testing i
 - ✅ Rate limiting & security
 - ✅ Health checks
 
-## 🐳 Docker Deployment
+## 🐳 Multi-Tenant VPS Deployment
 
-```bash
-# Configure environment
-cp server/.env.example .env
-# Edit .env with production values
+This project is configured to run on a shared VPS hosting multiple independent projects. 
+The GitHub Actions runner executes workflows but does **not** store the application code in its `_work` directory. Instead, the application lives cleanly in `~/apps/voiceAct-web`.
 
-# Start all services
-docker-compose up -d
+### Architecture
+- **Host Nginx**: The Ubuntu VPS runs a Host Nginx instance handling SSL, HTTP/2, and reverse proxying for all projects.
+- **Docker Compose**: Used purely for application services (`web`, `server`, `mongo`), never binding to ports 80/443 directly.
+- **Environment**: Configured via a single `.env` file loaded directly into the containers.
 
-# Seed database
-docker-compose exec server bun run src/seed.ts
-```
+### Deployment Flow
+1. Code pushed to `master` triggers GitHub Actions.
+2. The pipeline builds new images and pushes them to Docker Hub.
+3. The VPS self-hosted runner syncs the code to `~/apps/voiceAct-web`, pulls the new images, and restarts the containers automatically.
+
+### Manual Setup on VPS (One-time)
+1. Ensure the app directory exists: `mkdir -p ~/apps/voiceAct-web`
+2. Place your production `.env` inside `~/apps/voiceAct-web/.env`. (Use `.env.production.example` as a template, setting `HOST_WEB_PORT=3001` and `HOST_API_PORT=5001`).
+3. Configure your host's global Nginx to reverse-proxy traffic to ports `3001` (web frontend) and `5001` (express backend API).
 
 ## 📚 Documentation
 

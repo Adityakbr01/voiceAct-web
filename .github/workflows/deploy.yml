@@ -53,17 +53,25 @@ jobs:
         with:
           clean: false
 
-      - name: Log in to Docker Hub on VPS
-        run: |
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-
       - name: Deploy Latest Container Stack
         run: |
-          # Pull latest pre-built images from Docker Hub
+          # 1. Create the production directory if it doesn't exist
+          mkdir -p ~/apps/voiceAct-web
+          
+          # 2. Sync latest code to the production directory (excluding .git and .env)
+          rsync -avz --exclude '.git' --exclude '.env' ./ ~/apps/voiceAct-web/
+          
+          # 3. Enter the production directory
+          cd ~/apps/voiceAct-web
+
+          # 4. Log in to Docker Hub
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          
+          # 5. Pull latest pre-built images from Docker Hub
           docker compose pull
-
-          # Replace running containers with latest images
+          
+          # 6. Replace running containers with latest images
           docker compose up -d --remove-orphans
-
-          # Clean up old unused images
-          docker image prune -af
+          
+          # 7. Clean up old unused images securely
+          docker image prune -f
