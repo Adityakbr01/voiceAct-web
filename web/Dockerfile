@@ -8,11 +8,11 @@ WORKDIR /app
 
 COPY package.json bun.lock* package-lock.json* yarn.lock* pnpm-lock.yaml* ./
 RUN \
-  if [ -f bun.lock ]; then corepack enable && corepack prepare bun@latest --activate && bun install --frozen-lockfile; \
+  if [ -f package-lock.json ]; then npm ci; \
+  elif [ -f bun.lock ]; then npm install -g bun && bun install --frozen-lockfile; \
   elif [ -f yarn.lock ]; then corepack enable && yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "No lockfile found." && exit 1; \
+  else npm install; \
   fi
 
 # Build the app
@@ -40,11 +40,11 @@ ENV SENTRY_ORG=${SENTRY_ORG}
 ENV SENTRY_PROJECT=${SENTRY_PROJECT}
 
 RUN \
-  if [ -f bun.lock ]; then corepack enable && corepack prepare bun@latest --activate && bun run build; \
+  if [ -f package-lock.json ]; then npm run build; \
+  elif [ -f bun.lock ]; then npm install -g bun && bun run build; \
   elif [ -f yarn.lock ]; then corepack enable && yarn build; \
-  elif [ -f package-lock.json ]; then npm run build; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm build; \
-  else echo "No lockfile found." && exit 1; \
+  else npm run build; \
   fi
 
 # Production image
