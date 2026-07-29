@@ -58,8 +58,8 @@ jobs:
           # 1. Create the production directory if it doesn't exist
           mkdir -p ~/apps/voiceAct-web
           
-          # 2. Sync latest code to the production directory (excluding .git and .env)
-          rsync -avz --exclude '.git' --exclude '.env' ./ ~/apps/voiceAct-web/
+          # 2. Copy only docker-compose.yml to the production directory (no source code synced)
+          cp docker-compose.yml ~/apps/voiceAct-web/
           
           # 3. Enter the production directory
           cd ~/apps/voiceAct-web
