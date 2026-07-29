@@ -6,8 +6,7 @@ services:
     restart: unless-stopped
     volumes:
       - mongo-data:/data/db
-    env_file:
-      - .env
+
     environment:
       MONGO_INITDB_DATABASE: voiceact
     healthcheck:
@@ -24,7 +23,8 @@ services:
     ports:
       - "127.0.0.1:${HOST_API_PORT:-5001}:5000"
     env_file:
-      - .env
+      - path: ./server/.env
+        required: false
     environment:
       NODE_ENV: production
     depends_on:
@@ -45,7 +45,8 @@ services:
     ports:
       - "127.0.0.1:${HOST_WEB_PORT:-3001}:3000"
     env_file:
-      - .env
+      - path: ./web/.env
+        required: false
     environment:
       NODE_ENV: production
     depends_on:

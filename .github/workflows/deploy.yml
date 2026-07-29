@@ -75,13 +75,17 @@ jobs:
 
       - name: Deploy Latest Container Stack
         run: |
-          # 1. Create the production directory if it doesn't exist
-          mkdir -p ~/apps/voiceAct-web
+          # 1. Create the production directory structure if it doesn't exist
+          mkdir -p ~/apps/voiceAct-web/server ~/apps/voiceAct-web/web
           
-          # 2. Copy only docker-compose.yml to the production directory (no source code synced)
+          # 2. Ensure .env files exist in their respective directories so docker compose doesn't fail
+          touch ~/apps/voiceAct-web/server/.env
+          touch ~/apps/voiceAct-web/web/.env
+
+          # 3. Copy only docker-compose.yml to the production directory
           cp docker-compose.yml ~/apps/voiceAct-web/
           
-          # 3. Enter the production directory
+          # 4. Enter the production directory
           cd ~/apps/voiceAct-web
 
           # 4. Log in to Docker Hub
