@@ -5,11 +5,10 @@ on:
     branches: [main, master]
 
 jobs:
-  # ─── Job 1: Build Docker Images & Push to Docker Hub ───────────────────────
-  build-and-push:
-    name: Build & Push to Docker Hub
+  # ─── Job 1: Build & Push Server Image (Parallel) ───────────────────────────
+  build-server:
+    name: Build & Push Server Image
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -23,15 +22,34 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and Push Server Image
+      - name: Build and Push Server
         uses: docker/build-push-action@v5
         with:
           context: ./server
           file: ./server/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/voiceact-server:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      - name: Build and Push Web Image
+  # ─── Job 2: Build & Push Web Image (Parallel) ──────────────────────────────
+  build-web:
+    name: Build & Push Web Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push Web
         uses: docker/build-push-action@v5
         with:
           context: ./web
@@ -40,11 +58,13 @@ jobs:
           build-args: |
             NEXT_PUBLIC_API_URL=https://voiceact.tech/api
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/voiceact-web:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-  # ─── Job 2: Pull Latest Images & Deploy on VPS ─────────────────────────────
+  # ─── Job 3: Pull & Deploy on VPS ───────────────────────────────────────────
   deploy:
     name: Deploy to VPS
-    needs: build-and-push
+    needs: [build-server, build-web]
     runs-on: self-hosted
 
     steps:
