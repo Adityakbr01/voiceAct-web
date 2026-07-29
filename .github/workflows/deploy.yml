@@ -1,0 +1,22 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Build & Deploy on VPS
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          clean: false
+
+      - name: Deploy Docker Stack
+        run: |
+          docker compose build
+          docker compose up -d --remove-orphans
+          docker image prune -f

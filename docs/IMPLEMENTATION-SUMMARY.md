@@ -169,8 +169,8 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
 SMTP_PASS=your-app-password
-SMTP_FROM=noreply@voiceact.in
-ADMIN_NOTIFY_EMAIL=admin@voiceact.in
+SMTP_FROM=noreply@voiceact.tech
+ADMIN_NOTIFY_EMAIL=admin@voiceact.tech
 
 # Rate Limits
 RATE_LIMIT_GENERAL=60

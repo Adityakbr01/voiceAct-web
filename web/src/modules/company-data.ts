@@ -5,8 +5,8 @@ export const company = {
   description:
     "VoiceAct Solutions is a software development agency building production-grade web and mobile applications, and custom CRMs, for startups and scaleups.",
   industry: "Software Development",
-  website: "https://voiceact.in",
-  domain: "voiceact.in",
+  website: "https://voiceact.tech",
+  domain: "voiceact.tech",
 
   address: {
     street: "123 Tech Park, Whitefield",
@@ -18,9 +18,9 @@ export const company = {
   },
 
   contact: {
-    email: "hello@voiceact.in",
-    supportEmail: "support@voiceact.in",
-    salesEmail: "sales@voiceact.in",
+    email: "hello@voiceact.tech",
+    supportEmail: "support@voiceact.tech",
+    salesEmail: "sales@voiceact.tech",
     phone: "+91 80 4567 8900",
     whatsapp: "+91 98765 43210",
   },
@@ -44,7 +44,7 @@ export const company = {
   },
 
   socials: {
-    twitter: { label: "Twitter", handle: "@voiceactin", href: "https://twitter.com/voiceactin" },
+    twitter: { label: "Twitter", handle: "@voiceact_tech", href: "https://twitter.com/voiceact_tech" },
     linkedin: {
       label: "LinkedIn",
       handle: "voiceact",
@@ -63,13 +63,13 @@ export const company = {
     },
     instagram: {
       label: "Instagram",
-      handle: "@voiceact.in",
-      href: "https://instagram.com/voiceact.in",
+      handle: "@voiceact.tech",
+      href: "https://instagram.com/voiceact.tech",
     },
   },
 
   socialList: [
-    { label: "Twitter", handle: "@voiceactin", href: "https://twitter.com/voiceactin" },
+    { label: "Twitter", handle: "@voiceact_tech", href: "https://twitter.com/voiceact_tech" },
     { label: "LinkedIn", handle: "voiceact", href: "https://linkedin.com/company/voiceact" },
     {
       label: "GitHub",
@@ -82,7 +82,7 @@ export const company = {
       href: "https://github.com/Adityakbr01",
       badge: { text: "Developer", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
     },
-    { label: "Instagram", handle: "@voiceact.in", href: "https://instagram.com/voiceact.in" },
+    { label: "Instagram", handle: "@voiceact.tech", href: "https://instagram.com/voiceact.tech" },
   ],
 
   legal: {

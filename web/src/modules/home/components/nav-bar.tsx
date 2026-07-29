@@ -218,7 +218,7 @@ export function NavBar() {
     <header
       ref={headerRef}
       role="banner"
-      className={cn("fixed inset-x-0 top-6 z-50 transition-[padding] duration-500")}
+      className={cn("fixed inset-x-0 top-10 z-50 transition-[padding] duration-500")}
     >
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 md:px-10">
         <div
