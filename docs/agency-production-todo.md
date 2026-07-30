@@ -99,7 +99,7 @@ cd server && cp .env.example .env && bun install && bun run seed && bun run dev
 cd web && cp .env.example .env.local && bun install && bun run dev
 ```
 
-Admin: `http://localhost:3000/admin/login` (seed: `admin@voiceact.com` / `admin123`)
+Admin: `http://localhost:3000/admin/login` (seed: `admin@voiceact.tech` / `admin123`)
 
 ---
 

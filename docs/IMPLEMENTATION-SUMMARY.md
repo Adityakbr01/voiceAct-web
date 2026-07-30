@@ -363,7 +363,7 @@ Access:
 - Website: http://localhost:3000
 - API: http://localhost:5000
 - Admin: http://localhost:3000/admin/login
-  - Email: `admin@voiceact.com`
+  - Email: `admin@voiceact.tech`
   - Password: `admin123`
 
 ### Docker Deployment

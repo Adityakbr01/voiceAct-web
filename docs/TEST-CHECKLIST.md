@@ -100,7 +100,7 @@
 - [ ] **Form validation** works:
   - Empty fields → shows errors
   - Invalid credentials → shows "Invalid credentials" or similar
-- [ ] **Successful login** with admin@voiceact.com / admin123
+- [ ] **Successful login** with admin@voiceact.tech / admin123
   - Redirects to /admin/contacts
   - No console errors
 - [ ] **Authentication persistence**:

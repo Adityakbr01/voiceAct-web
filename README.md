@@ -7,7 +7,7 @@ A complete full-stack agency website with CMS, analytics, and visitor tracking.
 ### 🔐 Admin Credentials
 
 After running the seed command:
-- **Email**: `admin@voiceact.com`  
+- **Email**: `admin@voiceact.tech`  
 - **Password**: `admin123`  
 - **Admin URL**: http://localhost:3000/admin/login
 

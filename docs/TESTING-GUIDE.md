@@ -74,7 +74,7 @@ After running `bun run seed`:
 
 | Field | Value |
 |-------|-------|
-| **Email** | `admin@voiceact.com` |
+| **Email** | `admin@voiceact.tech` |
 | **Password** | `admin123` |
 | **Admin URL** | http://localhost:3000/admin/login |
 
@@ -121,7 +121,7 @@ After running `bun run seed`:
 #### Authentication
 - [ ] **Login page** loads: http://localhost:3000/admin/login
 - [ ] **Invalid credentials** shows error
-- [ ] **Valid login** (admin@voiceact.com / admin123) redirects to contacts
+- [ ] **Valid login** (admin@voiceact.tech / admin123) redirects to contacts
 - [ ] **Auto-redirect** when not logged in (try accessing /admin/projects directly)
 - [ ] **Logout** works and clears session
 
@@ -340,7 +340,7 @@ After running seed, you should see:
 - 1 "replied" status
 
 ### Admin User
-- Email: admin@voiceact.com
+- Email: admin@voiceact.tech
 - Password: admin123
 - Role: super_admin
 

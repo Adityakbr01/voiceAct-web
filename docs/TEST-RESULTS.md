@@ -156,7 +156,7 @@ All service layer tests passing:
 # This works correctly:
 curl -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"admin@voiceact.com","password":"admin123"}'
+  -d '{"email":"admin@voiceact.tech","password":"admin123"}'
 # Returns: {"success":true,"data":{"admin":{...}}}
 ```
 
