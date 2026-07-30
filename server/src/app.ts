@@ -26,7 +26,7 @@ app.use(
   cors({
     origin: config.corsOrigins,
     credentials: true,
-  })
+  }),
 );
 app.use(cookieParser());
 app.use(express.json({ strict: false }));
@@ -46,6 +46,9 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/tracking", trackingRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/health", (_req, res) => {
+  sendSuccess(res, null, "OK");
+});
 
 if (config.sentryDsn) {
   const { setupExpressErrorHandler } = await import("@sentry/node");

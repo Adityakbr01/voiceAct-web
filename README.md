@@ -119,7 +119,7 @@ The GitHub Actions runner executes workflows but does **not** store the applicat
 
 ### Architecture
 - **Host Nginx**: The Ubuntu VPS runs a Host Nginx instance handling SSL, HTTP/2, and reverse proxying for all projects.
-- **Docker Compose**: Used purely for application services (`web`, `server`, `mongo`), never binding to ports 80/443 directly.
+- **Docker Compose**: Used purely for application services (`web`, `server`), never binding to ports 80/443 directly. Database is externally managed via MongoDB Atlas (`MONGODB_URI`).
 - **Environment**: Configured via a single `.env` file loaded directly into the containers.
 
 ### Deployment Flow
