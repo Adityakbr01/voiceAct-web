@@ -209,9 +209,12 @@ export function Footer() {
                 <li key={n.label}>
                   <Link
                     href={n.href}
-                    className="inline-flex items-center text-white/80 transition-colors hover:text-white"
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
                   >
-                    <span>{n.label}</span>
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block">{n.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">{n.label}</span>
+                    </span>
                     {n.badge && (
                       <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${n.badge.color}`}>
                         {n.badge.text}
@@ -233,9 +236,12 @@ export function Footer() {
                 <li key={s.label}>
                   <Link
                     href={s.href}
-                    className="inline-flex items-center text-white/80 transition-colors hover:text-white"
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
                   >
-                    <span>{s.label}</span>
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block">{s.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">{s.label}</span>
+                    </span>
                     {s.badge && (
                       <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${s.badge.color}`}>
                         {s.badge.text}
@@ -257,9 +263,12 @@ export function Footer() {
                 <li key={l.label}>
                   <Link
                     href={l.href}
-                    className="inline-flex items-center text-white/80 transition-colors hover:text-white"
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
                   >
-                    <span>{l.label}</span>
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block">{l.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">{l.label}</span>
+                    </span>
                     {l.badge && (
                       <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${l.badge.color}`}>
                         {l.badge.text}

@@ -60,7 +60,7 @@ export function Hero() {
             />
           </motion.svg>
           <span className="block">{hero.title[0]}</span>
-          <span className="block text-muted-foreground/80">
+          <span className="block text-muted-foreground">
             designed to
             <Highlighter action="underline" color="#FF9800">
               convert,
@@ -154,7 +154,7 @@ export function Hero() {
                 (brand, i) => (
                   <span
                     key={`a-${brand}-${i}`}
-                    className="trusted-item font-display cursor-default text-sm font-semibold tracking-[0.18em] text-muted-foreground/80 transition-all duration-300 md:text-base"
+                    className="trusted-item font-display cursor-default text-sm font-semibold tracking-[0.18em] text-muted-foreground transition-all duration-300 md:text-base"
                     tabIndex={0}
                   >
                     {brand}
@@ -171,7 +171,7 @@ export function Hero() {
                 .map((brand, i) => (
                   <span
                     key={`b-${brand}-${i}`}
-                    className="trusted-item font-display cursor-default text-sm font-semibold tracking-[0.18em] text-muted-foreground/70 transition-all duration-300 md:text-base"
+                    className="trusted-item font-display cursor-default text-sm font-semibold tracking-[0.18em] text-muted-foreground transition-all duration-300 md:text-base"
                     tabIndex={0}
                   >
                     {brand}

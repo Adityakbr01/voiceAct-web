@@ -445,21 +445,6 @@
   --animate-aurora: aurora 60s linear infinite;
 }
 
-/* Lenis smooth scroll */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
 /* Lighthouse: skip rendering work for off-screen sections */
 .cv-auto {
   content-visibility: auto;

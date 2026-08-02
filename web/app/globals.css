@@ -326,16 +326,14 @@
   }
 }
 
+/* Composited aurora drift: transform instead of background-position
+   (background-position animates style+layout per frame; transform is GPU-only) */
 @keyframes aurora {
   0% {
-    background-position:
-      50% 50%,
-      50% 50%;
+    transform: translate3d(-12%, 0, 0);
   }
   100% {
-    background-position:
-      350% 50%,
-      350% 50%;
+    transform: translate3d(12%, 0, 0);
   }
 }
 
@@ -397,7 +395,7 @@
 .trusted-row-reverse {
   animation: marquee-reverse 40s linear infinite;
   animation-play-state: var(--marquee-play);
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 /* Shine on primary buttons */
@@ -435,6 +433,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .btn-shine::before,
+  .after\:animate-aurora::after,
   [style*="blob-drift"],
   [style*="float-slow"] {
     animation: none !important;
@@ -442,22 +441,7 @@
 }
 
 @theme {
-  --animate-aurora: aurora 60s linear infinite;
-}
-
-/* Lenis smooth scroll */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: hidden;
+  --animate-aurora: aurora 45s linear infinite alternate;
 }
 
 /* Lighthouse: skip rendering work for off-screen sections */

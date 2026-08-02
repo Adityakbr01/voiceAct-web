@@ -9,11 +9,6 @@ import { usePathname } from "next/navigation";
 import { NavBar } from "@/components/layouts/nav-bar";
 import { Footer } from "@/components/layouts/footer";
 
-const SmoothScrollProvider = dynamic(
-  () => import("@/components/Providers/smooth-scroll-provider").then((m) => m.SmoothScrollProvider),
-  { ssr: false },
-);
-
 function PostHogInit() {
   useEffect(() => {
     if (typeof window === "undefined" || !process.env.NEXT_PUBLIC_POSTHOG_KEY) return;
@@ -27,8 +22,7 @@ function PostHogInit() {
       });
     };
 
-    const supportsIdleCallback =
-      "requestIdleCallback" in window && "cancelIdleCallback" in window;
+    const supportsIdleCallback = "requestIdleCallback" in window && "cancelIdleCallback" in window;
     const idleHandle = supportsIdleCallback
       ? window.requestIdleCallback(() => void loadPostHog(), { timeout: 4_000 })
       : window.setTimeout(() => void loadPostHog(), 3_000);
@@ -58,11 +52,9 @@ export function Providers({ children }: { children: ReactNode }) {
       <PostHogInit />
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <SmoothScrollProvider>
-            {!isAdmin && <NavBar />}
-            {children}
-            {!isAdmin && <Footer />}
-          </SmoothScrollProvider>
+          {!isAdmin && <NavBar />}
+          {children}
+          {!isAdmin && <Footer />}
         </ThemeProvider>
       </QueryClientProvider>
     </>

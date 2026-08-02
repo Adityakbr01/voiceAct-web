@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useCallback, useEffect, type ReactNode } from "react";
-import Lenis from "lenis";
 import "./scroll-stack.css";
 
 interface ScrollStackProps {
@@ -49,7 +48,6 @@ const ScrollStack = ({
 }: ScrollStackProps) => {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const stackCompletedRef = useRef(false);
-  const lenisRef = useRef<Lenis | null>(null);
   const wrappersRef = useRef<HTMLElement[]>([]);
   const cardsRef = useRef<HTMLElement[]>([]);
   const wrapperOffsetsRef = useRef<number[]>([]);
@@ -270,31 +268,10 @@ const ScrollStack = ({
       card.style.webkitPerspective = "1000px";
     });
 
-    const globalLenis = (window as any).lenis;
-
     if (useWindowScroll) {
       window.addEventListener("scroll", handleScroll, { passive: true });
-      if (globalLenis) {
-        globalLenis.on("scroll", handleScroll);
-      }
     } else {
-      const lenis = new Lenis({
-        wrapper: scroller,
-        content: scroller.querySelector(".scroll-stack-inner") as HTMLElement,
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        touchMultiplier: 2,
-        infinite: false,
-        gestureOrientation: "vertical",
-        wheelMultiplier: 1,
-        lerp: 0.1,
-        syncTouch: true,
-        syncTouchLerp: 0.075,
-      });
-
-      lenis.on("scroll", handleScroll);
-      lenisRef.current = lenis;
+      scroller.addEventListener("scroll", handleScroll, { passive: true });
     }
 
     const handleResize = () => {
@@ -315,14 +292,10 @@ const ScrollStack = ({
 
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
-      if (lenisRef.current) {
-        lenisRef.current.destroy();
-      }
       if (useWindowScroll) {
         window.removeEventListener("scroll", handleScroll);
-        if (globalLenis) {
-          globalLenis.off("scroll", handleScroll);
-        }
+      } else {
+        scroller.removeEventListener("scroll", handleScroll);
       }
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("load", measureAndUpdate);
