@@ -4,7 +4,9 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev -H 0.0.0.0 --turbo",
+    "dev:lan": "bun scripts/dev-lan.ts",
+    "tunnel": "powershell -NoProfile -ExecutionPolicy Bypass -File \"scripts/setup-cloudflare-tunnel.ps1\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
