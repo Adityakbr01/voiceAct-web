@@ -132,9 +132,7 @@ export function NavBar() {
       role="banner"
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        scrolled
-          ? "bg-background/80 backdrop-blur-xl border-none shadow-none"
-          : "bg-transparent",
+        scrolled ? "bg-background/80 backdrop-blur-xl border-none shadow-none" : "bg-transparent",
       )}
     >
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-0 md:px-10">
@@ -147,13 +145,12 @@ export function NavBar() {
             className="pointer-events-none absolute inset-y-0 left-0 w-24 rounded-l-full bg-[radial-gradient(ellipse_at_left,var(--gradient-accent)_0%,transparent_70%)] opacity-20"
           />
           <Logo ref={logoRef} />
-          <DesktopNav
-            activeHref={activeHref}
-            onSetActiveHref={setActiveHrefCallback}
-          />
+          <DesktopNav activeHref={activeHref} onSetActiveHref={setActiveHrefCallback} />
           <div ref={ctaRef} className="relative z-10 flex items-center gap-2">
-            <ThemeToggle />
-            <CTA />
+        
+            <div className="hidden md:block">
+              <CTA />
+            </div>
             <button
               ref={burgerBtnRef}
               type="button"

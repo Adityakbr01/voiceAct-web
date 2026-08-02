@@ -9,10 +9,10 @@ import { site } from "@/modules/site";
 import { listServices } from "@/lib/api/cms";
 import { queryKeys } from "@/lib/api/query-keys";
 import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
+import { ThemeToggle } from "@/components/layouts/navbar/ThemeToggle";
 
 const Grainient = dynamic(() => import("@/components/grainient"), { ssr: false });
 const Ballpit = dynamic(() => import("@/components/ui/ballpit"), { ssr: false });
-
 
 interface SafeBallpitProps {
   children?: ReactNode;
@@ -142,14 +142,17 @@ export function Footer() {
           idx === 0
             ? { text: "Popular", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" }
             : idx === 1
-            ? { text: "New", color: "bg-blue-500/15 text-blue-400 border-blue-500/30" }
-            : undefined,
+              ? { text: "New", color: "bg-blue-500/15 text-blue-400 border-blue-500/30" }
+              : undefined,
       }));
     }
     return company.services.map((s, idx) => ({
       label: s,
       href: "/#services",
-      badge: idx === 0 ? { text: "Popular", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" } : undefined,
+      badge:
+        idx === 0
+          ? { text: "Popular", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" }
+          : undefined,
     }));
   }, [activeServices]);
 
@@ -171,12 +174,8 @@ export function Footer() {
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 md:grid-cols-12">
           {/* Company Info */}
           <div className="md:col-span-4">
-            <div className="font-display text-xl font-semibold text-white">
-              {company.name}
-            </div>
-            <p className="mt-3 max-w-sm text-sm text-white/70">
-              {company.tagline}
-            </p>
+            <div className="font-display text-xl font-semibold text-white">{company.name}</div>
+            <p className="mt-3 max-w-sm text-sm text-white/70">{company.tagline}</p>
             <div className="mt-6 space-y-2 text-sm text-white/60">
               <p>{company.address.full}</p>
               <p>
@@ -213,10 +212,14 @@ export function Footer() {
                   >
                     <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
                       <span className="nav-pill-flip-current relative block">{n.label}</span>
-                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">{n.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                        {n.label}
+                      </span>
                     </span>
                     {n.badge && (
-                      <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${n.badge.color}`}>
+                      <span
+                        className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${n.badge.color}`}
+                      >
                         {n.badge.text}
                       </span>
                     )}
@@ -240,10 +243,14 @@ export function Footer() {
                   >
                     <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
                       <span className="nav-pill-flip-current relative block">{s.label}</span>
-                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">{s.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                        {s.label}
+                      </span>
                     </span>
                     {s.badge && (
-                      <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${s.badge.color}`}>
+                      <span
+                        className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${s.badge.color}`}
+                      >
                         {s.badge.text}
                       </span>
                     )}
@@ -267,10 +274,14 @@ export function Footer() {
                   >
                     <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
                       <span className="nav-pill-flip-current relative block">{l.label}</span>
-                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">{l.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                        {l.label}
+                      </span>
                     </span>
                     {l.badge && (
-                      <span className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${l.badge.color}`}>
+                      <span
+                        className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${l.badge.color}`}
+                      >
                         {l.badge.text}
                       </span>
                     )}
@@ -302,7 +313,9 @@ export function Footer() {
                 >
                   <span>{s.label}</span>
                   {s.badge && (
-                    <span className={`inline-flex items-center rounded-none border px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider ${s.badge.color}`}>
+                    <span
+                      className={`inline-flex items-center rounded-none border px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider ${s.badge.color}`}
+                    >
                       {s.badge.text}
                     </span>
                   )}
@@ -317,6 +330,7 @@ export function Footer() {
           <div>
             © {new Date().getFullYear()} {company.name}. All rights reserved.
           </div>
+          <ThemeToggle />
         </div>
       </div>
     </footer>

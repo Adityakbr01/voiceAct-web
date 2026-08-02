@@ -15,7 +15,7 @@ import { NAV_ITEMS, services } from "@/config/services";
 import { company } from "@/modules/company-data";
 import { Logo } from "./Logo";
 import { CTA } from "./CTA";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -24,27 +24,30 @@ interface MobileMenuProps {
   onSetActiveHref: (href: string) => void;
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.1,
+      delayChildren: 0.15,
+      staggerChildren: 0.04,
     },
   },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.3 },
+    transition: {
+      duration: 0.22,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
   },
 };
 
-function MobileServiceAccordion() {
+function MobileServiceAccordion({ onSelect }: { onSelect?: () => void }) {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
 
   const toggleCategory = (category: string) => {
@@ -61,10 +64,8 @@ function MobileServiceAccordion() {
               type="button"
               onClick={() => toggleCategory(category.category)}
               className={cn(
-                "flex items-center justify-between w-full py-2 text-xl font-black uppercase tracking-wider transition-colors",
-                isOpen
-                  ? "text-primary"
-                  : "text-foreground hover:text-primary",
+                "flex items-center justify-between w-full py-2 text-xl font-black uppercase tracking-wider transition-colors active:opacity-80 touch-manipulation",
+                isOpen ? "text-primary" : "text-foreground hover:text-primary",
               )}
               aria-expanded={isOpen}
               aria-controls={`mobile-services-${category.category}`}
@@ -78,30 +79,34 @@ function MobileServiceAccordion() {
                 aria-hidden="true"
               />
             </button>
-            {isOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                id={`mobile-services-${category.category}`}
-                role="region"
-                aria-label={`${category.category} services`}
-                className="overflow-hidden pl-4 space-y-1"
+            <div
+              className="grid transition-[grid-template-rows] duration-300 ease-out transform-gpu"
+              style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+              id={`mobile-services-${category.category}`}
+              role="region"
+              aria-label={`${category.category} services`}
+            >
+              <div
+                className="overflow-hidden pl-4 space-y-1 min-h-0"
+                inert={!isOpen}
+                aria-hidden={!isOpen}
               >
                 {category.items.map((item) => (
                   <a
                     key={item.title}
                     href={item.href}
-                    onClick={() => setOpenCategory(null)}
-                    className="flex items-center gap-3 py-1.5 text-sm font-bold uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors"
+                    onClick={() => {
+                      setOpenCategory(null);
+                      if (onSelect) onSelect();
+                    }}
+                    className="flex items-center gap-3 py-1.5 text-sm font-bold uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors active:opacity-80 touch-manipulation"
                   >
                     <item.icon className="size-4 text-primary" aria-hidden="true" />
                     <span>{item.title}</span>
                   </a>
                 ))}
-              </motion.div>
-            )}
+              </div>
+            </div>
           </div>
         );
       })}
@@ -119,14 +124,14 @@ export const MobileMenu = memo(function MobileMenu({
     <Sheet open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <SheetContent
         side="left"
-        className="w-[85%] max-w-xs sm:max-w-sm bg-background text-foreground border-r border-border p-6 flex flex-col justify-between overflow-y-auto [&>button]:hidden"
+        className="w-[85%] max-w-xs sm:max-w-sm bg-background text-foreground border-r border-border p-6 flex flex-col justify-between overflow-y-auto overscroll-contain touch-pan-y [&>button]:hidden transform-gpu will-change-transform"
       >
         <div className="flex flex-col min-h-full">
           {/* Header with Logo and Circular Close Button */}
           <SheetHeader className="p-0 text-left">
             <div className="flex items-center justify-between pb-6">
               <Logo />
-              <SheetClose className="flex items-center justify-center size-10 rounded-full border-2 border-foreground/30 text-foreground hover:border-foreground hover:bg-foreground/5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              <SheetClose className="flex items-center justify-center size-10 rounded-full border-2 border-foreground/30 text-foreground hover:border-foreground hover:bg-foreground/5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary active:scale-95 touch-manipulation">
                 <X className="size-5 stroke-[2.5]" />
                 <span className="sr-only">Close menu</span>
               </SheetClose>
@@ -137,7 +142,7 @@ export const MobileMenu = memo(function MobileMenu({
             </SheetDescription>
           </SheetHeader>
 
-          {/* Navigation Links with Framer Motion Stagger Animation */}
+          {/* Navigation Links with Non-Overlapping Stagger Animation */}
           <motion.nav
             variants={containerVariants}
             initial="hidden"
@@ -152,7 +157,7 @@ export const MobileMenu = memo(function MobileMenu({
                 if ("hasDropdown" in item && item.hasDropdown) {
                   return (
                     <motion.li key={item.href} variants={itemVariants}>
-                      <MobileServiceAccordion />
+                      <MobileServiceAccordion onSelect={onClose} />
                     </motion.li>
                   );
                 }
@@ -167,10 +172,8 @@ export const MobileMenu = memo(function MobileMenu({
                         onClose();
                       }}
                       className={cn(
-                        "block text-2xl font-black uppercase tracking-wider transition-colors",
-                        isActive
-                          ? "text-primary font-black"
-                          : "text-foreground hover:text-primary",
+                        "block text-2xl font-black uppercase tracking-wider transition-colors active:opacity-80 touch-manipulation",
+                        isActive ? "text-primary font-black" : "text-foreground hover:text-primary",
                       )}
                     >
                       {item.label}
@@ -182,31 +185,33 @@ export const MobileMenu = memo(function MobileMenu({
 
             {/* CTA Button in Drawer */}
             <motion.div variants={itemVariants} className="pt-4 pb-2">
-              <CTA className="w-full justify-center py-2.5 text-sm" />
+              <CTA className="w-full justify-center py-2.5 text-sm touch-manipulation" />
             </motion.div>
 
-            {/* Divider Line with Stagger */}
+            {/* Divider Line */}
             <motion.div variants={itemVariants} className="my-5">
               <hr className="border-t-2 border-foreground/80 dark:border-foreground/60 w-full" />
             </motion.div>
 
-            {/* Address & Contact Block with Stagger */}
+            {/* Address & Contact Block */}
             <motion.div variants={itemVariants} className="space-y-4">
               <div className="text-sm font-black uppercase tracking-wider text-foreground/90 leading-relaxed">
                 <p>{company.address.street},</p>
-                <p>{company.address.city}, {company.address.state},</p>
+                <p>
+                  {company.address.city}, {company.address.state},
+                </p>
                 <p>{company.address.pincode}</p>
               </div>
               <div className="text-xs font-bold uppercase tracking-wider space-y-1 text-muted-foreground">
                 <a
                   href={`tel:${company.contact.phone}`}
-                  className="block hover:text-primary transition-colors"
+                  className="block hover:text-primary transition-colors touch-manipulation"
                 >
                   {company.contact.phone}
                 </a>
                 <a
                   href={`mailto:${company.contact.email}`}
-                  className="block hover:text-primary transition-colors"
+                  className="block hover:text-primary transition-colors touch-manipulation"
                 >
                   {company.contact.email}
                 </a>
