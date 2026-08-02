@@ -180,7 +180,9 @@ export function Footer() {
               <p>{company.address.full}</p>
               <p>
                 <a
-                  href={`mailto:${company.contact.email}`}
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(company.contact.email)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                 >
                   {company.contact.email}
@@ -297,7 +299,9 @@ export function Footer() {
               Connect
             </div>
             <a
-              href={`mailto:${site.email}`}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.email)}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-4 block text-lg font-display font-medium italic text-white transition-colors hover:text-white/80"
             >
               {site.email}
