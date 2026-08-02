@@ -21,13 +21,14 @@ export const company = {
     email: "hello@voiceact.tech",
     supportEmail: "support@voiceact.tech",
     salesEmail: "sales@voiceact.tech",
-    phone: "+91 80 4567 8900",
-    whatsapp: "+91 98765 43210",
+    phone: "+91 93049 22632",
+    whatsapp: "+91 93049 22632",
   },
 
   maps: {
     query: "VoiceAct+Solutions+Bengaluru",
-    embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0!2d77.7!3d12.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1",
+    embedUrl:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0!2d77.7!3d12.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1",
   },
 
   hours: {
@@ -44,7 +45,11 @@ export const company = {
   },
 
   socials: {
-    twitter: { label: "Twitter", handle: "@voiceact_tech", href: "https://twitter.com/voiceact_tech" },
+    twitter: {
+      label: "Twitter",
+      handle: "@voiceact_tech",
+      href: "https://twitter.com/voiceact_tech",
+    },
     linkedin: {
       label: "LinkedIn",
       handle: "voiceact",
@@ -59,7 +64,10 @@ export const company = {
       label: "GitHub",
       handle: "Adityakbr01",
       href: "https://github.com/Adityakbr01",
-      badge: { text: "Developer", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+      badge: {
+        text: "Developer",
+        color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+      },
     },
     instagram: {
       label: "Instagram",
@@ -80,7 +88,10 @@ export const company = {
       label: "GitHub",
       handle: "Adityakbr01",
       href: "https://github.com/Adityakbr01",
-      badge: { text: "Developer", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+      badge: {
+        text: "Developer",
+        color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+      },
     },
     { label: "Instagram", handle: "@voiceact.tech", href: "https://instagram.com/voiceact.tech" },
   ],
