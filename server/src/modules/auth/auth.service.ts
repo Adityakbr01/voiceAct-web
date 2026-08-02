@@ -24,3 +24,33 @@ export async function getMe(adminId: string) {
   if (!admin) throw new AppError("Admin not found", 404);
   return { id: admin._id, email: admin.email, name: admin.name, role: admin.role };
 }
+
+import { emailService as defaultEmailService, EmailService } from "../email/index.js";
+import type {
+  OTPEmailPayload,
+  PasswordResetEmailPayload,
+  VerificationEmailPayload,
+  MagicLinkEmailPayload,
+  WelcomeEmailPayload,
+} from "../email/index.js";
+
+export async function sendAuthOTP(payload: OTPEmailPayload, emailSvc: EmailService = defaultEmailService) {
+  return emailSvc.sendOTPEmail(payload);
+}
+
+export async function sendAuthPasswordReset(payload: PasswordResetEmailPayload, emailSvc: EmailService = defaultEmailService) {
+  return emailSvc.sendPasswordResetEmail(payload);
+}
+
+export async function sendAuthVerification(payload: VerificationEmailPayload, emailSvc: EmailService = defaultEmailService) {
+  return emailSvc.sendVerificationEmail(payload);
+}
+
+export async function sendAuthMagicLink(payload: MagicLinkEmailPayload, emailSvc: EmailService = defaultEmailService) {
+  return emailSvc.sendMagicLinkEmail(payload);
+}
+
+export async function sendAuthWelcome(payload: WelcomeEmailPayload, emailSvc: EmailService = defaultEmailService) {
+  return emailSvc.sendWelcomeEmail(payload);
+}
+

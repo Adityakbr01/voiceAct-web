@@ -2,14 +2,16 @@ import * as contactDao from "./contact.dao.js";
 import { AppError } from "../../utils/AppError.js";
 import { saveLeadAttribution } from "../tracking/tracking.service.js";
 
-import { sendContactNotification } from "../../utils/mailer.js";
+import { emailService as defaultEmailService, EmailService } from "../email/index.js";
 
-export async function submitContact(data: any, tracking?: any) {
+export async function submitContact(data: any, tracking?: any, emailSvc: EmailService = defaultEmailService) {
   const contact = await contactDao.create(data);
   if (tracking) {
     await saveLeadAttribution(tracking, "contact", String(contact._id)).catch(() => {});
   }
-  sendContactNotification(data).catch(() => {});
+  emailSvc.sendContactEmail(data).catch((err) => {
+    console.error("[ContactService] Failed to send contact emails:", err.message);
+  });
   return contact;
 }
 

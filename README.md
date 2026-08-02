@@ -102,15 +102,14 @@ See **[TESTING-BUN-GUIDE.md](docs/TESTING-BUN-GUIDE.md)** for detailed testing i
 - ✅ Device, browser, geo detection
 - ✅ Lead attribution on contact submission
 - ✅ Conversion funnel analysis
-- ✅ Real-time active sessions
-
-### Production Ready
-- ✅ Docker Compose setup
-- ✅ GitHub Actions CI/CD
-- ✅ Environment configuration
-- ✅ Error handling & validation
-- ✅ Rate limiting & security
-- ✅ Health checks
+### Email System (Resend SDK)
+- ✅ Resend SDK integration (no Nodemailer / SMTP)
+- ✅ Verified Domain: `voiceact.tech`
+- ✅ Lazy initialized singleton client
+- ✅ 9 Responsive dark-mode HTML email templates (Welcome, OTP, Password Reset, Email Verification, Invitation, Contact Form, Notification, Invoice, Magic Link)
+- ✅ Contact form dual email notification (`hello@voiceact.tech` with submitter Reply-To & auto-reply confirmation to user)
+- ✅ Automatic exponential backoff retries (429 Rate Limit & 5xx server errors)
+- ✅ Non-sensitive structured logging (Message ID, duration, status)
 
 ## 🐳 Multi-Tenant VPS Deployment
 
@@ -141,7 +140,7 @@ The GitHub Actions runner executes workflows but does **not** store the applicat
 
 ## 🔧 Tech Stack
 
-**Backend**: Express, MongoDB, Mongoose, Zod, Bun, JWT  
+**Backend**: Express, MongoDB, Mongoose, Zod, Bun, JWT, Resend SDK  
 **Frontend**: Next.js 16, React 19, TanStack Query, Tailwind CSS  
 **DevOps**: Docker, GitHub Actions, health checks  
 **Analytics**: Custom tracking, GeoIP, UTM attribution
