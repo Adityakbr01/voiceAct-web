@@ -2,7 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, MapPin, Clock, Check, Copy, MessageSquare, ArrowLeft } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Check,
+  Copy,
+  MessageSquare,
+  MessageCircle,
+  ArrowLeft,
+} from "lucide-react";
 import { Footer } from "@/components/layouts/footer";
 import { company } from "@/modules/company-data";
 import { Cta } from "@/modules/home/sections/cta";
@@ -92,6 +102,17 @@ export function ContactPage() {
                   {company.contact.phone}
                 </a>
               </div>
+              <a
+                href={`https://wa.me/${company.contact.phone.replace(/\D/g, "")}?text=${encodeURIComponent(
+                  `Hi ${company.name}! I'm interested in your services and would like to discuss a project.`,
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 hover:text-emerald-300 transition cursor-pointer"
+              >
+                <MessageCircle className="size-3.5" />
+                Chat on WhatsApp
+              </a>
               <span className="text-xs text-muted-foreground font-medium">
                 Quick response guaranteed
               </span>
