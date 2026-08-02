@@ -16,6 +16,7 @@ import {
   IconApi,
   IconBuildingStore,
   IconCreditCard,
+  IconBrandLaravel as SiLaravel,
 } from "@tabler/icons-react";
 import { Globe, Smartphone, Palette, Rocket, Server, Wrench, Users } from "lucide-react";
 
@@ -232,7 +233,7 @@ export const stack: StackItem[] = [
   { name: "Node.js", category: "Backend", icon: SiNodedotjs, color: "#5FA04E" },
   { name: "PHP", category: "Backend", icon: SiPhp, color: "#777BB4" },
   { name: "Postgres", category: "Database", icon: IconDatabase, color: "#4169E1" },
-  { name: "tRPC", category: "API", icon: IconApi, color: "#398CCB" },
+  { name: "Laravel", category: "Backend", icon: SiLaravel, color: "#398CCB" },
   { name: "WordPress", category: "CMS", icon: SiWordpress, color: "#21759B" },
   { name: "Shopify", category: "E-Commerce", icon: IconBuildingStore, color: "#96BF48" },
   { name: "AWS", category: "Cloud", icon: FaAws, color: "#FF9900" },
@@ -302,27 +303,33 @@ export interface ShowcaseProject {
 
 export const showcaseProjects: ShowcaseProject[] = [
   {
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
     text: "SaaS Analytics Dashboard",
   },
   {
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
     text: "Fintech Mobile Wallet",
   },
   {
-    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
     text: "E-Commerce Platform",
   },
   {
-    image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80",
     text: "AI Productivity Tool",
   },
   {
-    image: "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?auto=format&fit=crop&w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?auto=format&fit=crop&w=800&q=80",
     text: "Healthcare Patient Portal",
   },
   {
-    image: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=800&q=80",
     text: "Real Estate Marketplace",
   },
 ];
