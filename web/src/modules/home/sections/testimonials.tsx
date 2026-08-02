@@ -5,7 +5,7 @@ import { testimonials } from "@/modules/services-data";
 
 export function Testimonials() {
   return (
-    <Section id="testimonials">
+    <Section id="testimonials" className="cv-auto">
       <SectionHeader
         eyebrow="Testimonials"
         title={

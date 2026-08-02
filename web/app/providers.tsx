@@ -6,26 +6,38 @@ import { useState, useEffect, type ReactNode } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { captureUTMParams, trackPageView } from "@/lib/tracking";
 import { usePathname } from "next/navigation";
-import posthog from "posthog-js";
-import { PostHogProvider } from "posthog-js/react";
+import { NavBar } from "@/components/layouts/nav-bar";
+import { Footer } from "@/components/layouts/footer";
 
 const SmoothScrollProvider = dynamic(
   () => import("@/components/Providers/smooth-scroll-provider").then((m) => m.SmoothScrollProvider),
   { ssr: false },
 );
-const NavBar = dynamic(() => import("@/modules/home/components/nav-bar").then((m) => m.NavBar), {
-  ssr: false,
-});
-const Footer = dynamic(() => import("@/components/layouts/footer").then((m) => m.Footer), {
-  ssr: false,
-});
 
 function PostHogInit() {
   useEffect(() => {
     if (typeof window === "undefined" || !process.env.NEXT_PUBLIC_POSTHOG_KEY) return;
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
-    });
+    let cancelled = false;
+
+    const loadPostHog = async () => {
+      const { default: posthog } = await import("posthog-js");
+      if (cancelled) return;
+      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+        api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+      });
+    };
+
+    const supportsIdleCallback =
+      "requestIdleCallback" in window && "cancelIdleCallback" in window;
+    const idleHandle = supportsIdleCallback
+      ? window.requestIdleCallback(() => void loadPostHog(), { timeout: 4_000 })
+      : window.setTimeout(() => void loadPostHog(), 3_000);
+
+    return () => {
+      cancelled = true;
+      if (supportsIdleCallback) window.cancelIdleCallback(idleHandle as number);
+      else window.clearTimeout(idleHandle as number);
+    };
   }, []);
 
   return null;
@@ -44,17 +56,15 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <>
       <PostHogInit />
-      <PostHogProvider client={posthog}>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider>
-            <SmoothScrollProvider>
-              {!isAdmin && <NavBar />}
-              {children}
-              {!isAdmin && <Footer />}
-            </SmoothScrollProvider>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </PostHogProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <SmoothScrollProvider>
+            {!isAdmin && <NavBar />}
+            {children}
+            {!isAdmin && <Footer />}
+          </SmoothScrollProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </>
   );
 }

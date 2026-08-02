@@ -8,6 +8,7 @@ import { company } from "@/modules/company-data";
 import { site } from "@/modules/site";
 import { listServices } from "@/lib/api/cms";
 import { queryKeys } from "@/lib/api/query-keys";
+import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
 
 const Grainient = dynamic(() => import("@/components/grainient"), { ssr: false });
 const Ballpit = dynamic(() => import("@/components/ui/ballpit"), { ssr: false });
@@ -30,6 +31,58 @@ class SafeBallpit extends Component<SafeBallpitProps> {
   render() {
     return this.state.hasError ? (this.props.fallback ?? null) : this.props.children;
   }
+}
+
+function FooterEffects({ isMobile }: { isMobile: boolean }) {
+  return (
+    <>
+      <div className="absolute inset-0 z-[2] pointer-events-none">
+        <SafeBallpit>
+          <Ballpit
+            count={isMobile ? 12 : 40}
+            gravity={0.3}
+            friction={0.98}
+            wallBounce={0.9}
+            followCursor={false}
+            colors={["#e9d5d5", "#A1A1AA", "#3F3F46", "#5227FF"]}
+            ambientColor={16777215}
+            ambientIntensity={2}
+            minSize={isMobile ? 0.5 : 0.7}
+            maxSize={isMobile ? 0.7 : 1.1}
+          />
+        </SafeBallpit>
+      </div>
+
+      <div className="absolute inset-0 z-0">
+        <SafeBallpit>
+          <Grainient
+            color1="#494349"
+            color2="#5227FF"
+            color3="#777777"
+            timeSpeed={0.3}
+            colorBalance={-0.33}
+            warpStrength={1.0}
+            warpFrequency={11.9}
+            warpSpeed={4}
+            warpAmplitude={24}
+            blendAngle={0.0}
+            blendSoftness={0.05}
+            rotationAmount={500.0}
+            noiseScale={2.0}
+            grainAmount={0.1}
+            grainScale={2.0}
+            grainAnimated={false}
+            contrast={1.5}
+            gamma={1.0}
+            saturation={1.0}
+            centerX={0.1}
+            centerY={0.0}
+            zoom={0.9}
+          />
+        </SafeBallpit>
+      </div>
+    </>
+  );
 }
 
 interface FooterLinkItem {
@@ -71,11 +124,13 @@ const staticFooterLinks: { company: FooterLinkItem[]; legal: FooterLinkItem[] } 
 
 export function Footer() {
   const [isMobile, setIsMobile] = useState(false);
+  const { ref, isNearViewport } = useDeferredVisibility<HTMLElement>();
 
   // Fetch live active services from backend API
   const { data: activeServices = [] } = useQuery({
     queryKey: queryKeys.public.services,
     queryFn: listServices,
+    enabled: isNearViewport,
   });
 
   const servicesList: FooterLinkItem[] = useMemo(() => {
@@ -106,56 +161,11 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="relative overflow-hidden bg-zinc-950 text-white">
+    <footer ref={ref} className="relative overflow-hidden bg-zinc-950 text-white">
       {/* Fade from background into gradient */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background via-transparent to-transparent h-60 pointer-events-none" />
 
-      {/* Interactive Ballpit background layer */}
-      <div className="absolute inset-0 z-[2] pointer-events-none">
-        <SafeBallpit>
-          <Ballpit
-            count={isMobile ? 18 : 40}
-            gravity={0.3}
-            friction={0.98}
-            wallBounce={0.9}
-            followCursor={false}
-            colors={["#e9d5d5", "#A1A1AA", "#3F3F46", "#5227FF"]}
-            ambientColor={16777215}
-            ambientIntensity={2}
-            minSize={isMobile ? 1.5 : 0.7}
-            maxSize={isMobile ? 2.5 : 1.1}
-          />
-        </SafeBallpit>
-      </div>
-
-      <div className="absolute inset-0 z-0">
-        <SafeBallpit>
-          <Grainient
-            color1="#494349"
-            color2="#5227FF"
-            color3="#777777"
-            timeSpeed={0.3}
-            colorBalance={-0.33}
-            warpStrength={1.0}
-            warpFrequency={11.9}
-            warpSpeed={4}
-            warpAmplitude={24}
-            blendAngle={0.0}
-            blendSoftness={0.05}
-            rotationAmount={500.0}
-            noiseScale={2.0}
-            grainAmount={0.1}
-            grainScale={2.0}
-            grainAnimated={false}
-            contrast={1.5}
-            gamma={1.0}
-            saturation={1.0}
-            centerX={0.1}
-            centerY={0.0}
-            zoom={0.9}
-          />
-        </SafeBallpit>
-      </div>
+      {isNearViewport && <FooterEffects isMobile={isMobile} />}
 
       <div className="relative z-10 px-6 py-16 md:px-10">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 md:grid-cols-12">

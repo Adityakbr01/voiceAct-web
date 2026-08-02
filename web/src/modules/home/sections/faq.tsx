@@ -11,7 +11,7 @@ const items: MotionAccordionItem[] = faqs.map((f) => ({
 
 export function Faq() {
   return (
-    <Section id="faq">
+    <Section id="faq" className="cv-auto">
       <div className="grid grid-cols-1 gap-14 md:grid-cols-12">
         <div className="md:col-span-5">
           <SectionHeader

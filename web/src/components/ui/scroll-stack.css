@@ -28,6 +28,10 @@
   width: 100%;
 }
 
+.scroll-stack-card-wrapper:not(:last-child) {
+  margin-bottom: 24px;
+}
+
 .scroll-stack-card {
   transform-origin: top center;
   will-change: transform, filter;

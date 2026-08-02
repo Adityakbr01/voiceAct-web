@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
 import type { Service } from "@/modules/services-data";
 import { usePublicServices } from "@/hooks/use-public-cms";
+import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -120,10 +121,12 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 }
 
 export function Services() {
-  const { data: services = [] } = usePublicServices();
+  const { ref, isNearViewport } = useDeferredVisibility<HTMLDivElement>();
+  const { data: services = [] } = usePublicServices({ enabled: isNearViewport });
 
   return (
-    <Section id="services">
+    <Section id="services" className="cv-auto">
+      <div ref={ref}>
       <SectionHeader
         eyebrow="Services"
         title={
@@ -142,6 +145,7 @@ export function Services() {
         {services.map((s: Service, i: number) => (
           <ServiceCard key={s.title} service={s} index={i} />
         ))}
+      </div>
       </div>
     </Section>
   );

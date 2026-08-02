@@ -1,13 +1,19 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
 import { usePublicProjects } from "@/hooks/use-public-cms";
+import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
 import ScrollStack, { ScrollStackItem } from "@/components/ui/scroll-stack";
 
 export function Work() {
-  const { data: work = [] } = usePublicProjects();
+  const { ref, isNearViewport } = useDeferredVisibility<HTMLDivElement>();
+  const { data: rawWork = [] } = usePublicProjects({ enabled: isNearViewport });
+  const work = rawWork.slice(0, 3);
 
   return (
     <Section id="work">
+      <div ref={ref}>
       <SectionHeader
         eyebrow="Selected work"
         title={
@@ -22,48 +28,97 @@ export function Work() {
         description="Apps we designed and built for founders and product teams, running in production today."
       />
 
-      <div className="mt-16">
+      {/* Mobile Layout: Clean, un-cramped responsive card list (no sticky overlap) */}
+      <div className="mt-8 flex flex-col gap-5 md:hidden">
+        {work.map((w) => (
+          <a
+            key={w.client}
+            href="#contact"
+            className="group relative block overflow-hidden rounded-2xl border border-border/70 bg-card bg-[var(--gradient-card)] p-5 shadow-lg transition-all duration-300 active:scale-[0.99]"
+          >
+            <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground font-semibold">
+              <span>{w.industry}</span>
+              <span className="h-1 w-1 rounded-full bg-primary/60" />
+              <span className="text-primary font-bold">{w.client}</span>
+            </div>
+
+            <h3 className="mt-2.5 text-lg font-bold leading-snug text-foreground">
+              {w.title}
+            </h3>
+
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              {w.outcome}
+            </p>
+
+            {/* Metrics Grid */}
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {w.metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="glass flex flex-col items-center justify-center rounded-xl border border-border/80 p-2 text-center"
+                >
+                  <div className="font-display text-sm font-bold text-foreground">
+                    {m.value}
+                  </div>
+                  <div className="mt-0.5 text-[8px] uppercase tracking-wider text-muted-foreground font-medium leading-tight">
+                    {m.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-primary">
+              <span>Read the case study</span>
+              <ArrowUpRight className="size-3.5" />
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {/* Desktop Layout: 3D ScrollStack with balanced card gaps */}
+      <div className="mt-16 hidden md:block">
         <ScrollStack
-          itemDistance={60}
-          baseScale={0.9}
-          itemScale={0.02}
-          stackPosition="20%"
+          itemDistance={50}
+          itemStackDistance={32}
+          baseScale={0.88}
+          itemScale={0.03}
+          stackPosition="15%"
           useWindowScroll={true}
         >
           {work.map((w) => (
             <ScrollStackItem key={w.client}>
               <a
                 href="#contact"
-                className="group relative block overflow-hidden rounded-2xl border border-border/60 bg-card bg-[var(--gradient-card)] shadow-[var(--shadow-card)] p-4 transition-all duration-500 hover:border-primary/40 sm:rounded-3xl sm:p-6 md:p-10"
+                className="group relative block overflow-hidden rounded-3xl border border-border/60 bg-card bg-[var(--gradient-card)] shadow-[var(--shadow-card)] p-8 md:p-10 transition-all duration-500 hover:border-primary/40"
               >
-                <div className="grid grid-cols-1 gap-5 sm:gap-8 md:grid-cols-12 md:items-center">
-                  <div className="md:col-span-7">
-                    <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:gap-3 sm:text-xs">
+                <div className="grid grid-cols-12 items-center gap-8">
+                  <div className="col-span-7">
+                    <div className="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold">
                       <span>{w.industry}</span>
-                      <span className="h-px w-6 bg-border sm:w-8" />
-                      <span className="text-primary">{w.client}</span>
+                      <span className="h-px w-8 bg-border" />
+                      <span className="text-primary font-bold">{w.client}</span>
                     </div>
-                    <h3 className="mt-3 text-xl font-semibold leading-tight sm:text-2xl md:mt-4 md:text-3xl">
+                    <h3 className="mt-4 text-2xl font-bold leading-tight md:text-3xl text-foreground group-hover:text-primary transition-colors">
                       {w.title}
                     </h3>
-                    <p className="mt-2 max-w-xl text-sm text-muted-foreground sm:mt-3 md:text-base">
+                    <p className="mt-3 max-w-xl text-sm text-muted-foreground leading-relaxed md:text-base">
                       {w.outcome}
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-2 text-sm text-primary opacity-80 transition-opacity group-hover:opacity-100 sm:mt-6">
+                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary opacity-90 transition-all group-hover:opacity-100 group-hover:translate-x-1">
                       Read the case study
                       <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     </span>
                   </div>
-                  <div className="grid grid-cols-3 gap-1 sm:gap-3 md:col-span-5">
+                  <div className="col-span-5 grid grid-cols-3 gap-3">
                     {w.metrics.map((m) => (
                       <div
                         key={m.label}
-                        className="glass flex min-w-0 flex-col justify-center rounded-xl border border-border/60 p-1.5 sm:rounded-2xl sm:p-4"
+                        className="glass flex flex-col justify-center rounded-2xl border border-border/60 p-4 transition-all duration-300 group-hover:border-primary/30"
                       >
-                        <div className="font-display min-w-0 break-words text-xs font-semibold sm:text-lg md:text-2xl lg:text-3xl">
+                        <div className="font-display text-lg font-bold md:text-2xl lg:text-3xl text-foreground">
                           {m.value}
                         </div>
-                        <div className="mt-0.5 min-w-0 break-words text-[8px] leading-tight uppercase tracking-wider text-muted-foreground sm:mt-1 sm:text-[10px] md:text-[11px]">
+                        <div className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground font-medium md:text-[11px] leading-tight">
                           {m.label}
                         </div>
                       </div>
@@ -75,6 +130,8 @@ export function Work() {
           ))}
         </ScrollStack>
       </div>
+      </div>
     </Section>
   );
 }
+

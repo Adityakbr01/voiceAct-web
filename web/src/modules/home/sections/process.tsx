@@ -84,7 +84,7 @@ function StepCard({ item, index }: { item: ProcessStep; index: number }) {
 
 export function Process() {
   return (
-    <Section id="process">
+    <Section id="process" className="cv-auto">
       <SectionHeader
         eyebrow="Process"
         title={

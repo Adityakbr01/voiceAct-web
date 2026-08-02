@@ -1,5 +1,4 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import { getConsent } from "@/lib/cookie-consent";
 
 export type Theme = "light" | "dark";
 
@@ -39,10 +38,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     setThemeState(t);
     applyTheme(t);
     try {
-      const consent = getConsent();
-      if (consent?.preferences) {
-        window.localStorage.setItem(STORAGE_KEY, t);
-      }
+      window.localStorage.setItem(STORAGE_KEY, t);
     } catch {
       /* ignore */
     }

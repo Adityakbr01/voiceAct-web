@@ -1,74 +1,81 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
-import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    gsap.registerPlugin(ScrollTrigger);
-
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
-    // Detect coarse pointers (phones/tablets) — native inertial scroll is
-    // already excellent there, so we let the browser handle it and only
-    // smooth the wheel/trackpad path on desktop.
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (prefersReducedMotion || isTouch) return;
 
-    const lenis = new Lenis({
-      lerp: 0.1,
-      smoothWheel: !isTouch,
-      syncTouch: false,
-    });
+    let cancelled = false;
+    let cleanup: (() => void) | undefined;
 
-    (window as any).lenis = lenis;
+    const initialize = async () => {
+      const [{ default: Lenis }, { gsap }, { ScrollTrigger }] = await Promise.all([
+        import("lenis"),
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      if (cancelled) return;
 
-    // Synchronize Lenis scroll updates with GSAP ScrollTrigger
-    const handleScroll = () => {
-      ScrollTrigger.update();
-    };
-    lenis.on("scroll", handleScroll);
+      gsap.registerPlugin(ScrollTrigger);
+      const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, syncTouch: false });
+      (window as any).lenis = lenis;
 
-    // Drive Lenis RAF loop through GSAP's single synchronized ticker
-    const updateTicker = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
+      const handleScroll = () => ScrollTrigger.update();
+      const updateTicker = (time: number) => lenis.raf(time * 1000);
+      lenis.on("scroll", handleScroll);
+      gsap.ticker.add(updateTicker);
+      gsap.ticker.lagSmoothing(0);
 
-    // Anchor link handling: smooth scroll to hash targets
-    const onAnchorClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
-      if (!target) return;
-      const hash = target.getAttribute("href");
-      if (!hash || hash.length < 2) return;
-      const el = document.querySelector(hash);
-      if (!el) return;
-      e.preventDefault();
-      lenis.scrollTo(el as HTMLElement, { offset: -80, duration: 1.0 });
-    };
-    document.addEventListener("click", onAnchorClick);
+      const onAnchorClick = (event: MouseEvent) => {
+        const target = (event.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
+        const hash = target?.getAttribute("href");
+        if (!hash || hash.length < 2) return;
 
-    // Handle resizes (images loading, content rendering)
-    const resizeObserver = new ResizeObserver(() => {
-      lenis.resize();
-      ScrollTrigger.refresh();
-    });
-    if (document.body) {
+        const element = document.querySelector(hash);
+        if (!element) return;
+        event.preventDefault();
+        lenis.scrollTo(element as HTMLElement, { offset: -80, duration: 1 });
+      };
+      document.addEventListener("click", onAnchorClick);
+
+      let refreshTimer: number | undefined;
+      const scheduleRefresh = () => {
+        window.clearTimeout(refreshTimer);
+        refreshTimer = window.setTimeout(() => {
+          lenis.resize();
+          ScrollTrigger.refresh();
+        }, 150);
+      };
+      const resizeObserver = new ResizeObserver(scheduleRefresh);
       resizeObserver.observe(document.body);
-    }
+
+      cleanup = () => {
+        window.clearTimeout(refreshTimer);
+        gsap.ticker.remove(updateTicker);
+        lenis.off("scroll", handleScroll);
+        document.removeEventListener("click", onAnchorClick);
+        resizeObserver.disconnect();
+        lenis.destroy();
+        delete (window as any).lenis;
+      };
+    };
+
+    const supportsIdleCallback =
+      "requestIdleCallback" in window && "cancelIdleCallback" in window;
+    const idleHandle = supportsIdleCallback
+      ? window.requestIdleCallback(() => void initialize(), { timeout: 2_500 })
+      : window.setTimeout(() => void initialize(), 1_500);
 
     return () => {
-      gsap.ticker.remove(updateTicker);
-      lenis.off("scroll", handleScroll);
-      document.removeEventListener("click", onAnchorClick);
-      resizeObserver.disconnect();
-      lenis.destroy();
-      delete (window as any).lenis;
+      cancelled = true;
+      if (supportsIdleCallback) window.cancelIdleCallback(idleHandle as number);
+      else window.clearTimeout(idleHandle as number);
+      cleanup?.();
     };
   }, []);
 

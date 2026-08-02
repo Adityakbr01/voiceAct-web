@@ -9,6 +9,7 @@ import { cta } from "@/modules/home-data";
 import { submitContact } from "@/lib/api/contacts";
 import { listServices } from "@/lib/api/cms";
 import { queryKeys } from "@/lib/api/query-keys";
+import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
 
 type Choice = { label: string; options: string[]; value: string };
 
@@ -37,7 +38,7 @@ function Chips({
               className={[
                 "rounded-full border px-3.5 py-1.5 text-sm transition-all",
                 active
-                  ? "border-primary/60 bg-primary/15 text-foreground shadow-[0_0_0_1px_var(--color-primary)_inset]"
+                  ? "border-primary/60 bg-primary/15 text-foreground shadow-none"
                   : "border-border/60 bg-card/40 text-muted-foreground hover:border-border hover:text-foreground",
               ].join(" ")}
               aria-pressed={active}
@@ -52,10 +53,13 @@ function Chips({
 }
 
 export function Cta() {
+  const { ref, isNearViewport } = useDeferredVisibility<HTMLDivElement>();
+
   // Fetch live active services from backend CMS
   const { data: activeServices = [] } = useQuery({
     queryKey: queryKeys.public.services,
     queryFn: listServices,
+    enabled: isNearViewport,
   });
 
   const projectTypeOptions = useMemo(() => {
@@ -160,8 +164,9 @@ export function Cta() {
   }
 
   return (
-    <section id="contact" className="relative px-6 pb-32 md:px-10">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-border/60 bg-card shadow-[var(--shadow-card)] p-8 md:p-14">
+    <section id="contact" className="relative px-0 pb-32 md:px-10 cv-auto">
+      <div ref={ref}>
+      <div className="relative mx-auto md:max-w-6xl w-full overflow-hidden md:rounded-[2rem] border border-border/60 bg-card shadow-none p-8 md:p-14">
         <div className="relative grid gap-10 md:grid-cols-[1.05fr_1fr] md:gap-14">
           {/* Left — pitch + anchor (Contrast Effect + Loss Aversion) */}
           <div className="flex flex-col text-left">
@@ -223,7 +228,7 @@ export function Cta() {
           </div>
 
           {/* Right — pre-filled form (Smart Defaults + IKEA + Goal Gradient) */}
-          <div className="glass rounded-2xl border border-border/60 bg-card/40 p-6 md:p-7">
+          <div className="glass shadow-none! rounded-2xl border-none! border-border/60 bg-card/40 p-0 md:p-7">
             {submitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.92 }}
@@ -234,7 +239,7 @@ export function Cta() {
                 {/* Animated Green Checkmark Badge SVG */}
                 <div className="relative flex items-center justify-center">
                   <div className="absolute inset-0 rounded-full bg-emerald-500/20 blur-xl animate-pulse" />
-                  <div className="relative grid size-16 place-items-center rounded-full border-2 border-emerald-500/40 bg-emerald-500/10 text-emerald-400 shadow-lg">
+                  <div className="relative grid size-16 place-items-center rounded-full border-2 border-emerald-500/40 bg-emerald-500/10 text-emerald-400 shadow-none">
                     <svg className="w-8 h-8 stroke-emerald-400 fill-none" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
@@ -282,7 +287,7 @@ export function Cta() {
             ) : (
             <>
             {/* Goal gradient */}
-            <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center justify-between text-xs shadow-none">
               <span className="inline-flex items-center gap-1.5 text-muted-foreground">
                 <Sparkles className="size-3.5 text-primary" aria-hidden />
                 Preferences captured
@@ -360,6 +365,7 @@ export function Cta() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
