@@ -99,6 +99,7 @@ const staticFooterLinks: { company: FooterLinkItem[]; legal: FooterLinkItem[] } 
     { label: "About", href: "/about" },
     { label: "Services", href: "/#services" },
     { label: "Work", href: "/#work" },
+    { label: "Blog", href: "/blog" },
     {
       label: "Portfolio",
       href: "/#work",
@@ -146,13 +147,23 @@ export function Footer() {
               : undefined,
       }));
     }
-    return company.services.map((s, idx) => ({
-      label: s,
-      href: "/#services",
+    const defaultServices = [
+      { label: "Web Development", slug: "web-development" },
+      { label: "Mobile App Development", slug: "mobile-development" },
+      { label: "SaaS Development", slug: "saas-development" },
+      { label: "UI/UX Design", slug: "ui-ux-design" },
+      { label: "AI Solutions", slug: "ai-solutions" },
+      { label: "Cloud Solutions", slug: "cloud-solutions" },
+    ];
+    return defaultServices.map((s, idx) => ({
+      label: s.label,
+      href: `/services/${s.slug}`,
       badge:
         idx === 0
           ? { text: "Popular", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" }
-          : undefined,
+          : idx === 1
+            ? { text: "New", color: "bg-blue-500/15 text-blue-400 border-blue-500/30" }
+            : undefined,
     }));
   }, [activeServices]);
 

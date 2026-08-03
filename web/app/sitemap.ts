@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { APP } from "@/config/constants";
-import { listProjects } from "@/lib/api/cms";
+import { listProjects, listServices } from "@/lib/api/cms";
+import { blogPosts } from "@/modules/blog-data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech").replace(
@@ -8,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
   );
 
-  // Base static routes with standard priorities and update frequencies
+  // Base static routes
   const routes: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}`,
@@ -26,6 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 0.8,
     },
     {
@@ -48,7 +55,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Dynamically include published portfolio project detail pages (/work/[slug])
+  // Static fallback service routes
+  const defaultServiceSlugs = [
+    "web-development",
+    "mobile-development",
+    "saas-development",
+    "ui-ux-design",
+    "ai-solutions",
+    "cloud-solutions",
+  ];
+
+  // Dynamic portfolio project detail pages (/work/[slug])
   try {
     const projects = await listProjects();
     if (Array.isArray(projects)) {
@@ -65,6 +82,51 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } catch (error) {
     console.error("Failed to fetch dynamic project routes for sitemap:", error);
+  }
+
+  // Service detail pages (/services/[slug])
+  try {
+    const services = await listServices();
+    if (Array.isArray(services) && services.length > 0) {
+      for (const service of services) {
+        if (service.slug) {
+          routes.push({
+            url: `${baseUrl}/services/${service.slug}`,
+            lastModified: service.updatedAt ? new Date(service.updatedAt) : new Date(),
+            changeFrequency: "weekly",
+            priority: 0.7,
+          });
+        }
+      }
+    } else {
+      for (const slug of defaultServiceSlugs) {
+        routes.push({
+          url: `${baseUrl}/services/${slug}`,
+          lastModified: new Date(),
+          changeFrequency: "weekly",
+          priority: 0.7,
+        });
+      }
+    }
+  } catch {
+    for (const slug of defaultServiceSlugs) {
+      routes.push({
+        url: `${baseUrl}/services/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.7,
+      });
+    }
+  }
+
+  // Blog post detail pages (/blog/[slug])
+  for (const post of blogPosts) {
+    routes.push({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    });
   }
 
   return routes;

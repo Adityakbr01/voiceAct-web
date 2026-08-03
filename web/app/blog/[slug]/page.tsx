@@ -1,0 +1,188 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft, Clock, Calendar, ArrowRight, Share2, Tag } from "lucide-react";
+import { getBlogPostBySlug, blogPosts } from "@/modules/blog-data";
+import { company } from "@/modules/company-data";
+import { Footer } from "@/components/layouts/footer";
+import { Cta } from "@/modules/home/sections/cta";
+
+interface PageProps {
+  params: Promise<{ slug: string }> | { slug: string };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = getBlogPostBySlug(resolvedParams.slug);
+
+  if (!post) {
+    return { title: `Post Not Found — ${company.name}` };
+  }
+
+  return {
+    title: `${post.title} — ${company.name} Blog`,
+    description: post.excerpt,
+    openGraph: {
+      title: `${post.title} — ${company.name} Blog`,
+      description: post.excerpt,
+      images: [{ url: post.coverImage }],
+    },
+  };
+}
+
+export default async function BlogPostDetailPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const post = getBlogPostBySlug(resolvedParams.slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
+
+  return (
+    <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
+      <main className="pt-24 pb-20">
+        <div className="max-w-4xl mx-auto px-6 md:px-10 mb-8">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="size-4" /> Back to Blog
+          </Link>
+        </div>
+
+        {/* Article Header */}
+        <section className="max-w-4xl mx-auto px-6 md:px-10 pb-8 space-y-6">
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <span className="rounded-full bg-primary/10 border border-primary/20 px-3 py-1 font-semibold text-primary uppercase tracking-wider">
+              {post.category}
+            </span>
+            <span>·</span>
+            <span className="inline-flex items-center gap-1">
+              <Clock className="size-3.5" /> {post.readTime}
+            </span>
+            <span>·</span>
+            <span className="inline-flex items-center gap-1">
+              <Calendar className="size-3.5" /> {post.publishedAt}
+            </span>
+          </div>
+
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+            {post.title}
+          </h1>
+
+          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">{post.excerpt}</p>
+
+          <div className="flex items-center justify-between border-y border-border/60 py-4">
+            <div className="flex items-center gap-3">
+              <img
+                src={post.author.avatar}
+                alt={post.author.name}
+                className="size-10 rounded-full object-cover border border-border"
+              />
+              <div>
+                <p className="text-sm font-bold text-foreground">{post.author.name}</p>
+                <p className="text-xs text-muted-foreground">{post.author.role}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="hidden sm:inline-flex items-center gap-1 rounded-full border border-border/60 bg-card/50 px-2.5 py-0.5 text-xs text-muted-foreground"
+                >
+                  <Tag className="size-3" /> {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Cover Image */}
+        <section className="max-w-4xl mx-auto px-6 md:px-10 pb-12">
+          <div className="overflow-hidden rounded-3xl border border-border/60 aspect-video">
+            <img src={post.coverImage} alt={post.title} className="h-full w-full object-cover" />
+          </div>
+        </section>
+
+        {/* Article Body */}
+        <article className="max-w-3xl mx-auto px-6 md:px-10 pb-16 prose prose-invert max-w-none text-foreground/90 space-y-6 text-base md:text-lg leading-relaxed">
+          {post.content.split("\n\n").map((paragraph, i) => {
+            if (paragraph.startsWith("### ")) {
+              return (
+                <h3
+                  key={i}
+                  className="text-xl md:text-2xl font-bold tracking-tight text-foreground pt-4"
+                >
+                  {paragraph.replace("### ", "")}
+                </h3>
+              );
+            }
+            if (paragraph.startsWith("- ")) {
+              return (
+                <ul key={i} className="space-y-2 my-4 pl-4 border-l-2 border-primary/40">
+                  {paragraph.split("\n").map((item, j) => (
+                    <li key={j} className="text-muted-foreground text-base">
+                      {item.replace("- ", "")}
+                    </li>
+                  ))}
+                </ul>
+              );
+            }
+            if (paragraph.startsWith("1. ")) {
+              return (
+                <ol key={i} className="space-y-2 my-4 pl-4 border-l-2 border-primary/40">
+                  {paragraph.split("\n").map((item, j) => (
+                    <li key={j} className="text-muted-foreground text-base">
+                      {item}
+                    </li>
+                  ))}
+                </ol>
+              );
+            }
+            return (
+              <p key={i} className="text-muted-foreground">
+                {paragraph}
+              </p>
+            );
+          })}
+        </article>
+
+        {/* Related Articles */}
+        {relatedPosts.length > 0 && (
+          <section className="max-w-4xl mx-auto px-6 md:px-10 py-12 border-t border-border/60">
+            <h3 className="text-xl font-bold tracking-tight mb-6">Related Articles</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {relatedPosts.map((related) => (
+                <Link
+                  key={related.slug}
+                  href={`/blog/${related.slug}`}
+                  className="group p-5 rounded-2xl border border-border/60 bg-card/40 hover:border-primary/40 transition flex flex-col justify-between"
+                >
+                  <div className="space-y-2">
+                    <span className="text-xs font-semibold text-primary">{related.category}</span>
+                    <h4 className="font-bold text-base group-hover:text-primary transition-colors">
+                      {related.title}
+                    </h4>
+                  </div>
+                  <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                    Read Post <ArrowRight className="size-3" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* CTA */}
+        <div className="mt-8">
+          <Cta />
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
