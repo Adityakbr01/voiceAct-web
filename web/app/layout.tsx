@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "./globals.css";
 import { APP, SOCIALS } from "@/config/constants";
@@ -36,6 +37,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const gaId =
+    process.env.NEXT_PUBLIC_GA_ID ||
+    (process.env.NODE_ENV === "production" ? "G-D7ZC6EPVER" : undefined);
+
   return (
     <html
       lang="en"
@@ -68,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </a>
           {children}
         </Providers>
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );
