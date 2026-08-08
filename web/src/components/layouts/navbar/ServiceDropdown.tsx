@@ -59,12 +59,11 @@ export const ServiceDropdown = memo(function ServiceDropdown({
     gsap.set(items.querySelectorAll("[data-service-item]"), { opacity: 0, y: 10 });
 
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-    tl.to(dropdown, { opacity: 1, y: 0, scale: 1, duration: 0.4 }, 0)
-      .to(
-        items.querySelectorAll("[data-service-item]"),
-        { opacity: 1, y: 0, duration: 0.35, stagger: 0.05, ease: "power3.out" },
-        0.1,
-      );
+    tl.to(dropdown, { opacity: 1, y: 0, scale: 1, duration: 0.4 }, 0).to(
+      items.querySelectorAll("[data-service-item]"),
+      { opacity: 1, y: 0, duration: 0.35, stagger: 0.05, ease: "power3.out" },
+      0.1,
+    );
 
     return () => {
       gsap.killTweensOf(dropdown);

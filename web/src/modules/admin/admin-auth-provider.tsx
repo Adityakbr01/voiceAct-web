@@ -49,7 +49,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
       setAdmin(user);
       router.replace("/admin/contacts");
     },
-    [router]
+    [router],
   );
 
   const logout = useCallback(() => {

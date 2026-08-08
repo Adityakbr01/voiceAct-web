@@ -76,15 +76,7 @@ export interface UserTeamMembership {
 }
 
 export type SocialPlatform =
-  | 'twitter'
-  | 'linkedin'
-  | 'github'
-  | 'instagram'
-  | 'dribbble'
-  | 'behance'
-  | 'skype'
-  | 'website'
-  | 'facebook'
+  'twitter' | 'linkedin' | 'github' | 'instagram' | 'dribbble' | 'behance' | 'skype' | 'website' | 'facebook'
 
 export interface UserSocialLink {
   platform: SocialPlatform

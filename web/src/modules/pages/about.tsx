@@ -29,9 +29,7 @@ export function AboutPage() {
           <h1 className="font-display text-4xl font-semibold tracking-tight md:text-6xl">
             About {company.name}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-            {company.description}
-          </p>
+          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">{company.description}</p>
         </motion.div>
 
         {/* Mission & Vision */}
@@ -43,15 +41,11 @@ export function AboutPage() {
         >
           <div className="rounded-xl border bg-card p-8">
             <h2 className="font-display text-2xl font-semibold">Our Mission</h2>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
-              {company.mission}
-            </p>
+            <p className="mt-4 text-muted-foreground leading-relaxed">{company.mission}</p>
           </div>
           <div className="rounded-xl border bg-card p-8">
             <h2 className="font-display text-2xl font-semibold">Our Vision</h2>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
-              {company.vision}
-            </p>
+            <p className="mt-4 text-muted-foreground leading-relaxed">{company.vision}</p>
           </div>
         </motion.section>
 
@@ -70,13 +64,8 @@ export function AboutPage() {
               { value: company.clients, label: "Clients Served" },
               { value: company.projects, label: "Projects Delivered" },
             ].map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-xl border bg-card p-6 text-center"
-              >
-                <div className="font-display text-3xl font-semibold text-primary">
-                  {stat.value}
-                </div>
+              <div key={stat.label} className="rounded-xl border bg-card p-6 text-center">
+                <div className="font-display text-3xl font-semibold text-primary">{stat.value}</div>
                 <div className="mt-2 text-sm text-muted-foreground">{stat.label}</div>
               </div>
             ))}
@@ -102,19 +91,14 @@ export function AboutPage() {
                     className="flex size-10 items-center justify-center rounded-lg"
                     style={{ backgroundColor: `${service.color}15` }}
                   >
-                    <service.icon
-                      className="size-5"
-                      style={{ color: service.color }}
-                    />
+                    <service.icon className="size-5" style={{ color: service.color }} />
                   </div>
                   <div>
                     <div className="text-xs text-muted-foreground">{service.tag}</div>
                     <div className="font-medium">{service.title}</div>
                   </div>
                 </div>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  {service.description}
-                </p>
+                <p className="mt-4 text-sm text-muted-foreground">{service.description}</p>
               </div>
             ))}
           </div>
@@ -149,7 +133,9 @@ export function AboutPage() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-20"
         >
-          <h2 className="font-display text-2xl font-semibold mb-8">Contact & Business Information</h2>
+          <h2 className="font-display text-2xl font-semibold mb-8">
+            Contact & Business Information
+          </h2>
           <div className="grid gap-8 md:grid-cols-2">
             {/* Contact Details */}
             <div className="rounded-xl border bg-card p-8">

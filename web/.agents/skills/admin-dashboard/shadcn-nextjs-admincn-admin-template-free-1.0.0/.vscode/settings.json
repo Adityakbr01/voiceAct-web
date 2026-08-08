@@ -23,12 +23,7 @@
   // Extension: Prettier
   "prettier.requireConfig": true,
   // Extension: ESLint
-  "eslint.validate": [
-    "javascript",
-    "typescript",
-    "javascriptreact",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact"],
   "eslint.format.enable": true,
   "eslint.workingDirectories": [
     {

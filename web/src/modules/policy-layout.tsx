@@ -34,9 +34,7 @@ export function PolicyLayout({ title, lastUpdated, children }: PolicyLayoutProps
           <h1 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
             {title}
           </h1>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Last updated: {lastUpdated}
-          </p>
+          <p className="mt-3 text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
 
           <div className="prose prose-neutral dark:prose-invert mt-12 max-w-none space-y-8">
             {children}

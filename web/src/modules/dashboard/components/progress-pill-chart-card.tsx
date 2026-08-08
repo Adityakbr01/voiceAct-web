@@ -47,15 +47,15 @@ export function ProgressPillChartCard({ themeMode = "dark" }: ProgressPillChartC
       tl.fromTo(
         bars,
         { scaleY: 0, opacity: 0, transformOrigin: "bottom center" },
-        { scaleY: 1, opacity: 1, duration: 0.55, stagger: 0.07 }
+        { scaleY: 1, opacity: 1, duration: 0.55, stagger: 0.07 },
       ).fromTo(
         tags,
         { y: 8, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.3, stagger: 0.05 },
-        "-=0.2"
+        "-=0.2",
       );
     },
-    { scope: chartContainerRef, dependencies: [timeframe] }
+    { scope: chartContainerRef, dependencies: [timeframe] },
   );
 
   return (
@@ -67,7 +67,9 @@ export function ProgressPillChartCard({ themeMode = "dark" }: ProgressPillChartC
     >
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className={`text-xl sm:text-2xl tracking-tight font-bold ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}>
+          <h2
+            className={`text-xl sm:text-2xl tracking-tight font-bold ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}
+          >
             {timeframe === "week" ? "Weekly Visitor Traffic" : "Monthly Visitor Growth"}
           </h2>
           <p className={`text-xs mt-1 ${isDark ? "text-slate-400" : "text-slate-700"}`}>
@@ -78,9 +80,11 @@ export function ProgressPillChartCard({ themeMode = "dark" }: ProgressPillChartC
         </div>
 
         {/* Functionable Week / Month Toggle */}
-        <div className={`inline-flex items-center gap-1.5 rounded-full p-1 border ${
-          isDark ? "bg-[#212630] border-[#2A2F38]" : "bg-slate-900/10 border-slate-900/10"
-        }`}>
+        <div
+          className={`inline-flex items-center gap-1.5 rounded-full p-1 border ${
+            isDark ? "bg-[#212630] border-[#2A2F38]" : "bg-slate-900/10 border-slate-900/10"
+          }`}
+        >
           <button
             onClick={() => setTimeframe("week")}
             className={`px-3 py-1.5 rounded-full text-[11px] font-bold transition-all duration-300 cursor-pointer ${
@@ -89,8 +93,8 @@ export function ProgressPillChartCard({ themeMode = "dark" }: ProgressPillChartC
                   ? "bg-[#d6f14a] text-slate-950 shadow-md shadow-[#d6f14a]/20"
                   : "bg-slate-900 text-[#d6f14a] shadow-sm"
                 : isDark
-                ? "text-slate-400 hover:text-white"
-                : "text-slate-800 hover:text-slate-950"
+                  ? "text-slate-400 hover:text-white"
+                  : "text-slate-800 hover:text-slate-950"
             }`}
           >
             Week
@@ -103,8 +107,8 @@ export function ProgressPillChartCard({ themeMode = "dark" }: ProgressPillChartC
                   ? "bg-[#d6f14a] text-slate-950 shadow-md shadow-[#d6f14a]/20"
                   : "bg-slate-900 text-[#d6f14a] shadow-sm"
                 : isDark
-                ? "text-slate-400 hover:text-white"
-                : "text-slate-800 hover:text-slate-950"
+                  ? "text-slate-400 hover:text-white"
+                  : "text-slate-800 hover:text-slate-950"
             }`}
           >
             Month
@@ -162,8 +166,8 @@ export function ProgressPillChartCard({ themeMode = "dark" }: ProgressPillChartC
                         ? "text-[#d6f14a] font-bold"
                         : "text-slate-950 font-bold"
                       : isDark
-                      ? "text-slate-300"
-                      : "text-slate-800"
+                        ? "text-slate-300"
+                        : "text-slate-800"
                   }`}
                 >
                   {item.label}
@@ -183,7 +187,9 @@ export function ProgressPillChartCard({ themeMode = "dark" }: ProgressPillChartC
           ))}
         </div>
 
-        <div className={`mt-5 flex items-center justify-between text-[11px] ${isDark ? "text-slate-300" : "text-slate-800"}`}>
+        <div
+          className={`mt-5 flex items-center justify-between text-[11px] ${isDark ? "text-slate-300" : "text-slate-800"}`}
+        >
           <div className="flex items-center gap-2">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-lime-400 animate-pulse" />
             <span>Peak Visitor Sessions</span>

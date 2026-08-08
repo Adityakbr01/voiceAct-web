@@ -9,6 +9,7 @@ import * as authController from "./auth.controller.js";
 const router = Router();
 
 router.post("/login", authLimiter, validate(loginSchema), asyncHandler(authController.login));
+router.post("/refresh", asyncHandler(authController.refresh));
 router.post("/logout", protect, asyncHandler(authController.logout));
 router.get("/me", protect, asyncHandler(authController.me));
 

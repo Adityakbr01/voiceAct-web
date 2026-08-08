@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Section, SectionHeader } from "@/modules/home/components/section";
 import { process, type ProcessStep } from "@/modules/services-data";

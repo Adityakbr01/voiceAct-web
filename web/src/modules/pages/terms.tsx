@@ -7,14 +7,19 @@ export function TermsPage() {
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Acceptance of Terms</h2>
         <p className="text-muted-foreground">
-          By accessing and using the services provided by {company.name} (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;), you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our services.
+          By accessing and using the services provided by {company.name} (&quot;we,&quot;
+          &quot;our,&quot; or &quot;us&quot;), you agree to be bound by these Terms and Conditions.
+          If you do not agree to these terms, please do not use our services.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Services</h2>
         <p className="text-muted-foreground">
-          We provide software development services including but not limited to web development, mobile app development, UI/UX design, cloud solutions, and consulting. The scope, deliverables, and timeline for each project will be defined in a separate Statement of Work (SOW) or project agreement.
+          We provide software development services including but not limited to web development,
+          mobile app development, UI/UX design, cloud solutions, and consulting. The scope,
+          deliverables, and timeline for each project will be defined in a separate Statement of
+          Work (SOW) or project agreement.
         </p>
       </section>
 
@@ -44,13 +49,13 @@ export function TermsPage() {
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Refund Policy</h2>
-        <p className="text-muted-foreground">
-          Refund eligibility depends on the project stage:
-        </p>
+        <p className="text-muted-foreground">Refund eligibility depends on the project stage:</p>
         <ul className="mt-4 space-y-2 text-muted-foreground list-disc pl-6">
           <li>Before project commencement: Full refund minus administrative fees.</li>
           <li>During discovery/design phase: Pro-rata refund based on work completed.</li>
-          <li>During development phase: Refund calculated based on remaining undelivered milestones.</li>
+          <li>
+            During development phase: Refund calculated based on remaining undelivered milestones.
+          </li>
           <li>After delivery: No refund for completed and accepted deliverables.</li>
         </ul>
       </section>
@@ -58,7 +63,8 @@ export function TermsPage() {
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Project Delivery</h2>
         <p className="text-muted-foreground">
-          We strive to deliver projects within the agreed timeline. However, timelines may be adjusted due to:
+          We strive to deliver projects within the agreed timeline. However, timelines may be
+          adjusted due to:
         </p>
         <ul className="mt-4 space-y-2 text-muted-foreground list-disc pl-6">
           <li>Changes in project scope or requirements.</li>
@@ -71,49 +77,64 @@ export function TermsPage() {
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Intellectual Property</h2>
         <p className="text-muted-foreground">
-          Upon full payment, the client receives ownership of all custom code, designs, and deliverables created specifically for the project. {company.name} retains the right to use general knowledge, skills, tools, and pre-existing components in future projects.
+          Upon full payment, the client receives ownership of all custom code, designs, and
+          deliverables created specifically for the project. {company.name} retains the right to use
+          general knowledge, skills, tools, and pre-existing components in future projects.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Confidentiality</h2>
         <p className="text-muted-foreground">
-          Both parties agree to keep confidential all proprietary information shared during the course of the engagement. This obligation survives the termination of the agreement for a period of two years.
+          Both parties agree to keep confidential all proprietary information shared during the
+          course of the engagement. This obligation survives the termination of the agreement for a
+          period of two years.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Limitation of Liability</h2>
         <p className="text-muted-foreground">
-          To the maximum extent permitted by applicable law, {company.name} shall not be liable for any indirect, incidental, special, consequential, or punitive damages. Our total liability shall not exceed the total amount paid by the client under the applicable project agreement.
+          To the maximum extent permitted by applicable law, {company.name} shall not be liable for
+          any indirect, incidental, special, consequential, or punitive damages. Our total liability
+          shall not exceed the total amount paid by the client under the applicable project
+          agreement.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Termination</h2>
         <p className="text-muted-foreground">
-          Either party may terminate the agreement with 14 days&apos; written notice. In the event of termination, the client shall pay for all work completed up to the termination date. Provisions that by their nature should survive termination shall remain in effect.
+          Either party may terminate the agreement with 14 days&apos; written notice. In the event
+          of termination, the client shall pay for all work completed up to the termination date.
+          Provisions that by their nature should survive termination shall remain in effect.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Governing Law</h2>
         <p className="text-muted-foreground">
-          These Terms and Conditions shall be governed by and construed in accordance with the laws of India. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts in Bengaluru, Karnataka, India.
+          These Terms and Conditions shall be governed by and construed in accordance with the laws
+          of India. Any disputes arising under these terms shall be subject to the exclusive
+          jurisdiction of the courts in Bengaluru, Karnataka, India.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Dispute Resolution</h2>
         <p className="text-muted-foreground">
-          Any disputes arising out of or relating to these terms shall first be attempted to be resolved through good-faith negotiation. If the dispute cannot be resolved through negotiation within 30 days, either party may submit the dispute to binding arbitration under the Arbitration and Conciliation Act, 1996, in Bengaluru, India.
+          Any disputes arising out of or relating to these terms shall first be attempted to be
+          resolved through good-faith negotiation. If the dispute cannot be resolved through
+          negotiation within 30 days, either party may submit the dispute to binding arbitration
+          under the Arbitration and Conciliation Act, 1996, in Bengaluru, India.
         </p>
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold tracking-tight">Contact Information</h2>
         <p className="text-muted-foreground">
-          For questions regarding these Terms & Conditions, please contact {company.name} at {company.contact.email} or write to {company.address.full}.
+          For questions regarding these Terms & Conditions, please contact {company.name} at{" "}
+          {company.contact.email} or write to {company.address.full}.
         </p>
       </section>
     </PolicyLayout>

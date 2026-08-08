@@ -59,7 +59,7 @@ function AccordionItem({
         aria-controls={panelId}
         aria-expanded={isOpen}
         onClick={onToggle}
-        className="flex w-full cursor-pointer select-none items-center justify-between gap-4 px-7 py-2 text-left"
+        className="flex w-full cursor-pointer select-none items-center justify-between gap-4 px-2 py-2 md:px-7  text-left"
       >
         <span className="text-[clamp(0.96rem,1.28vw,1.04rem)] font-medium tracking-tight leading-snug">
           {item.question}
@@ -76,28 +76,11 @@ function AccordionItem({
           className="inline-flex size-12 shrink-0 items-center justify-center text-foreground"
         >
           {isOpen ? (
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 2"
-              fill="none"
-              aria-hidden
-            >
-              <path
-                d="M1 1h12"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-              />
+            <svg width="14" height="14" viewBox="0 0 14 2" fill="none" aria-hidden>
+              <path d="M1 1h12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
             </svg>
           ) : (
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              aria-hidden
-            >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
               <path
                 d="M7 1v12M1 7h12"
                 stroke="currentColor"
@@ -144,11 +127,7 @@ function AccordionItem({
   );
 }
 
-export function MotionAccordion({
-  items,
-  gap = 5,
-  className,
-}: MotionAccordionProps) {
+export function MotionAccordion({ items, gap = 5, className }: MotionAccordionProps) {
   const rawId = React.useId();
   const baseId = `accordion-${rawId.replace(/:/g, "")}`;
 
@@ -158,7 +137,7 @@ export function MotionAccordion({
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="flex flex-col rounded-[34px] p-3 " style={{ gap }}>
+      <div className="flex flex-col rounded-[34px] md:p-3 " style={{ gap }}>
         {items.map((item, i) => (
           <AccordionItem
             key={i}

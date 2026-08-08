@@ -162,52 +162,99 @@ export function AdminProjectsView() {
         }
       />
 
-      <div className={`overflow-hidden rounded-none border ${
-        isDark ? "border-[#1f1f1f] bg-[#0a0a0a]" : "border-slate-200 bg-white shadow-sm"
-      }`}>
+      <div
+        className={`overflow-hidden rounded-none border ${
+          isDark ? "border-[#1f1f1f] bg-[#0a0a0a]" : "border-slate-200 bg-white shadow-sm"
+        }`}
+      >
         <Table>
           <TableHeader>
-            <TableRow className={`border-b ${isDark ? "border-[#1f1f1f] hover:bg-transparent" : "border-slate-200 bg-slate-50"}`}>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Title</TableHead>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Client</TableHead>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Featured</TableHead>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Order</TableHead>
-              <TableHead className={`text-right ${isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}`}>Actions</TableHead>
+            <TableRow
+              className={`border-b ${isDark ? "border-[#1f1f1f] hover:bg-transparent" : "border-slate-200 bg-slate-50"}`}
+            >
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Title
+              </TableHead>
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Client
+              </TableHead>
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Featured
+              </TableHead>
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Order
+              </TableHead>
+              <TableHead
+                className={`text-right ${isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}`}
+              >
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading && (
               <TableRow>
-                <TableCell colSpan={5} className={`py-10 text-center ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>
+                <TableCell
+                  colSpan={5}
+                  className={`py-10 text-center ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}
+                >
                   Loading projects…
                 </TableCell>
               </TableRow>
             )}
             {!isLoading && !projects.length && (
               <TableRow>
-                <TableCell colSpan={5} className={`py-10 text-center ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>
+                <TableCell
+                  colSpan={5}
+                  className={`py-10 text-center ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}
+                >
                   No projects yet.
                 </TableCell>
               </TableRow>
             )}
             {projects.map((project) => (
-              <TableRow key={project._id} className={`border-b transition-colors ${
-                isDark ? "border-[#1f1f1f] hover:bg-[#111111]" : "border-slate-100 hover:bg-slate-50"
-              }`}>
-                <TableCell className={`font-semibold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>{project.title}</TableCell>
-                <TableCell className={`text-xs ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>{project.client ?? "—"}</TableCell>
+              <TableRow
+                key={project._id}
+                className={`border-b transition-colors ${
+                  isDark
+                    ? "border-[#1f1f1f] hover:bg-[#111111]"
+                    : "border-slate-100 hover:bg-slate-50"
+                }`}
+              >
+                <TableCell
+                  className={`font-semibold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
+                >
+                  {project.title}
+                </TableCell>
+                <TableCell className={`text-xs ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>
+                  {project.client ?? "—"}
+                </TableCell>
                 <TableCell>
-                  <Badge variant="outline" className={`capitalize font-semibold rounded-none border ${
-                    project.featured
-                      ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
-                      : isDark ? "bg-[#1f1f1f] text-[#a1a1a1] border-[#333333]" : "bg-slate-100 text-slate-500 border-slate-300"
-                  }`}>
+                  <Badge
+                    variant="outline"
+                    className={`capitalize font-semibold rounded-none border ${
+                      project.featured
+                        ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                        : isDark
+                          ? "bg-[#1f1f1f] text-[#a1a1a1] border-[#333333]"
+                          : "bg-slate-100 text-slate-500 border-slate-300"
+                    }`}
+                  >
                     {project.featured ? "Featured" : "Standard"}
                   </Badge>
                 </TableCell>
-                <TableCell className={`font-mono text-xs ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>{project.order}</TableCell>
+                <TableCell
+                  className={`font-mono text-xs ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}
+                >
+                  {project.order}
+                </TableCell>
                 <TableCell className="space-x-2 text-right">
-                  <Button size="sm" variant="ghost" className={`text-xs font-semibold rounded-none ${isDark ? "text-[#ededed] hover:bg-[#1f1f1f]" : "text-slate-700 hover:bg-slate-100"}`} onClick={() => openEdit(project)}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className={`text-xs font-semibold rounded-none ${isDark ? "text-[#ededed] hover:bg-[#1f1f1f]" : "text-slate-700 hover:bg-slate-100"}`}
+                    onClick={() => openEdit(project)}
+                  >
                     Edit
                   </Button>
                   <Button
@@ -227,11 +274,17 @@ export function AdminProjectsView() {
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className={`max-h-[90vh] overflow-y-auto border rounded-none ${
-          isDark ? "border-[#1f1f1f] bg-[#0a0a0a] text-[#ededed]" : "border-slate-200 bg-white text-slate-900 shadow-xl"
-        }`}>
+        <DialogContent
+          className={`max-h-[90vh] overflow-y-auto border rounded-none ${
+            isDark
+              ? "border-[#1f1f1f] bg-[#0a0a0a] text-[#ededed]"
+              : "border-slate-200 bg-white text-slate-900 shadow-xl"
+          }`}
+        >
           <DialogHeader>
-            <DialogTitle className={`text-lg font-bold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>
+            <DialogTitle
+              className={`text-lg font-bold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
+            >
               {editingId ? "Edit Project" : "New Project"}
             </DialogTitle>
           </DialogHeader>
@@ -240,7 +293,9 @@ export function AdminProjectsView() {
               <span className={isDark ? "text-[#a1a1a1]" : "text-slate-600"}>Title</span>
               <input
                 className={`rounded-none border px-3 py-2 text-xs transition focus:outline-none ${
-                  isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white" : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
+                  isDark
+                    ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white"
+                    : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
                 }`}
                 value={form.title}
                 onChange={(e) => setForm((prev) => ({ ...prev, title: e.target.value }))}
@@ -250,7 +305,9 @@ export function AdminProjectsView() {
               <span className={isDark ? "text-[#a1a1a1]" : "text-slate-600"}>Slug</span>
               <input
                 className={`rounded-none border px-3 py-2 text-xs transition focus:outline-none ${
-                  isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white" : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
+                  isDark
+                    ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white"
+                    : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
                 }`}
                 value={form.slug}
                 onChange={(e) => setForm((prev) => ({ ...prev, slug: e.target.value }))}
@@ -260,7 +317,9 @@ export function AdminProjectsView() {
               <span className={isDark ? "text-[#a1a1a1]" : "text-slate-600"}>Client</span>
               <input
                 className={`rounded-none border px-3 py-2 text-xs transition focus:outline-none ${
-                  isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white" : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
+                  isDark
+                    ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white"
+                    : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
                 }`}
                 value={form.client}
                 onChange={(e) => setForm((prev) => ({ ...prev, client: e.target.value }))}
@@ -271,7 +330,9 @@ export function AdminProjectsView() {
               <textarea
                 rows={4}
                 className={`rounded-none border px-3 py-2 text-xs transition focus:outline-none ${
-                  isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white" : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
+                  isDark
+                    ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white"
+                    : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
                 }`}
                 value={form.description}
                 onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
@@ -282,15 +343,21 @@ export function AdminProjectsView() {
               <div className="flex items-center gap-2">
                 <input
                   className={`flex-1 rounded-none border px-3 py-2 text-xs transition focus:outline-none ${
-                    isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white" : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
+                    isDark
+                      ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white"
+                      : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
                   }`}
                   value={form.image}
                   onChange={(e) => setForm((prev) => ({ ...prev, image: e.target.value }))}
                   placeholder="URL or upload an image file"
                 />
-                <label className={`cursor-pointer rounded-none px-3 py-2 text-xs font-semibold border transition ${
-                  isDark ? "bg-[#1f1f1f] border-[#333333] text-[#ededed] hover:bg-[#2a2a2a]" : "bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200"
-                }`}>
+                <label
+                  className={`cursor-pointer rounded-none px-3 py-2 text-xs font-semibold border transition ${
+                    isDark
+                      ? "bg-[#1f1f1f] border-[#333333] text-[#ededed] hover:bg-[#2a2a2a]"
+                      : "bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200"
+                  }`}
+                >
                   {uploading ? "Uploading…" : "Upload"}
                   <input
                     type="file"
@@ -308,7 +375,9 @@ export function AdminProjectsView() {
               <span className={isDark ? "text-[#a1a1a1]" : "text-slate-600"}>Project URL</span>
               <input
                 className={`rounded-none border px-3 py-2 text-xs transition focus:outline-none ${
-                  isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white" : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
+                  isDark
+                    ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white"
+                    : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
                 }`}
                 value={form.url}
                 onChange={(e) => setForm((prev) => ({ ...prev, url: e.target.value }))}
@@ -319,7 +388,9 @@ export function AdminProjectsView() {
               <input
                 type="number"
                 className={`rounded-none border px-3 py-2 text-xs transition focus:outline-none ${
-                  isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white" : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
+                  isDark
+                    ? "border-[#1f1f1f] bg-[#111111] text-[#ededed] focus:border-white"
+                    : "border-slate-200 bg-slate-50 text-slate-900 focus:border-black"
                 }`}
                 value={form.order}
                 onChange={(e) => setForm((prev) => ({ ...prev, order: Number(e.target.value) }))}
@@ -332,16 +403,24 @@ export function AdminProjectsView() {
                 onChange={(e) => setForm((prev) => ({ ...prev, featured: e.target.checked }))}
                 className="w-4 h-4 rounded-none"
               />
-              <span className={isDark ? "text-[#ededed]" : "text-slate-800"}>Featured on homepage</span>
+              <span className={isDark ? "text-[#ededed]" : "text-slate-800"}>
+                Featured on homepage
+              </span>
             </label>
           </div>
           <DialogFooter>
-            <Button variant="outline" className={`rounded-none ${isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed]" : "border-slate-200 bg-slate-100 text-slate-700"}`} onClick={() => setOpen(false)}>
+            <Button
+              variant="outline"
+              className={`rounded-none ${isDark ? "border-[#1f1f1f] bg-[#111111] text-[#ededed]" : "border-slate-200 bg-slate-100 text-slate-700"}`}
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
             <Button
               className={`rounded-none font-bold text-xs ${
-                isDark ? "bg-white text-black hover:bg-slate-200" : "bg-black text-white hover:bg-slate-800"
+                isDark
+                  ? "bg-white text-black hover:bg-slate-200"
+                  : "bg-black text-white hover:bg-slate-800"
               }`}
               disabled={saveMutation.isPending || !form.title || !form.slug || !form.description}
               onClick={() => saveMutation.mutate()}

@@ -11,7 +11,9 @@ interface NetIf {
 }
 
 function isVirtualName(name: string): boolean {
-  return /vEthernet|WSL|Virtual|Loopback|Hyper-V|Docker|Bluetooth|Local Area Connection/i.test(name);
+  return /vEthernet|WSL|Virtual|Loopback|Hyper-V|Docker|Bluetooth|Local Area Connection/i.test(
+    name,
+  );
 }
 
 function getLanAddresses(): NetIf[] {
@@ -46,7 +48,9 @@ function printHeader(phone: NetIf | undefined, lanIps: NetIf[]) {
   }
   console.log("--------------------------------------------------------------------------");
   for (const item of lanIps) {
-    console.log(`   - ${item.name}${item.isVirtual ? " (virtual, ignored)" : ""}: http://${item.address}:${WEB_PORT}`);
+    console.log(
+      `   - ${item.name}${item.isVirtual ? " (virtual, ignored)" : ""}: http://${item.address}:${WEB_PORT}`,
+    );
   }
   console.log("--------------------------------------------------------------------------");
   console.log(" 🌐 Cloudflare Tunnel fallback (if the phone still can't reach the LAN IP):");
@@ -77,7 +81,9 @@ async function verifyLan(phone: NetIf | undefined) {
     console.log(` [✓] LAN check ${url} -> HTTP ${res.status}`);
   } catch {
     console.log(` [✗] LAN check ${url} failed.`);
-    console.log("     If the phone still can't load it, your hotspot blocks client traffic (AP/client");
+    console.log(
+      "     If the phone still can't load it, your hotspot blocks client traffic (AP/client",
+    );
     console.log("     isolation) -> use the Cloudflare Tunnel fallback: bun run tunnel");
   }
 }

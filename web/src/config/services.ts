@@ -86,8 +86,8 @@ export const services = [
   },
 ] as const;
 
-export type ServiceCategory = typeof services[number];
-export type ServiceItem = typeof services[number]["items"][number] & {
+export type ServiceCategory = (typeof services)[number];
+export type ServiceItem = (typeof services)[number]["items"][number] & {
   onClick?: () => void;
 };
 
@@ -99,4 +99,4 @@ export const NAV_ITEMS = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-export type NavItem = typeof NAV_ITEMS[number];
+export type NavItem = (typeof NAV_ITEMS)[number];

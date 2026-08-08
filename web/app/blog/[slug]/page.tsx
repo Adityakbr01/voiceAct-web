@@ -6,6 +6,8 @@ import { getBlogPostBySlug, blogPosts } from "@/modules/blog-data";
 import { company } from "@/modules/company-data";
 import { Footer } from "@/components/layouts/footer";
 import { Cta } from "@/modules/home/sections/cta";
+import { JsonLd } from "@/components/seo/json-ld";
+import { getBreadcrumbSchema } from "@/lib/seo/schema";
 
 interface PageProps {
   params: Promise<{ slug: string }> | { slug: string };
@@ -38,10 +40,43 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const baseUrl = company.website.replace(/\/$/, "");
+  const postUrl = `${baseUrl}/blog/${post.slug}`;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.coverImage,
+    datePublished: post.publishedAt,
+    author: {
+      "@type": "Person",
+      name: post.author.name,
+      jobTitle: post.author.role,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: company.name,
+      url: baseUrl,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": postUrl,
+    },
+  };
+
+  const breadcrumbsSchema = getBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Blog", url: `${baseUrl}/blog` },
+    { name: post.title, url: postUrl },
+  ]);
+
   const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
+      <JsonLd data={[articleSchema, breadcrumbsSchema]} />
       <main className="pt-24 pb-20">
         <div className="max-w-4xl mx-auto px-6 md:px-10 mb-8">
           <Link

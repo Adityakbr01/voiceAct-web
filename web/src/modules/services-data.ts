@@ -23,6 +23,7 @@ import { Globe, Smartphone, Palette, Rocket, Server, Wrench, Users } from "lucid
 export interface Service {
   icon: LucideIcon;
   title: string;
+  slug?: string;
   description: string;
   bullets: string[];
   tag: string;
@@ -34,6 +35,7 @@ export const services: Service[] = [
   {
     icon: Globe,
     tag: "Web",
+    slug: "web-development",
     color: "#61DAFB",
     span: "wide",
     title: "Web application development",
@@ -48,6 +50,7 @@ export const services: Service[] = [
   {
     icon: Smartphone,
     tag: "Mobile",
+    slug: "mobile-development",
     color: "#7F52FF",
     title: "iOS & Android app development",
     description:
@@ -61,6 +64,7 @@ export const services: Service[] = [
   {
     icon: Palette,
     tag: "Design",
+    slug: "ui-ux-design",
     color: "#EC1C7B",
     title: "Product design & UX",
     description:
@@ -70,6 +74,7 @@ export const services: Service[] = [
   {
     icon: Rocket,
     tag: "MVP",
+    slug: "saas-development",
     color: "#F05138",
     title: "MVP sprints",
     description:
@@ -83,6 +88,7 @@ export const services: Service[] = [
   {
     icon: Users,
     tag: "CRM",
+    slug: "custom-crm",
     color: "#4169E1",
     title: "Custom CRM development",
     description:
@@ -96,6 +102,7 @@ export const services: Service[] = [
   {
     icon: Server,
     tag: "Backend",
+    slug: "api-development",
     color: "#5FA04E",
     span: "wide",
     title: "APIs & backend engineering",
@@ -106,6 +113,7 @@ export const services: Service[] = [
   {
     icon: Wrench,
     tag: "DevOps",
+    slug: "cloud-solutions",
     color: "#F38020",
     title: "Maintenance & DevOps",
     description:

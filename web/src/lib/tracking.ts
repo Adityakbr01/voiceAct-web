@@ -21,7 +21,17 @@ export function captureUTMParams() {
   if (typeof window === "undefined") return;
   const params = new URLSearchParams(window.location.search);
   const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
-  const adKeys = ["gclid", "fbclid", "msclkid", "ttclid", "li_fat_id", "campaign_id", "ad_id", "creative_id", "keyword"];
+  const adKeys = [
+    "gclid",
+    "fbclid",
+    "msclkid",
+    "ttclid",
+    "li_fat_id",
+    "campaign_id",
+    "ad_id",
+    "creative_id",
+    "keyword",
+  ];
 
   const data: Record<string, string> = {};
   for (const key of [...utmKeys, ...adKeys]) {
@@ -30,7 +40,10 @@ export function captureUTMParams() {
   }
 
   if (Object.keys(data).length > 0) {
-    localStorage.setItem(TRACKING_KEY, JSON.stringify({ ...JSON.parse(localStorage.getItem(TRACKING_KEY) || "{}"), ...data }));
+    localStorage.setItem(
+      TRACKING_KEY,
+      JSON.stringify({ ...JSON.parse(localStorage.getItem(TRACKING_KEY) || "{}"), ...data }),
+    );
   }
 
   const ref = params.get("ref");
@@ -69,5 +82,18 @@ export async function trackPageView(path?: string) {
     });
   } catch {
     // silent fail — tracking shouldn't break the app
+  }
+}
+
+export function trackGAEvent(eventName: string, eventParams?: Record<string, unknown>) {
+  if (
+    typeof window !== "undefined" &&
+    (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag
+  ) {
+    (window as unknown as { gtag: (...args: unknown[]) => void }).gtag(
+      "event",
+      eventName,
+      eventParams,
+    );
   }
 }

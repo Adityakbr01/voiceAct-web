@@ -4,8 +4,8 @@ import { memo, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { site } from "@/modules/site";
 
-export const Logo = memo(forwardRef<HTMLAnchorElement, { className?: string }>(
-  function Logo({ className }, ref) {
+export const Logo = memo(
+  forwardRef<HTMLAnchorElement, { className?: string }>(function Logo({ className }, ref) {
     return (
       <a
         ref={ref}
@@ -19,7 +19,7 @@ export const Logo = memo(forwardRef<HTMLAnchorElement, { className?: string }>(
         <span className="tracking-tight">{site.shortName}</span>
       </a>
     );
-  },
-));
+  }),
+);
 
 Logo.displayName = "Logo";

@@ -15,6 +15,7 @@ import {
   Zap,
   Briefcase,
   Layers,
+  FileText,
 } from "lucide-react";
 
 interface DashboardSidebarProps {
@@ -61,6 +62,7 @@ export function DashboardSidebar({
       items: [
         { id: "projects", label: "Projects", icon: Briefcase, href: "/admin/projects" },
         { id: "services", label: "Services", icon: Layers, href: "/admin/services" },
+        { id: "blogs", label: "Blog Posts", icon: FileText, href: "/admin/blogs" },
       ],
     },
   ];
@@ -84,8 +86,16 @@ export function DashboardSidebar({
                 <Zap className="w-5 h-5 fill-current" />
               </div>
               <div>
-                <h1 className={`font-bold text-sm tracking-tight ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>VoiceAct</h1>
-                <p className={`text-[10px] font-medium ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>Admin Analytics</p>
+                <h1
+                  className={`font-bold text-sm tracking-tight ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
+                >
+                  VoiceAct
+                </h1>
+                <p
+                  className={`text-[10px] font-medium ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}
+                >
+                  Admin Analytics
+                </p>
               </div>
             </div>
           )}
@@ -105,7 +115,11 @@ export function DashboardSidebar({
             }`}
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
-            {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            {isCollapsed ? (
+              <ChevronRight className="w-4 h-4" />
+            ) : (
+              <ChevronLeft className="w-4 h-4" />
+            )}
           </button>
         </div>
 
@@ -114,9 +128,11 @@ export function DashboardSidebar({
           {navItems.map((section) => (
             <div key={section.group} className="space-y-2">
               {!isCollapsed && (
-                <span className={`text-[10px] font-bold tracking-wider uppercase px-3 block mb-1 ${
-                  isDark ? "text-[#a1a1a1]" : "text-slate-500"
-                }`}>
+                <span
+                  className={`text-[10px] font-bold tracking-wider uppercase px-3 block mb-1 ${
+                    isDark ? "text-[#a1a1a1]" : "text-slate-500"
+                  }`}
+                >
                   {section.group}
                 </span>
               )}
@@ -135,15 +151,19 @@ export function DashboardSidebar({
                             ? "bg-[#1f1f1f] text-white border border-[#333333] shadow-sm"
                             : "bg-black text-white font-bold border border-black shadow-sm"
                           : isDark
-                          ? "hover:bg-[#1f1f1f]/60 hover:text-white text-[#a1a1a1] border border-transparent"
-                          : "hover:bg-slate-100 hover:text-slate-900 text-slate-700 border border-transparent"
+                            ? "hover:bg-[#1f1f1f]/60 hover:text-white text-[#a1a1a1] border border-transparent"
+                            : "hover:bg-slate-100 hover:text-slate-900 text-slate-700 border border-transparent"
                       } ${isCollapsed ? "justify-center" : ""}`}
                     >
-                      <Icon className={`w-4 h-4 shrink-0 transition-transform duration-200 ease-out group-hover:scale-110 ${
-                        isActive
-                          ? "text-white"
-                          : isDark ? "text-[#a1a1a1] group-hover:text-white" : "text-slate-500 group-hover:text-slate-900"
-                      }`} />
+                      <Icon
+                        className={`w-4 h-4 shrink-0 transition-transform duration-200 ease-out group-hover:scale-110 ${
+                          isActive
+                            ? "text-white"
+                            : isDark
+                              ? "text-[#a1a1a1] group-hover:text-white"
+                              : "text-slate-500 group-hover:text-slate-900"
+                        }`}
+                      />
                       {!isCollapsed && <span className="truncate">{item.label}</span>}
                     </Link>
                   );
@@ -155,17 +175,23 @@ export function DashboardSidebar({
       </div>
 
       {/* Footer Profile */}
-      <div className={`pt-4 border-t space-y-3 ${isDark ? "border-[#1f1f1f]" : "border-slate-200"}`}>
+      <div
+        className={`pt-4 border-t space-y-3 ${isDark ? "border-[#1f1f1f]" : "border-slate-200"}`}
+      >
         <div className={`flex items-center gap-3 px-1 ${isCollapsed ? "justify-center" : ""}`}>
           <div className="w-8 h-8 rounded-none bg-[#1f1f1f] border border-[#333333] flex items-center justify-center font-bold text-white text-xs shrink-0 hover:scale-105 transition-transform duration-300">
             AD
           </div>
           {!isCollapsed && (
             <div className="flex-1 overflow-hidden">
-              <span className={`text-xs font-bold block truncate ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>
+              <span
+                className={`text-xs font-bold block truncate ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
+              >
                 {adminName}
               </span>
-              <span className={`text-[10px] block truncate ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>
+              <span
+                className={`text-[10px] block truncate ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}
+              >
                 Admin
               </span>
             </div>
@@ -176,7 +202,9 @@ export function DashboardSidebar({
             type="button"
             onClick={onLogout}
             className={`w-full rounded-none px-3 py-2 text-xs font-semibold transition-colors ${
-              isDark ? "bg-[#1f1f1f] hover:bg-[#2e2e2e] text-[#ededed]" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+              isDark
+                ? "bg-[#1f1f1f] hover:bg-[#2e2e2e] text-[#ededed]"
+                : "bg-slate-100 hover:bg-slate-200 text-slate-700"
             }`}
           >
             Sign out

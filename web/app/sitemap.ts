@@ -36,6 +36,54 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/calculator`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/audit`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/hire/react-developers`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/hire/nextjs-developers`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/hire/react-native-developers`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/hire/ai-engineers`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/compare/crm-vs-erp`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/compare/nextjs-vs-react`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/privacy-policy`,
       lastModified: new Date(),
       changeFrequency: "yearly",
@@ -59,9 +107,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const defaultServiceSlugs = [
     "web-development",
     "mobile-development",
+    "crm-development",
+    "cms-development",
     "saas-development",
-    "ui-ux-design",
     "ai-solutions",
+    "ui-ux-design",
+    "ecommerce-development",
+    "api-development",
     "cloud-solutions",
   ];
 
@@ -127,6 +179,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.7,
     });
+  }
+
+  // Programmatic Location Pages (/location/[city]/[service])
+  const cities = ["bangalore", "bengaluru", "hyderabad", "pune", "mumbai", "delhi"];
+  const locationServices = [
+    "web-development",
+    "mobile-development",
+    "crm-development",
+    "saas-development",
+    "ai-solutions",
+    "ui-ux-design",
+  ];
+
+  for (const city of cities) {
+    for (const service of locationServices) {
+      routes.push({
+        url: `${baseUrl}/location/${city}/${service}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+    }
   }
 
   return routes;

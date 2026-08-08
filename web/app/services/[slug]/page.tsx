@@ -1,4 +1,6 @@
+import { JsonLd } from "@/components/seo/json-ld";
 import { getServiceBySlug } from "@/lib/api/cms";
+import { getBreadcrumbSchema, getServiceSchema } from "@/lib/seo/schema";
 import { company } from "@/modules/company-data";
 import { Cta } from "@/modules/home/sections/cta";
 import { ArrowLeft, ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
@@ -55,6 +57,42 @@ const staticServiceDetails: Record<
       "Seamless backend sync and real-time state management",
     ],
   },
+  "crm-development": {
+    title: "Custom CRM Development",
+    tagline: "Tailor-made CRM systems engineered for your sales and operational workflows.",
+    description:
+      "Stop forcing your business into rigid off-the-shelf software. We construct custom CRM platforms with pipeline management, lead scoring, automated email/WhatsApp sequences, and custom analytics dashboards.",
+    features: [
+      "Custom lead pipeline & deal stage tracking",
+      "Automated WhatsApp & Email customer notification flows",
+      "Role-based access control (RBAC) & audit logging",
+      "Third-party integrations with Razorpay, Stripe, and VoIP",
+      "Real-time analytics dashboards and custom report exports",
+    ],
+    outcomes: [
+      "100% alignment with proprietary company processes",
+      "3x faster lead response times with automated workflows",
+      "Elimination of recurring per-user SaaS license fees",
+    ],
+  },
+  "cms-development": {
+    title: "Headless CMS Development",
+    tagline: "Blazing fast content management systems built for performance.",
+    description:
+      "Empower your marketing and content teams without sacrificing technical performance. We implement headless CMS solutions (Payload, Strapi, Sanity, or custom CMS) seamlessly connected to Next.js frontends.",
+    features: [
+      "Headless CMS integration with full visual preview",
+      "Custom content models, relations, and localized fields",
+      "Automated incremental static regeneration (ISR) for speed",
+      "Fine-grained team permissions and editorial workflows",
+      "Media asset optimization and CDN distribution",
+    ],
+    outcomes: [
+      "Instant content updates without needing developer deploys",
+      "Sub-second page rendering for maximum SEO scoring",
+      "Scalable infrastructure ready for millions of monthly visitors",
+    ],
+  },
   "saas-development": {
     title: "SaaS Development",
     tagline: "End-to-end multi-tenant cloud software for modern businesses.",
@@ -71,6 +109,24 @@ const staticServiceDetails: Record<
       "Production-ready MVP in 6–8 weeks",
       "Automated subscription lifecycles & billing management",
       "Enterprise-level security and uptime reliability",
+    ],
+  },
+  "ai-solutions": {
+    title: "AI Solutions & Integrations",
+    tagline: "Custom AI workflows, LLM agents, and smart automation.",
+    description:
+      "Integrate state-of-the-art AI into your existing software. We build custom LLM workflows, RAG (Retrieval-Augmented Generation) search systems, conversational agents, and automated data processing tools.",
+    features: [
+      "OpenAI, Claude, and Gemini API integration",
+      "Retrieval-Augmented Generation (RAG) over custom docs",
+      "Automated text, image, and document processing pipelines",
+      "Custom fine-tuning & prompt engineering optimizations",
+      "Real-time streaming responses & voice interface integration",
+    ],
+    outcomes: [
+      "Automated customer support & repetitive task execution",
+      "Instant semantic search over proprietary company knowledge",
+      "Enhanced product value through intelligent automation",
     ],
   },
   "ui-ux-design": {
@@ -91,22 +147,40 @@ const staticServiceDetails: Record<
       "Accelerated development timeline using design tokens",
     ],
   },
-  "ai-solutions": {
-    title: "AI Solutions & Integrations",
-    tagline: "Custom AI workflows, LLM agents, and smart automation.",
+  "ecommerce-development": {
+    title: "E-Commerce Development",
+    tagline: "High-converting, scalable online stores and custom shopping platforms.",
     description:
-      "Integrate state-of-the-art AI into your existing software. We build custom LLM workflows, RAG (Retrieval-Augmented Generation) search systems, conversational agents, and automated data processing tools.",
+      "Drive sales with custom e-commerce experiences. We build headless storefronts and custom shopping systems with seamless cart checkouts, inventory sync, multi-currency support, and payment gateway integrations.",
     features: [
-      "OpenAI, Claude, and Gemini API integration",
-      "Retrieval-Augmented Generation (RAG) over custom docs",
-      "Automated text, image, and document processing pipelines",
-      "Custom fine-tuning & prompt engineering optimizations",
-      "Real-time streaming responses & voice interface integration",
+      "Headless Shopify / custom Next.js storefront architecture",
+      "High-speed checkout flows optimized for mobile conversion",
+      "Razorpay, Stripe, PayU, and COD payment gateway wiring",
+      "Real-time inventory management and ERP synchronization",
+      "Automated order tracking and SMS/WhatsApp notifications",
     ],
     outcomes: [
-      "Automated customer support & repetitive task execution",
-      "Instant semantic search over proprietary company knowledge",
-      "Enhanced product value through intelligent automation",
+      "Higher checkout completion rate with friction-free payments",
+      "Lightning-fast product page load times for low bounce rates",
+      "Robust security complying with payment industry standards",
+    ],
+  },
+  "api-development": {
+    title: "API Development & Integration",
+    tagline: "Secure, well-documented REST & GraphQL APIs built for high throughput.",
+    description:
+      "Connect systems seamlessly. We build robust microservices, custom REST/GraphQL APIs, webhook receivers, and third-party API integrations engineered for speed, security, and developer clarity.",
+    features: [
+      "Node.js, Express, Bun, and TypeScript backend microservices",
+      "REST & GraphQL endpoint design with OpenAPI / Swagger specs",
+      "OAuth2, JWT authentication, rate-limiting, and API keys",
+      "Database ORM design with PostgreSQL, Prisma, and Redis caching",
+      "Third-party API integrations (CRM, Payment, Logistics, AI)",
+    ],
+    outcomes: [
+      "Scalable infrastructure capable of thousands of requests/sec",
+      "Clean API documentation for effortless developer onboarding",
+      "Resilient failure handling and automated retry mechanisms",
     ],
   },
   "cloud-solutions": {
@@ -180,7 +254,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = await getServiceData(resolvedParams.slug);
 
   return {
-    title: `${service.title} — ${company.name}`,
+    title: service.title,
     description: service.description,
     openGraph: {
       title: `${service.title} — ${company.name}`,
@@ -192,9 +266,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ServiceDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
   const service = await getServiceData(resolvedParams.slug);
+  const baseUrl = company.website.replace(/\/$/, "");
+
+  const serviceSchema = getServiceSchema({
+    name: service.title,
+    description: service.description,
+    url: `${baseUrl}/services/${resolvedParams.slug}`,
+  });
+
+  const breadcrumbsSchema = getBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Services", url: `${baseUrl}/#services` },
+    { name: service.title, url: `${baseUrl}/services/${resolvedParams.slug}` },
+  ]);
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
+      <JsonLd data={[serviceSchema, breadcrumbsSchema]} />
       <main className="pt-24 pb-20">
         <div className="max-w-4xl mx-auto px-6 md:px-10 mb-8">
           <Link

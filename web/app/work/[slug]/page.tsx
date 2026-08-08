@@ -49,11 +49,7 @@ export default async function ProjectPage({ params }: PageProps) {
         <div className="space-y-6">
           {project.image && (
             <div className="overflow-hidden rounded-2xl border border-border/60">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="h-auto w-full object-cover"
-              />
+              <img src={project.image} alt={project.title} className="h-auto w-full object-cover" />
             </div>
           )}
 

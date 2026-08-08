@@ -54,6 +54,19 @@ export const company = {
       label: "LinkedIn",
       handle: "voiceact",
       href: "https://linkedin.com/company/voiceact",
+      badge: {
+        text: "Soon",
+        color: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30",
+      },
+    },
+    developerLinkedin: {
+      label: "LinkedIn",
+      handle: "aditya-kbr",
+      href: "https://www.linkedin.com/in/aditya-kbr-3b833731b/",
+      badge: {
+        text: "Developer",
+        color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+      },
     },
     github: {
       label: "GitHub",
@@ -78,12 +91,22 @@ export const company = {
 
   socialList: [
     { label: "Twitter", handle: "@voiceact_tech", href: "https://twitter.com/voiceact_tech" },
-    { label: "LinkedIn", handle: "voiceact", href: "https://linkedin.com/company/voiceact" },
+    {
+      label: "LinkedIn",
+      handle: "voiceact",
+      href: "https://linkedin.com/company/voiceact",
+      badge: {
+        text: "Soon",
+        color: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30",
+      },
+    },
+
     {
       label: "GitHub",
       handle: "voiceAct-web",
       href: "https://github.com/Adityakbr01/voiceAct-web",
     },
+    { label: "Instagram", handle: "@voiceact.tech", href: "https://instagram.com/voiceact.tech" },
     {
       label: "GitHub",
       handle: "Adityakbr01",
@@ -93,7 +116,15 @@ export const company = {
         color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
       },
     },
-    { label: "Instagram", handle: "@voiceact.tech", href: "https://instagram.com/voiceact.tech" },
+    {
+      label: "LinkedIn",
+      handle: "aditya-kbr",
+      href: "https://www.linkedin.com/in/aditya-kbr-3b833731b/",
+      badge: {
+        text: "Developer",
+        color: "bg-amber-500/15 text-amber-400 border-amber-500/30",
+      },
+    },
   ],
 
   legal: {
@@ -104,6 +135,8 @@ export const company = {
 
   nav: {
     services: { label: "Services", href: "/#services" },
+    hire: { label: "Hire Developers", href: "/hire" },
+    calculator: { label: "Cost Estimator", href: "/calculator" },
     work: { label: "Work", href: "/#work" },
     process: { label: "Process", href: "/#process" },
     tech: { label: "Tech", href: "/#stack" },

@@ -9,14 +9,53 @@ export async function login(email: string, password: string) {
     throw new AppError("Invalid email or password", 401);
   }
 
-  const token = jwt.sign({ id: admin._id }, config.jwtSecret, {
+  const accessToken = jwt.sign({ id: admin._id, type: "access" }, config.jwtSecret, {
+    expiresIn: "15m",
+  });
+
+  const refreshToken = jwt.sign({ id: admin._id, type: "refresh" }, config.jwtSecret + "_refresh", {
     expiresIn: config.jwtExpiresIn as any,
   });
 
   return {
-    token,
+    accessToken,
+    refreshToken,
+    token: accessToken,
     admin: { id: admin._id, email: admin.email, name: admin.name, role: admin.role },
   };
+}
+
+export async function refreshAuthToken(refreshTokenInput: string) {
+  try {
+    const decoded = jwt.verify(refreshTokenInput, config.jwtSecret + "_refresh") as {
+      id: string;
+      type: string;
+    };
+
+    if (decoded.type !== "refresh") {
+      throw new AppError("Invalid token type", 401);
+    }
+
+    const admin = await adminDao.findById(decoded.id);
+    if (!admin) throw new AppError("Admin not found", 401);
+
+    const accessToken = jwt.sign({ id: admin._id, type: "access" }, config.jwtSecret, {
+      expiresIn: "15m",
+    });
+
+    const newRefreshToken = jwt.sign({ id: admin._id, type: "refresh" }, config.jwtSecret + "_refresh", {
+      expiresIn: config.jwtExpiresIn as any,
+    });
+
+    return {
+      accessToken,
+      refreshToken: newRefreshToken,
+      token: accessToken,
+      admin: { id: admin._id, email: admin.email, name: admin.name, role: admin.role },
+    };
+  } catch {
+    throw new AppError("Invalid or expired refresh token", 401);
+  }
 }
 
 export async function getMe(adminId: string) {

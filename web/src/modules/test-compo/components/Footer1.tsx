@@ -20,15 +20,13 @@ export function Footer1() {
       {/* Heading */}
       <h2 className="mt-4 text-center font-sans text-4xl font-light tracking-tighter text-foreground sm:text-6xl">
         Let&apos;s Stay{" "}
-        <span className="font-sans font-light tracking-tighter text-foreground/80">
-          Connected
-        </span>
+        <span className="font-sans font-light tracking-tighter text-foreground/80">Connected</span>
       </h2>
 
       {/* Copy */}
       <p className="mx-auto mt-4 max-w-xl text-center font-sans text-sm text-muted-foreground sm:text-base">
-        Got questions or want to collaborate? Feel free to reach out — we&apos;re
-        open to new projects or just a casual chat!
+        Got questions or want to collaborate? Feel free to reach out — we&apos;re open to new
+        projects or just a casual chat!
       </p>
 
       <ContactCta />

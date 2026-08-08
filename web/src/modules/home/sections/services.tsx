@@ -1,10 +1,37 @@
+"use client";
+
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
 import type { Service } from "@/modules/services-data";
 import { usePublicServices } from "@/hooks/use-public-cms";
 import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
+
+function getServiceHref(service: Service & { slug?: string }) {
+  if (service.slug) return `/services/${service.slug}`;
+  const titleLower = service.title.toLowerCase();
+  if (titleLower.includes("web")) return "/services/web-development";
+  if (titleLower.includes("mobile") || titleLower.includes("ios") || titleLower.includes("android"))
+    return "/services/mobile-development";
+  if (titleLower.includes("design") || titleLower.includes("ux")) return "/services/ui-ux-design";
+  if (titleLower.includes("crm")) return "/services/custom-crm";
+  if (titleLower.includes("mvp") || titleLower.includes("saas"))
+    return "/services/saas-development";
+  if (titleLower.includes("api") || titleLower.includes("backend"))
+    return "/services/api-development";
+  if (
+    titleLower.includes("devops") ||
+    titleLower.includes("cloud") ||
+    titleLower.includes("maintenance")
+  )
+    return "/services/cloud-solutions";
+  return `/services/${service.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")}`;
+}
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -39,6 +66,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
   const Icon = service.icon;
   const isWide = service.span === "wide";
+  const href = getServiceHref(service);
 
   return (
     <motion.article
@@ -50,15 +78,16 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
-
       className={`
-        group relative overflow-hidden rounded-3xl border border-border bg-card p-6
+        group relative cursor-pointer overflow-hidden rounded-3xl border border-border bg-card p-6
         transition-all duration-500 ease-out
         hover:-translate-y-1 hover:shadow-card hover:border-opacity-80
         md:p-7
         ${isWide ? "md:col-span-2" : ""}
       `}
     >
+      <Link href={href} className="absolute inset-0 z-10" aria-label={`Explore ${service.title}`} />
+
       {/* Mouse-following glow */}
       <motion.div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -127,25 +156,25 @@ export function Services() {
   return (
     <Section id="services" className="cv-auto">
       <div ref={ref}>
-      <SectionHeader
-        eyebrow="Services"
-        title={
-          <>
-            One studio for the whole
-            <span className="font-display italic tracking-tight text-primary">
-              {" "}
-              product surface.
-            </span>
-          </>
-        }
-        description="From first sketch to App Store launch — design, web, mobile, backend and DevOps, under one roof."
-      />
+        <SectionHeader
+          eyebrow="Services"
+          title={
+            <>
+              One studio for the whole
+              <span className="font-display italic tracking-tight text-primary">
+                {" "}
+                product surface.
+              </span>
+            </>
+          }
+          description="From first sketch to App Store launch — design, web, mobile, backend and DevOps, under one roof."
+        />
 
-      <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((s: Service, i: number) => (
-          <ServiceCard key={s.title} service={s} index={i} />
-        ))}
-      </div>
+        <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((s: Service, i: number) => (
+            <ServiceCard key={s.title} service={s} index={i} />
+          ))}
+        </div>
       </div>
     </Section>
   );

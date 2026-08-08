@@ -15,7 +15,7 @@ interface CircularGalleryProps {
   scrollEase?: number;
 }
 
-function debounce(func: Function, wait: number) {
+function debounce(func: (...args: any[]) => void, wait: number) {
   let timeout: any;
   return function (this: any, ...args: any[]) {
     clearTimeout(timeout);
@@ -37,7 +37,8 @@ function autoBind(instance: any) {
 }
 
 const DEFAULT_FONT = "bold 30px Figtree";
-const DEFAULT_FONT_URL = "https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap";
+const DEFAULT_FONT_URL =
+  "https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap";
 
 function deriveFontFamilyFromUrl(url: string) {
   const fileName = (url.split("/").pop() || "custom-font").split("?")[0];
@@ -71,7 +72,7 @@ async function loadFontFromStylesheet(url: string) {
     fontFaces.map(async (face) => {
       await face.load();
       document.fonts.add(face);
-    })
+    }),
   );
   return family;
 }
@@ -126,7 +127,12 @@ function getFontSize(font: string) {
   return match ? parseInt(match[1], 10) : 30;
 }
 
-function createTextTexture(gl: any, text: string, font: string = "bold 30px monospace", color: string = "black") {
+function createTextTexture(
+  gl: any,
+  text: string,
+  font: string = "bold 30px monospace",
+  color: string = "black",
+) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
   context.font = font;
@@ -181,7 +187,12 @@ class Title {
   }
 
   createMesh() {
-    const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
+    const { texture, width, height } = createTextTexture(
+      this.gl,
+      this.text,
+      this.font,
+      this.textColor,
+    );
     const geometry = new Plane(this.gl);
     const program = new Program(this.gl, {
       vertex: `
@@ -433,12 +444,21 @@ class Media {
     }
   }
 
-  onResize({ screen, viewport }: { screen?: { width: number; height: number }; viewport?: { width: number; height: number } } = {}) {
+  onResize({
+    screen,
+    viewport,
+  }: {
+    screen?: { width: number; height: number };
+    viewport?: { width: number; height: number };
+  } = {}) {
     if (screen) this.screen = screen;
     if (viewport) {
       this.viewport = viewport;
       if (this.plane.program.uniforms.uViewportSizes) {
-        this.plane.program.uniforms.uViewportSizes.value = [this.viewport.width, this.viewport.height];
+        this.plane.program.uniforms.uViewportSizes.value = [
+          this.viewport.width,
+          this.viewport.height,
+        ];
       }
     }
     this.scale = this.screen.height / 1500;
@@ -456,7 +476,7 @@ class App {
   container: HTMLDivElement;
   scrollSpeed: number;
   scroll: { ease: number; current: number; target: number; last: number; position?: number };
-  onCheckDebounce: Function;
+  onCheckDebounce: (...args: any[]) => void;
   renderer!: Renderer;
   gl!: any;
   camera!: Camera;
@@ -467,7 +487,6 @@ class App {
   isDown: boolean = false;
   touchStartPos: number = 0;
   raf!: number;
-
 
   boundOnResize!: any;
   boundOnWheel!: any;
@@ -494,7 +513,7 @@ class App {
       font?: string;
       scrollSpeed?: number;
       scrollEase?: number;
-    } = {}
+    } = {},
   ) {
     document.documentElement.classList.remove("no-js");
     this.container = container;
@@ -539,7 +558,13 @@ class App {
     });
   }
 
-  createMedias(items: Array<{ image: string; text: string }> | undefined, bend: number | undefined, textColor: string, borderRadius: number, font: string) {
+  createMedias(
+    items: Array<{ image: string; text: string }> | undefined,
+    bend: number | undefined,
+    textColor: string,
+    borderRadius: number,
+    font: string,
+  ) {
     const defaultItems = [
       { image: `https://picsum.photos/seed/1/800/600?grayscale`, text: "Bridge" },
       { image: `https://picsum.photos/seed/2/800/600?grayscale`, text: "Desk Setup" },
@@ -588,7 +613,6 @@ class App {
     const distance = (this.touchStartPos - x) * (this.scrollSpeed * 0.025);
     this.scroll.target = (this.scroll.position ?? 0) + distance;
   }
-
 
   onTouchUp() {
     this.isDown = false;
@@ -648,7 +672,9 @@ class App {
     const width = height * this.camera.aspect;
     this.viewport = { width, height };
     if (this.medias) {
-      this.medias.forEach((media) => media.onResize({ screen: this.screen, viewport: this.viewport }));
+      this.medias.forEach((media) =>
+        media.onResize({ screen: this.screen, viewport: this.viewport }),
+      );
     }
   }
 
@@ -771,7 +797,7 @@ export default function CircularGallery({
             app.stop();
           }
         },
-        { threshold: 0 }
+        { threshold: 0 },
       );
       observer.observe(containerRef.current);
     });
@@ -792,4 +818,3 @@ export default function CircularGallery({
     />
   );
 }
-

@@ -131,8 +131,8 @@ export function AdminContactsView() {
                     ? "bg-white text-black font-bold"
                     : "bg-black text-white font-bold"
                   : isDark
-                  ? "bg-[#111111] border border-[#1f1f1f] text-[#a1a1a1] hover:text-[#ededed] hover:bg-[#1f1f1f]"
-                  : "bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200"
+                    ? "bg-[#111111] border border-[#1f1f1f] text-[#a1a1a1] hover:text-[#ededed] hover:bg-[#1f1f1f]"
+                    : "bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200"
               }`}
             >
               {status}
@@ -141,7 +141,9 @@ export function AdminContactsView() {
         </div>
 
         <div className="relative">
-          <Search className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? "text-[#a1a1a1]" : "text-slate-400"}`} />
+          <Search
+            className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? "text-[#a1a1a1]" : "text-slate-400"}`}
+          />
           <input
             type="text"
             placeholder="Search inquiries..."
@@ -157,31 +159,55 @@ export function AdminContactsView() {
       </div>
 
       {/* Contacts Table */}
-      <div className={`overflow-hidden rounded-none border ${
-        isDark ? "border-[#1f1f1f] bg-[#0a0a0a]" : "border-slate-200 bg-white shadow-sm"
-      }`}>
+      <div
+        className={`overflow-hidden rounded-none border ${
+          isDark ? "border-[#1f1f1f] bg-[#0a0a0a]" : "border-slate-200 bg-white shadow-sm"
+        }`}
+      >
         <Table>
           <TableHeader>
-            <TableRow className={`border-b ${isDark ? "border-[#1f1f1f] hover:bg-transparent" : "border-slate-200 bg-slate-50"}`}>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Name</TableHead>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Email</TableHead>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Service</TableHead>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Status</TableHead>
-              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>Received</TableHead>
-              <TableHead className={`text-right ${isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}`}>Action</TableHead>
+            <TableRow
+              className={`border-b ${isDark ? "border-[#1f1f1f] hover:bg-transparent" : "border-slate-200 bg-slate-50"}`}
+            >
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Name
+              </TableHead>
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Email
+              </TableHead>
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Service
+              </TableHead>
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Status
+              </TableHead>
+              <TableHead className={isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}>
+                Received
+              </TableHead>
+              <TableHead
+                className={`text-right ${isDark ? "text-[#a1a1a1]" : "text-slate-600 font-bold"}`}
+              >
+                Action
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading && (
               <TableRow>
-                <TableCell colSpan={6} className={`py-10 text-center ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>
+                <TableCell
+                  colSpan={6}
+                  className={`py-10 text-center ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}
+                >
                   Loading inquiries…
                 </TableCell>
               </TableRow>
             )}
             {!isLoading && !filteredItems.length && (
               <TableRow>
-                <TableCell colSpan={6} className={`py-10 text-center ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>
+                <TableCell
+                  colSpan={6}
+                  className={`py-10 text-center ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}
+                >
                   No inquiries found.
                 </TableCell>
               </TableRow>
@@ -191,12 +217,22 @@ export function AdminContactsView() {
                 key={inquiry._id}
                 onClick={() => handleOpenInquiry(inquiry)}
                 className={`border-b cursor-pointer transition-colors ${
-                  isDark ? "border-[#1f1f1f] hover:bg-[#111111]" : "border-slate-100 hover:bg-slate-50"
+                  isDark
+                    ? "border-[#1f1f1f] hover:bg-[#111111]"
+                    : "border-slate-100 hover:bg-slate-50"
                 }`}
               >
-                <TableCell className={`font-semibold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>{inquiry.name}</TableCell>
-                <TableCell className={`text-xs ${isDark ? "text-slate-300" : "text-slate-700"}`}>{inquiry.email}</TableCell>
-                <TableCell className={`text-xs ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>{inquiry.service ?? "—"}</TableCell>
+                <TableCell
+                  className={`font-semibold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
+                >
+                  {inquiry.name}
+                </TableCell>
+                <TableCell className={`text-xs ${isDark ? "text-slate-300" : "text-slate-700"}`}>
+                  {inquiry.email}
+                </TableCell>
+                <TableCell className={`text-xs ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>
+                  {inquiry.service ?? "—"}
+                </TableCell>
                 <TableCell>
                   <Badge
                     variant="outline"
@@ -204,14 +240,16 @@ export function AdminContactsView() {
                       inquiry.status === "new"
                         ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
                         : inquiry.status === "replied"
-                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-                        : "bg-blue-500/10 text-blue-400 border-blue-500/30"
+                          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                          : "bg-blue-500/10 text-blue-400 border-blue-500/30"
                     }`}
                   >
                     {inquiry.status}
                   </Badge>
                 </TableCell>
-                <TableCell className={`text-xs font-mono ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>
+                <TableCell
+                  className={`text-xs font-mono ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}
+                >
                   {new Date(inquiry.createdAt).toLocaleString()}
                 </TableCell>
                 <TableCell className="text-right">
@@ -236,20 +274,28 @@ export function AdminContactsView() {
       {/* Selected Inquiry Modal */}
       <Dialog open={!!selectedInquiry} onOpenChange={(open) => !open && setSelectedInquiry(null)}>
         {selectedInquiry && (
-          <DialogContent className={`max-w-xl border rounded-none space-y-4 ${
-            isDark ? "border-[#1f1f1f] bg-[#0a0a0a] text-[#ededed]" : "border-slate-200 bg-white text-slate-900 shadow-xl"
-          }`}>
+          <DialogContent
+            className={`max-w-xl border rounded-none space-y-4 ${
+              isDark
+                ? "border-[#1f1f1f] bg-[#0a0a0a] text-[#ededed]"
+                : "border-slate-200 bg-white text-slate-900 shadow-xl"
+            }`}
+          >
             <DialogHeader>
               <div className="flex items-center justify-between pr-6">
-                <DialogTitle className={`text-xl font-bold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>{selectedInquiry.name}</DialogTitle>
+                <DialogTitle
+                  className={`text-xl font-bold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
+                >
+                  {selectedInquiry.name}
+                </DialogTitle>
                 <Badge
                   variant="outline"
                   className={`capitalize font-bold rounded-none border ${
                     selectedInquiry.status === "new"
                       ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
                       : selectedInquiry.status === "replied"
-                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-                      : "bg-blue-500/10 text-blue-400 border-blue-500/30"
+                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                        : "bg-blue-500/10 text-blue-400 border-blue-500/30"
                   }`}
                 >
                   {selectedInquiry.status}
@@ -258,12 +304,17 @@ export function AdminContactsView() {
             </DialogHeader>
 
             <div className="space-y-4 py-2 text-xs">
-              <div className={`grid grid-cols-2 gap-3 p-3 rounded-none border ${
-                isDark ? "bg-[#111111] border-[#1f1f1f]" : "bg-slate-50 border-slate-200"
-              }`}>
+              <div
+                className={`grid grid-cols-2 gap-3 p-3 rounded-none border ${
+                  isDark ? "bg-[#111111] border-[#1f1f1f]" : "bg-slate-50 border-slate-200"
+                }`}
+              >
                 <div className="flex items-center gap-2">
                   <Mail className={`w-4 h-4 ${isDark ? "text-[#a1a1a1]" : "text-slate-400"}`} />
-                  <a href={`mailto:${selectedInquiry.email}`} className="hover:underline truncate font-mono">
+                  <a
+                    href={`mailto:${selectedInquiry.email}`}
+                    className="hover:underline truncate font-mono"
+                  >
                     {selectedInquiry.email}
                   </a>
                 </div>
@@ -284,24 +335,34 @@ export function AdminContactsView() {
               </div>
 
               <div className="space-y-1.5">
-                <span className={`font-bold uppercase tracking-wider text-[10px] ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>Message Body</span>
-                <div className={`p-4 rounded-none border whitespace-pre-wrap text-sm leading-relaxed ${
-                  isDark ? "bg-[#111111] border-[#1f1f1f] text-[#ededed]" : "bg-slate-50 border-slate-200 text-slate-800"
-                }`}>
+                <span
+                  className={`font-bold uppercase tracking-wider text-[10px] ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}
+                >
+                  Message Body
+                </span>
+                <div
+                  className={`p-4 rounded-none border whitespace-pre-wrap text-sm leading-relaxed ${
+                    isDark
+                      ? "bg-[#111111] border-[#1f1f1f] text-[#ededed]"
+                      : "bg-slate-50 border-slate-200 text-slate-800"
+                  }`}
+                >
                   {selectedInquiry.message}
                 </div>
               </div>
 
               {/* Quick Status Picker */}
               <div className="flex items-center justify-between pt-2">
-                <span className={`text-xs font-semibold ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>Update Status:</span>
+                <span
+                  className={`text-xs font-semibold ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}
+                >
+                  Update Status:
+                </span>
                 <div className="flex items-center gap-2">
                   {STATUS_OPTIONS.map((st) => (
                     <button
                       key={st}
-                      onClick={() =>
-                        statusMutation.mutate({ id: selectedInquiry._id, status: st })
-                      }
+                      onClick={() => statusMutation.mutate({ id: selectedInquiry._id, status: st })}
                       disabled={statusMutation.isPending}
                       className={`px-3 py-1 rounded-none text-xs font-bold capitalize transition-all cursor-pointer border ${
                         selectedInquiry.status === st
@@ -309,8 +370,8 @@ export function AdminContactsView() {
                             ? "bg-white text-black border-white"
                             : "bg-black text-white border-black"
                           : isDark
-                          ? "bg-[#111111] border-[#1f1f1f] text-[#a1a1a1] hover:text-[#ededed]"
-                          : "bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900"
+                            ? "bg-[#111111] border-[#1f1f1f] text-[#a1a1a1] hover:text-[#ededed]"
+                            : "bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900"
                       }`}
                     >
                       {st}
@@ -323,10 +384,12 @@ export function AdminContactsView() {
             <DialogFooter>
               <a
                 href={`mailto:${selectedInquiry.email}?subject=Re:%20${encodeURIComponent(
-                  selectedInquiry.service ?? "Inquiry"
+                  selectedInquiry.service ?? "Inquiry",
                 )}`}
                 className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-none font-bold text-xs transition ${
-                  isDark ? "bg-white text-black hover:bg-slate-200" : "bg-black text-white hover:bg-slate-800"
+                  isDark
+                    ? "bg-white text-black hover:bg-slate-200"
+                    : "bg-black text-white hover:bg-slate-800"
                 }`}
               >
                 <Mail className="w-4 h-4" /> Reply via Email

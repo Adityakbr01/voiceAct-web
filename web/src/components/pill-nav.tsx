@@ -60,7 +60,7 @@ const PillNav = ({
         const pill = circle.parentElement;
         const rect = pill.getBoundingClientRect();
         const { width: w, height: h } = rect;
-        const R = (w * w) / 4 + h * h / (2 * h);
+        const R = (w * w) / 4 + (h * h) / (2 * h);
         const D = Math.ceil(2 * R) + 2;
         const delta = Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
         const originY = D - delta;
@@ -193,7 +193,7 @@ const PillNav = ({
         gsap.fromTo(
           menu,
           { opacity: 0, y: 10, scaleY: 1 },
-          { opacity: 1, y: 0, scaleY: 1, duration: 0.3, ease, transformOrigin: "top center" }
+          { opacity: 1, y: 0, scaleY: 1, duration: 0.3, ease, transformOrigin: "top center" },
         );
       } else {
         gsap.to(menu, {
@@ -261,7 +261,9 @@ const PillNav = ({
                     <span
                       className="hover-circle"
                       aria-hidden="true"
-                      ref={(el) => { circleRefs.current[i] = el; }}
+                      ref={(el) => {
+                        circleRefs.current[i] = el;
+                      }}
                     />
                     <span className="label-stack">
                       <span className="pill-label">{item.label}</span>
@@ -282,7 +284,9 @@ const PillNav = ({
                     <span
                       className="hover-circle"
                       aria-hidden="true"
-                      ref={(el) => { circleRefs.current[i] = el; }}
+                      ref={(el) => {
+                        circleRefs.current[i] = el;
+                      }}
                     />
                     <span className="label-stack">
                       <span className="pill-label">{item.label}</span>

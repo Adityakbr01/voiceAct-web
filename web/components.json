@@ -20,8 +20,8 @@
   },
   "registries": {
     "@magicui": "https://magicui.design/r/{name}",
-     "@fancy": "https://fancycomponents.dev/r/{name}.json",
-     "@bundui": {
+    "@fancy": "https://fancycomponents.dev/r/{name}.json",
+    "@bundui": {
       "url": "https://bundui.io/api/registry/{name}.json"
     }
   }

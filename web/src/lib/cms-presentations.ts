@@ -12,8 +12,8 @@ export function mergeServicesFromApi(apiServices: ServiceRecord[]): Service[] {
   const active = apiServices.filter((s) => s.active).sort((a, b) => a.order - b.order);
 
   return active.map((s, i) => {
-    const bySlug = staticServices.find(
-      (p) => p.title.toLowerCase().includes(s.slug.replace(/-/g, " ").slice(0, 8))
+    const bySlug = staticServices.find((p) =>
+      p.title.toLowerCase().includes(s.slug.replace(/-/g, " ").slice(0, 8)),
     );
     const preset = bySlug ?? staticServices[i % staticServices.length];
     return {

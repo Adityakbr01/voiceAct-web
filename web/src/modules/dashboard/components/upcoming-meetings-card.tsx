@@ -51,10 +51,14 @@ export function UpcomingMeetingsCard({ themeMode = "dark" }: UpcomingMeetingsCar
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className={`text-xl sm:text-[22px] tracking-tight font-extrabold ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}>
+            <h2
+              className={`text-xl sm:text-[22px] tracking-tight font-extrabold ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}
+            >
               Upcoming meetings
             </h2>
-            <p className={`text-xs mt-1 flex items-center gap-1.5 font-medium ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+            <p
+              className={`text-xs mt-1 flex items-center gap-1.5 font-medium ${isDark ? "text-slate-400" : "text-slate-500"}`}
+            >
               <Phone className="w-3.5 h-3.5 text-lime-500" />
               <span>4 calls • Tue, 19</span>
             </p>
@@ -88,8 +92,8 @@ export function UpcomingMeetingsCard({ themeMode = "dark" }: UpcomingMeetingsCar
                     isActive
                       ? "bg-[#d6f14a] text-slate-950 font-bold shadow-md shadow-[#d6f14a]/20 scale-105"
                       : isDark
-                      ? "bg-[#212630] text-slate-300 hover:bg-slate-700"
-                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        ? "bg-[#212630] text-slate-300 hover:bg-slate-700"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                   }`}
                 >
                   <span className="font-bold font-mono">{item.day}</span>
@@ -102,10 +106,14 @@ export function UpcomingMeetingsCard({ themeMode = "dark" }: UpcomingMeetingsCar
 
         {/* Progress Line & Time Markers */}
         <div className="mt-5">
-          <div className={`h-1.5 rounded-full overflow-hidden ${isDark ? "bg-[#212630]" : "bg-slate-100"}`}>
+          <div
+            className={`h-1.5 rounded-full overflow-hidden ${isDark ? "bg-[#212630]" : "bg-slate-100"}`}
+          >
             <div className="h-full w-2/5 bg-[#d6f14a] rounded-full transition-all duration-500" />
           </div>
-          <div className={`mt-2 flex justify-between text-[10px] font-mono font-medium ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+          <div
+            className={`mt-2 flex justify-between text-[10px] font-mono font-medium ${isDark ? "text-slate-400" : "text-slate-500"}`}
+          >
             <span>09:00</span>
             <span>12:00</span>
             <span>15:00</span>
@@ -115,7 +123,9 @@ export function UpcomingMeetingsCard({ themeMode = "dark" }: UpcomingMeetingsCar
 
         {/* Next Scheduled Meetings Feed (Fills Empty Space Perfectly) */}
         <div className="mt-5 space-y-2.5">
-          <span className={`text-[10px] font-bold uppercase tracking-wider block ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+          <span
+            className={`text-[10px] font-bold uppercase tracking-wider block ${isDark ? "text-slate-400" : "text-slate-500"}`}
+          >
             Scheduled Voice Sessions
           </span>
           {UPCOMING_CALL_SESSIONS.map((session) => (
@@ -126,20 +136,31 @@ export function UpcomingMeetingsCard({ themeMode = "dark" }: UpcomingMeetingsCar
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs ${session.avatarBg}`}>
+                <div
+                  className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs ${session.avatarBg}`}
+                >
                   <Video className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className={`text-xs font-bold ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}>{session.client}</h4>
+                  <h4
+                    className={`text-xs font-bold ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}
+                  >
+                    {session.client}
+                  </h4>
                   <p className={`text-[10px] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                    {session.company} • <span className="text-lime-500 font-medium">{session.type}</span>
+                    {session.company} •{" "}
+                    <span className="text-lime-500 font-medium">{session.type}</span>
                   </p>
                 </div>
               </div>
 
               <div className="text-right flex items-center gap-2">
                 <div>
-                  <span className={`text-xs font-mono font-bold block ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}>{session.time}</span>
+                  <span
+                    className={`text-xs font-mono font-bold block ${isDark ? "text-[#F4F2F2]" : "text-slate-900"}`}
+                  >
+                    {session.time}
+                  </span>
                   <span className="text-[9px] px-2 py-0.5 rounded-full bg-lime-500/10 text-lime-600 font-bold border border-lime-500/20">
                     {session.status}
                   </span>
@@ -151,9 +172,11 @@ export function UpcomingMeetingsCard({ themeMode = "dark" }: UpcomingMeetingsCar
       </div>
 
       {/* Card Footer */}
-      <div className={`mt-4 pt-3 flex items-center justify-between text-[11px] border-t ${
-        isDark ? "border-[#212630] text-slate-400" : "border-slate-100 text-slate-600"
-      }`}>
+      <div
+        className={`mt-4 pt-3 flex items-center justify-between text-[11px] border-t ${
+          isDark ? "border-[#212630] text-slate-400" : "border-slate-100 text-slate-600"
+        }`}
+      >
         <span className="flex items-center gap-1.5">
           <Clock className="w-3.5 h-3.5 text-lime-500" /> Total 2.5 hrs calls today
         </span>

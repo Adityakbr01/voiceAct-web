@@ -32,7 +32,9 @@ export default function AdminLoginPage() {
       >
         <div>
           <h1 className="text-xl font-bold text-[#F4F2F2]">VoiceAct Admin</h1>
-          <p className="mt-1 text-sm text-slate-400">Sign in to manage contacts, projects, and services.</p>
+          <p className="mt-1 text-sm text-slate-400">
+            Sign in to manage contacts, projects, and services.
+          </p>
         </div>
         <label className="block space-y-1.5 text-sm">
           <span className="text-slate-400">Email</span>
@@ -55,7 +57,11 @@ export default function AdminLoginPage() {
           />
         </label>
         {error && <p className="text-sm text-red-400">{error}</p>}
-        <Button type="submit" disabled={submitting} className="w-full rounded-xl bg-[#d6f14a] text-slate-950 hover:bg-[#c5e043]">
+        <Button
+          type="submit"
+          disabled={submitting}
+          className="w-full rounded-xl bg-[#d6f14a] text-slate-950 hover:bg-[#c5e043]"
+        >
           {submitting ? "Signing in…" : "Sign in"}
         </Button>
       </form>

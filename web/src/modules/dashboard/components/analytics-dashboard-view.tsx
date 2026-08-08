@@ -28,7 +28,9 @@ interface AnalyticsDashboardViewProps {
   activeTabRoute?: string;
 }
 
-export function AnalyticsDashboardView({ activeTabRoute = "overview" }: AnalyticsDashboardViewProps) {
+export function AnalyticsDashboardView({
+  activeTabRoute = "overview",
+}: AnalyticsDashboardViewProps) {
   const searchParams = useSearchParams();
   const currentTab = activeTabRoute || searchParams.get("tab") || "overview";
 
@@ -85,11 +87,11 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
             duration: 0.45,
             stagger: 0.06,
             ease: "power3.out",
-          }
+          },
         );
       }
     },
-    { dependencies: [currentTab] }
+    { dependencies: [currentTab] },
   );
 
   const handleRefresh = () => {
@@ -118,7 +120,9 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
   const realtimeCount = dashboardStats?.tracking.realtime?.activeSessions ?? 0;
 
   const handleExportJSON = () => {
-    const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(JSON.stringify(dashboardStats ?? {}, null, 2));
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(dashboardStats ?? {}, null, 2));
     const link = document.createElement("a");
     link.setAttribute("href", csvContent);
     link.setAttribute("download", `analytics_export_${dateRange}.json`);
@@ -164,7 +168,10 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
           <>
             <RealtimeVisitorsBanner realtimeCount={realtimeCount} themeMode={themeMode} />
             <KPISummaryCards themeMode={themeMode} liveMetrics={liveMetrics} />
-            <TrafficOverviewChart themeMode={themeMode} timeSeries={dashboardStats?.tracking.timeSeries} />
+            <TrafficOverviewChart
+              themeMode={themeMode}
+              timeSeries={dashboardStats?.tracking.timeSeries}
+            />
             <TrafficSourcesSection themeMode={themeMode} sources={liveTrafficSources} />
             <RecentConversionsTable themeMode={themeMode} contacts={liveRecentContacts} />
           </>
@@ -173,7 +180,10 @@ export function AnalyticsDashboardView({ activeTabRoute = "overview" }: Analytic
         {/* 2. TRAFFIC & SOURCES */}
         {currentTab === "traffic" && (
           <>
-            <TrafficOverviewChart themeMode={themeMode} timeSeries={dashboardStats?.tracking.timeSeries} />
+            <TrafficOverviewChart
+              themeMode={themeMode}
+              timeSeries={dashboardStats?.tracking.timeSeries}
+            />
             <TrafficSourcesSection themeMode={themeMode} sources={liveTrafficSources} />
           </>
         )}

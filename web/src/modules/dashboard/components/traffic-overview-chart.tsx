@@ -27,7 +27,10 @@ const chartConfig = {
   uniqueVisitors: { label: "Unique Visitors", color: "#737373" },
 };
 
-export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: TrafficOverviewChartProps) {
+export function TrafficOverviewChart({
+  themeMode = "dark",
+  timeSeries = [],
+}: TrafficOverviewChartProps) {
   const isDark = themeMode === "dark";
   const [granularity, setGranularity] = useState<"hourly" | "daily">("daily");
   const [chartType, setChartType] = useState<"area" | "line" | "bar">("area");
@@ -46,12 +49,16 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
     : [{ time: "Today", visitors: 0, sessions: 0, pageViews: 0, uniqueVisitors: 0 }];
 
   return (
-    <section className={`p-7 rounded-none space-y-6 font-sans border shadow-sm ${
-      isDark ? "bg-[#0a0a0a] border-[#1f1f1f]" : "bg-white border-slate-200"
-    }`}>
+    <section
+      className={`p-7 rounded-none space-y-6 font-sans border shadow-sm ${
+        isDark ? "bg-[#0a0a0a] border-[#1f1f1f]" : "bg-white border-slate-200"
+      }`}
+    >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className={`text-xl font-bold tracking-tight flex items-center gap-2 ${isDark ? "text-[#ededed]" : "text-slate-900"}`}>
+          <h2
+            className={`text-xl font-bold tracking-tight flex items-center gap-2 ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
+          >
             <Globe className="w-5 h-5 text-blue-500" /> Traffic Trends Overview
           </h2>
           <p className={`text-xs mt-1 font-medium ${isDark ? "text-[#a1a1a1]" : "text-slate-500"}`}>
@@ -61,11 +68,17 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
 
         <div className="flex flex-wrap items-center gap-2">
           {/* Metric Selector */}
-          <div className={`inline-flex p-1 rounded-none text-xs border ${isDark ? "bg-[#111111] border-[#1f1f1f]" : "bg-slate-100 border-slate-200"}`}>
+          <div
+            className={`inline-flex p-1 rounded-none text-xs border ${isDark ? "bg-[#111111] border-[#1f1f1f]" : "bg-slate-100 border-slate-200"}`}
+          >
             <button
               onClick={() => setActiveTrafficMetric("visitors")}
               className={`px-3 py-1 rounded-none font-semibold transition cursor-pointer ${
-                activeTrafficMetric === "visitors" ? "bg-white text-black" : isDark ? "text-[#a1a1a1] hover:text-white" : "text-slate-600 hover:text-slate-900"
+                activeTrafficMetric === "visitors"
+                  ? "bg-white text-black"
+                  : isDark
+                    ? "text-[#a1a1a1] hover:text-white"
+                    : "text-slate-600 hover:text-slate-900"
               }`}
             >
               Visitors
@@ -73,7 +86,11 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
             <button
               onClick={() => setActiveTrafficMetric("sessions")}
               className={`px-3 py-1 rounded-none font-semibold transition cursor-pointer ${
-                activeTrafficMetric === "sessions" ? "bg-white text-black" : isDark ? "text-[#a1a1a1] hover:text-white" : "text-slate-600 hover:text-slate-900"
+                activeTrafficMetric === "sessions"
+                  ? "bg-white text-black"
+                  : isDark
+                    ? "text-[#a1a1a1] hover:text-white"
+                    : "text-slate-600 hover:text-slate-900"
               }`}
             >
               Sessions
@@ -81,7 +98,11 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
             <button
               onClick={() => setActiveTrafficMetric("pageViews")}
               className={`px-3 py-1 rounded-none font-semibold transition cursor-pointer ${
-                activeTrafficMetric === "pageViews" ? "bg-white text-black" : isDark ? "text-[#a1a1a1] hover:text-white" : "text-slate-600 hover:text-slate-900"
+                activeTrafficMetric === "pageViews"
+                  ? "bg-white text-black"
+                  : isDark
+                    ? "text-[#a1a1a1] hover:text-white"
+                    : "text-slate-600 hover:text-slate-900"
               }`}
             >
               Page Views
@@ -89,11 +110,17 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
           </div>
 
           {/* Granularity Selector */}
-          <div className={`inline-flex p-1 rounded-none text-xs border ${isDark ? "bg-[#111111] border-[#1f1f1f]" : "bg-slate-100 border-slate-200"}`}>
+          <div
+            className={`inline-flex p-1 rounded-none text-xs border ${isDark ? "bg-[#111111] border-[#1f1f1f]" : "bg-slate-100 border-slate-200"}`}
+          >
             <button
               onClick={() => setGranularity("hourly")}
               className={`px-3 py-1 rounded-none font-semibold transition cursor-pointer ${
-                granularity === "hourly" ? "bg-[#1f1f1f] text-white" : isDark ? "text-[#a1a1a1] hover:text-white" : "text-slate-500 hover:text-slate-800"
+                granularity === "hourly"
+                  ? "bg-[#1f1f1f] text-white"
+                  : isDark
+                    ? "text-[#a1a1a1] hover:text-white"
+                    : "text-slate-500 hover:text-slate-800"
               }`}
             >
               Hourly
@@ -101,7 +128,11 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
             <button
               onClick={() => setGranularity("daily")}
               className={`px-3 py-1 rounded-none font-semibold transition cursor-pointer ${
-                granularity === "daily" ? "bg-[#1f1f1f] text-white" : isDark ? "text-[#a1a1a1] hover:text-white" : "text-slate-500 hover:text-slate-800"
+                granularity === "daily"
+                  ? "bg-[#1f1f1f] text-white"
+                  : isDark
+                    ? "text-[#a1a1a1] hover:text-white"
+                    : "text-slate-500 hover:text-slate-800"
               }`}
             >
               Daily
@@ -109,11 +140,17 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
           </div>
 
           {/* Chart Type Selector */}
-          <div className={`inline-flex p-1 rounded-none text-xs border ${isDark ? "bg-[#111111] border-[#1f1f1f]" : "bg-slate-100 border-slate-200"}`}>
+          <div
+            className={`inline-flex p-1 rounded-none text-xs border ${isDark ? "bg-[#111111] border-[#1f1f1f]" : "bg-slate-100 border-slate-200"}`}
+          >
             <button
               onClick={() => setChartType("area")}
               className={`px-2.5 py-1 rounded-none font-semibold transition cursor-pointer ${
-                chartType === "area" ? "bg-[#1f1f1f] text-white" : isDark ? "text-[#a1a1a1] hover:text-white" : "text-slate-500 hover:text-slate-800"
+                chartType === "area"
+                  ? "bg-[#1f1f1f] text-white"
+                  : isDark
+                    ? "text-[#a1a1a1] hover:text-white"
+                    : "text-slate-500 hover:text-slate-800"
               }`}
             >
               Area
@@ -121,7 +158,11 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
             <button
               onClick={() => setChartType("bar")}
               className={`px-2.5 py-1 rounded-none font-semibold transition cursor-pointer ${
-                chartType === "bar" ? "bg-[#1f1f1f] text-white" : isDark ? "text-[#a1a1a1] hover:text-white" : "text-slate-500 hover:text-slate-800"
+                chartType === "bar"
+                  ? "bg-[#1f1f1f] text-white"
+                  : isDark
+                    ? "text-[#a1a1a1] hover:text-white"
+                    : "text-slate-500 hover:text-slate-800"
               }`}
             >
               Bar
@@ -129,7 +170,11 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
             <button
               onClick={() => setChartType("line")}
               className={`px-2.5 py-1 rounded-none font-semibold transition cursor-pointer ${
-                chartType === "line" ? "bg-[#1f1f1f] text-white" : isDark ? "text-[#a1a1a1] hover:text-white" : "text-slate-500 hover:text-slate-800"
+                chartType === "line"
+                  ? "bg-[#1f1f1f] text-white"
+                  : isDark
+                    ? "text-[#a1a1a1] hover:text-white"
+                    : "text-slate-500 hover:text-slate-800"
               }`}
             >
               Line
@@ -152,7 +197,14 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
             <XAxis dataKey="time" stroke={isDark ? "#a1a1a1" : "#64748b"} fontSize={11} />
             <YAxis stroke={isDark ? "#a1a1a1" : "#64748b"} fontSize={11} />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Area type="monotone" dataKey={activeTrafficMetric} stroke={isDark ? "#ffffff" : "#000000"} strokeWidth={2} fillOpacity={1} fill="url(#colorMetric)" />
+            <Area
+              type="monotone"
+              dataKey={activeTrafficMetric}
+              stroke={isDark ? "#ffffff" : "#000000"}
+              strokeWidth={2}
+              fillOpacity={1}
+              fill="url(#colorMetric)"
+            />
           </AreaChart>
         ) : chartType === "bar" ? (
           <BarChart data={currentTrafficSeries}>
@@ -160,7 +212,11 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
             <XAxis dataKey="time" stroke={isDark ? "#a1a1a1" : "#64748b"} fontSize={11} />
             <YAxis stroke={isDark ? "#a1a1a1" : "#64748b"} fontSize={11} />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Bar dataKey={activeTrafficMetric} fill={isDark ? "#ffffff" : "#000000"} radius={[4, 4, 0, 0]} />
+            <Bar
+              dataKey={activeTrafficMetric}
+              fill={isDark ? "#ffffff" : "#000000"}
+              radius={[4, 4, 0, 0]}
+            />
           </BarChart>
         ) : (
           <LineChart data={currentTrafficSeries}>
@@ -168,7 +224,13 @@ export function TrafficOverviewChart({ themeMode = "dark", timeSeries = [] }: Tr
             <XAxis dataKey="time" stroke={isDark ? "#a1a1a1" : "#64748b"} fontSize={11} />
             <YAxis stroke={isDark ? "#a1a1a1" : "#64748b"} fontSize={11} />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Line type="monotone" dataKey={activeTrafficMetric} stroke={isDark ? "#ffffff" : "#000000"} strokeWidth={2} dot={{ r: 4, fill: isDark ? "#ffffff" : "#000000" }} />
+            <Line
+              type="monotone"
+              dataKey={activeTrafficMetric}
+              stroke={isDark ? "#ffffff" : "#000000"}
+              strokeWidth={2}
+              dot={{ r: 4, fill: isDark ? "#ffffff" : "#000000" }}
+            />
           </LineChart>
         )}
       </ChartContainer>

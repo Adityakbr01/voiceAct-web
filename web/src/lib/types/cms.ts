@@ -66,7 +66,10 @@ export interface DashboardStats {
   contacts: { total: number; new: number; read: number; replied: number };
   projects: { total: number };
   services: { total: number; active: number };
-  recentContacts: Pick<ContactInquiry, "_id" | "name" | "email" | "service" | "status" | "createdAt">[];
+  recentContacts: Pick<
+    ContactInquiry,
+    "_id" | "name" | "email" | "service" | "status" | "createdAt"
+  >[];
   tracking: {
     sources: TrafficSourceRow[];
     campaigns: unknown[];

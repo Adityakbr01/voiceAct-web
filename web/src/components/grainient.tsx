@@ -236,8 +236,7 @@ const Grainient = ({
     };
 
     const tryStart = () => {
-      if (isVisible && isPageVisible && raf === 0)
-        raf = requestAnimationFrame(loop);
+      if (isVisible && isPageVisible && raf === 0) raf = requestAnimationFrame(loop);
     };
     const tryStop = () => {
       if (raf !== 0) {
@@ -249,15 +248,23 @@ const Grainient = ({
     const io = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
-        isVisible ? tryStart() : tryStop();
+        if (isVisible) {
+          tryStart();
+        } else {
+          tryStop();
+        }
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
     io.observe(container);
 
     const onVisibility = () => {
       isPageVisible = !document.hidden;
-      isPageVisible ? tryStart() : tryStop();
+      if (isPageVisible) {
+        tryStart();
+      } else {
+        tryStop();
+      }
     };
     document.addEventListener("visibilitychange", onVisibility);
 
@@ -331,12 +338,7 @@ const Grainient = ({
     color3,
   ]);
 
-  return (
-    <div
-      ref={containerRef}
-      className={`grainient-container ${className}`.trim()}
-    />
-  );
+  return <div ref={containerRef} className={`grainient-container ${className}`.trim()} />;
 };
 
 export default Grainient;

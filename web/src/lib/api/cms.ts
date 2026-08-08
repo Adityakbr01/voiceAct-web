@@ -19,7 +19,7 @@ export async function getServiceBySlug(slug: string) {
 }
 
 export async function createService(
-  payload: Partial<ServiceRecord> & { title: string; slug: string; description: string }
+  payload: Partial<ServiceRecord> & { title: string; slug: string; description: string },
 ) {
   const { data } = await api.post<ApiSuccess<ServiceRecord>>("/services", payload);
   return data.data;
@@ -52,7 +52,7 @@ export async function getProjectBySlug(slug: string) {
 }
 
 export async function createProject(
-  payload: Partial<ProjectRecord> & { title: string; slug: string; description: string }
+  payload: Partial<ProjectRecord> & { title: string; slug: string; description: string },
 ) {
   const { data } = await api.post<ApiSuccess<ProjectRecord>>("/projects", payload);
   return data.data;

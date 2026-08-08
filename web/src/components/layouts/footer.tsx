@@ -21,12 +21,11 @@ interface SafeBallpitProps {
 
 class SafeBallpit extends Component<SafeBallpitProps> {
   state = { hasError: false };
-  static getDerivedStateFromError(error: any) {
-    console.error("SafeBallpit caught an error during render:", error);
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
-  componentDidCatch(error: any, errorInfo: any) {
-    console.error("SafeBallpit details:", error, errorInfo);
+  componentDidCatch() {
+    // Suppress WebGL error logs in environments without 3D canvas support
   }
   render() {
     return this.state.hasError ? (this.props.fallback ?? null) : this.props.children;
@@ -94,9 +93,15 @@ interface FooterLinkItem {
   };
 }
 
-const staticFooterLinks: { company: FooterLinkItem[]; legal: FooterLinkItem[] } = {
+const staticFooterLinks: {
+  company: FooterLinkItem[];
+  hire: FooterLinkItem[];
+  tools: FooterLinkItem[];
+  locations: FooterLinkItem[];
+  legal: FooterLinkItem[];
+} = {
   company: [
-    { label: "About", href: "/about" },
+    { label: "About Us", href: "/about" },
     { label: "Services", href: "/#services" },
     { label: "Work", href: "/#work" },
     { label: "Blog", href: "/blog" },
@@ -110,6 +115,38 @@ const staticFooterLinks: { company: FooterLinkItem[]; legal: FooterLinkItem[] } 
       href: "/about#contact",
       badge: { text: "Soon", color: "bg-amber-500/15 text-amber-400 border-amber-500/30" },
     },
+  ],
+  hire: [
+    {
+      label: "Hire Developers",
+      href: "/hire",
+      badge: { text: "Vetted", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+    },
+    { label: "React Developers", href: "/hire/react-developers" },
+    { label: "Next.js Developers", href: "/hire/nextjs-developers" },
+    { label: "Mobile Developers", href: "/hire/react-native-developers" },
+    { label: "AI Engineers", href: "/hire/ai-engineers" },
+  ],
+  tools: [
+    {
+      label: "Cost Estimator",
+      href: "/calculator",
+      badge: { text: "Tool", color: "bg-purple-500/15 text-purple-400 border-purple-500/30" },
+    },
+    {
+      label: "Free Site Audit",
+      href: "/audit",
+      badge: { text: "Free", color: "bg-amber-500/15 text-amber-400 border-amber-500/30" },
+    },
+    { label: "CRM vs ERP Guide", href: "/compare/crm-vs-erp" },
+    { label: "Next.js vs React", href: "/compare/nextjs-vs-react" },
+  ],
+  locations: [
+    { label: "Bangalore", href: "/location/bangalore/web-development" },
+    { label: "Hyderabad", href: "/location/hyderabad/web-development" },
+    { label: "Pune", href: "/location/pune/web-development" },
+    { label: "Mumbai", href: "/location/mumbai/web-development" },
+    { label: "Delhi NCR", href: "/location/delhi/web-development" },
   ],
   legal: [
     { label: "Privacy Policy", href: company.legal.privacyPolicyUrl },
@@ -182,9 +219,9 @@ export function Footer() {
       {isNearViewport && <FooterEffects isMobile={isMobile} />}
 
       <div className="relative z-10 px-6 py-16 md:px-10">
-        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 md:grid-cols-12">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-8 md:grid-cols-12">
           {/* Company Info */}
-          <div className="md:col-span-4">
+          <div className="col-span-2 md:col-span-4">
             <div className="font-display text-xl font-semibold text-white">{company.name}</div>
             <p className="mt-3 max-w-sm text-sm text-white/70">{company.tagline}</p>
             <div className="mt-6 space-y-2 text-sm text-white/60">
@@ -211,8 +248,8 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="md:col-span-2">
+          {/* Company Links */}
+          <div className="col-span-1 md:col-span-2">
             <div className="text-xs font-medium uppercase tracking-[0.2em] text-white/50">
               Company
             </div>
@@ -242,8 +279,39 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Hire Developers */}
+          <div className="col-span-1 md:col-span-2">
+            <div className="text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+              Hire Talent
+            </div>
+            <ul className="mt-4 space-y-2 text-sm">
+              {staticFooterLinks.hire.map((h) => (
+                <li key={h.label}>
+                  <Link
+                    href={h.href}
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
+                  >
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block">{h.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                        {h.label}
+                      </span>
+                    </span>
+                    {h.badge && (
+                      <span
+                        className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${h.badge.color}`}
+                      >
+                        {h.badge.text}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Services */}
-          <div className="md:col-span-2">
+          <div className="col-span-1 md:col-span-2">
             <div className="text-xs font-medium uppercase tracking-[0.2em] text-white/50">
               Services
             </div>
@@ -273,12 +341,64 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
-          <div className="md:col-span-2">
+          {/* Tools & Asset Guides */}
+          <div className="col-span-1 md:col-span-2">
             <div className="text-xs font-medium uppercase tracking-[0.2em] text-white/50">
-              Legal
+              Tools & Guides
             </div>
             <ul className="mt-4 space-y-2 text-sm">
+              {staticFooterLinks.tools.map((t) => (
+                <li key={t.label}>
+                  <Link
+                    href={t.href}
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
+                  >
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block">{t.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                        {t.label}
+                      </span>
+                    </span>
+                    {t.badge && (
+                      <span
+                        className={`ml-2 inline-flex items-center rounded-none border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${t.badge.color}`}
+                      >
+                        {t.badge.text}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Cities, Legal & Connect Social Section */}
+        <div className="mx-auto mt-12 grid w-full max-w-7xl grid-cols-1 gap-8 md:grid-cols-12 pt-10">
+          {/* Cities */}
+          <div className="md:col-span-4 space-y-3">
+            <div className="text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+              Target Cities
+            </div>
+            <div className="flex flex-wrap gap-2 text-xs text-white/70">
+              {staticFooterLinks.locations.map((loc) => (
+                <Link
+                  key={loc.label}
+                  href={loc.href}
+                  className="rounded-full border border-white/10 px-3 py-1 transition-colors hover:border-white/40 hover:text-white"
+                >
+                  {loc.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Legal */}
+          <div className="md:col-span-3 space-y-3">
+            <div className="text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+              Legal & Policy
+            </div>
+            <ul className="space-y-2 text-sm">
               {staticFooterLinks.legal.map((l) => (
                 <li key={l.label}>
                   <Link
@@ -304,8 +424,8 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact & Social */}
-          <div className="md:col-span-2">
+          {/* Connect & Social Badges */}
+          <div className="md:col-span-5 space-y-4">
             <div className="text-xs font-medium uppercase tracking-[0.2em] text-white/50">
               Connect
             </div>
@@ -313,18 +433,18 @@ export function Footer() {
               href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.email)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 block text-lg font-display font-medium italic text-white transition-colors hover:text-white/80"
+              className="block text-xl font-display font-medium italic text-white transition-colors hover:text-white/80"
             >
               {site.email}
             </a>
-            <div className="mt-6 flex flex-wrap gap-2.5">
-              {site.socials.map((s: any) => (
+            <div className="flex flex-wrap gap-2.5">
+              {site.socials.map((s: any, idx: number) => (
                 <a
-                  key={s.href}
+                  key={s.href + idx}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-none border border-white/20 px-3 py-1 text-xs text-white/80 backdrop-blur-sm transition-colors hover:text-white hover:border-white/40"
+                  className="inline-flex items-center gap-1.5 rounded-none border border-white/20 px-3 py-1.5 text-xs text-white/80 backdrop-blur-sm transition-colors hover:text-white hover:border-white/40"
                 >
                   <span>{s.label}</span>
                   {s.badge && (
@@ -341,8 +461,8 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mx-auto mt-16 flex w-full max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row">
-          <div>
+        <div className="mx-auto mt-12 flex w-full max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row">
+          <div suppressHydrationWarning>
             © {new Date().getFullYear()} {company.name}. All rights reserved.
           </div>
           <ThemeToggle />

@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,7 +11,10 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden pt-24 sm:pt-28 md:pt-32">
       {/* Aurora ambient background */}
-      <AuroraBackground aria-hidden className="pointer-events-none absolute inset-0 z-0 transform-gpu" />
+      <AuroraBackground
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 transform-gpu"
+      />
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 sm:px-6 pb-12 text-center md:px-10 md:pb-16">
         <motion.span
@@ -179,8 +184,7 @@ export function Hero() {
                   >
                     {brand}
                   </span>
-                ),
-              )}
+                ))}
             </div>
           </div>
         </div>

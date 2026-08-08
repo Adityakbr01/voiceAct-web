@@ -55,7 +55,14 @@ class ThreeApp {
   scene!: Scene;
   renderer!: WebGLRenderer | null;
   postprocessingInstance: any;
-  size: { width: number; height: number; wWidth: number; wHeight: number; ratio: number; pixelRatio: number } = {
+  size: {
+    width: number;
+    height: number;
+    wWidth: number;
+    wHeight: number;
+    ratio: number;
+    pixelRatio: number;
+  } = {
     width: 0,
     height: 0,
     wWidth: 0,
@@ -144,12 +151,20 @@ class ThreeApp {
 
   onIntersection = (entries: IntersectionObserverEntry[]) => {
     this.isIntersecting = entries[0].isIntersecting;
-    this.isIntersecting ? this.startLoop() : this.stopLoop();
+    if (this.isIntersecting) {
+      this.startLoop();
+    } else {
+      this.stopLoop();
+    }
   };
 
   onVisibilityChange = () => {
     if (this.isIntersecting) {
-      document.hidden ? this.stopLoop() : this.startLoop();
+      if (document.hidden) {
+        this.stopLoop();
+      } else {
+        this.startLoop();
+      }
     }
   };
 
@@ -159,7 +174,8 @@ class ThreeApp {
   };
 
   resize() {
-    let width = 0, height = 0;
+    let width = 0,
+      height = 0;
     if (this.options.size instanceof Object) {
       width = this.options.size.width;
       height = this.options.size.height;
@@ -433,7 +449,9 @@ function updateCoordinates(target: any, rect: DOMRect) {
 
 function isInsideRect(rect: DOMRect) {
   const { x, y } = globalPointer;
-  return x >= rect.left && x <= rect.left + rect.width && y >= rect.top && y <= rect.top + rect.height;
+  return (
+    x >= rect.left && x <= rect.left + rect.width && y >= rect.top && y <= rect.top + rect.height
+  );
 }
 
 const F = new Vector3();
@@ -590,11 +608,11 @@ class CustomPhysicalMaterial extends MeshPhysicalMaterial {
         shader.fragmentShader;
       shader.fragmentShader = shader.fragmentShader.replace(
         "void main() {",
-        "\n        void RE_Direct_Scattering(const in IncidentLight directLight, const in vec2 uv, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3 geometryViewDir, const in vec3 geometryClearcoatNormal, inout ReflectedLight reflectedLight) {\n          vec3 scatteringHalf = normalize(directLight.direction + (geometryNormal * thicknessDistortion));\n          float scatteringDot = pow(saturate(dot(geometryViewDir, -scatteringHalf)), thicknessPower) * thicknessScale;\n          #ifdef USE_COLOR\n            vec3 scatteringIllu = (scatteringDot + thicknessAmbient) * vColor;\n          #else\n            vec3 scatteringIllu = (scatteringDot + thicknessAmbient) * diffuse;\n          #endif\n          reflectedLight.directDiffuse += scatteringIllu * thicknessAttenuation * directLight.color;\n        }\n\n        void main() {\n      "
+        "\n        void RE_Direct_Scattering(const in IncidentLight directLight, const in vec2 uv, const in vec3 geometryPosition, const in vec3 geometryNormal, const in vec3 geometryViewDir, const in vec3 geometryClearcoatNormal, inout ReflectedLight reflectedLight) {\n          vec3 scatteringHalf = normalize(directLight.direction + (geometryNormal * thicknessDistortion));\n          float scatteringDot = pow(saturate(dot(geometryViewDir, -scatteringHalf)), thicknessPower) * thicknessScale;\n          #ifdef USE_COLOR\n            vec3 scatteringIllu = (scatteringDot + thicknessAmbient) * vColor;\n          #else\n            vec3 scatteringIllu = (scatteringDot + thicknessAmbient) * diffuse;\n          #endif\n          reflectedLight.directDiffuse += scatteringIllu * thicknessAttenuation * directLight.color;\n        }\n\n        void main() {\n      ",
       );
       const t = ShaderChunk.lights_fragment_begin.replaceAll(
         "RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );",
-        "\n          RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );\n          RE_Direct_Scattering(directLight, vUv, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, reflectedLight);\n        "
+        "\n          RE_Direct( directLight, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, material, reflectedLight );\n          RE_Direct_Scattering(directLight, vUv, geometryPosition, geometryNormal, geometryViewDir, geometryClearcoatNormal, reflectedLight);\n        ",
       );
       shader.fragmentShader = shader.fragmentShader.replace("#include <lights_fragment_begin>", t);
       if (this.onBeforeCompile2) this.onBeforeCompile2(shader);
@@ -660,7 +678,7 @@ class InstancedSpheres extends InstancedMesh {
   setColors(colors: any[]) {
     if (Array.isArray(colors) && colors.length > 1) {
       const gradient = (() => {
-        let cols: Color[] = [];
+        const cols: Color[] = [];
         colors.forEach((col) => {
           cols.push(new Color(col));
         });
@@ -830,7 +848,6 @@ const Ballpit = ({ className = "", followCursor = true, ...props }: BallpitProps
         spheresInstanceRef.current.dispose();
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <canvas className={className} ref={canvasRef} style={{ width: "100%", height: "100%" }} />;

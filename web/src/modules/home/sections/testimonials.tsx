@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";

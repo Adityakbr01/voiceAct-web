@@ -147,7 +147,6 @@ export function NavBar() {
           <Logo ref={logoRef} />
           <DesktopNav activeHref={activeHref} onSetActiveHref={setActiveHrefCallback} />
           <div ref={ctaRef} className="relative z-10 flex items-center gap-2">
-        
             <div className="hidden md:block">
               <CTA />
             </div>

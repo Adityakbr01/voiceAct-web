@@ -1,7 +1,16 @@
 "use client";
 
 import React from "react";
-import { BarChart2, RefreshCw, Sun, Moon, Download, ChevronDown, Settings, FileText } from "lucide-react";
+import {
+  BarChart2,
+  RefreshCw,
+  Sun,
+  Moon,
+  Download,
+  ChevronDown,
+  Settings,
+  FileText,
+} from "lucide-react";
 
 interface DashboardHeaderProps {
   lastRefreshed: string;
@@ -31,28 +40,36 @@ export function DashboardHeader({
   const isDark = themeMode === "dark";
 
   return (
-    <header className={`flex flex-col xl:flex-row xl:items-center justify-between gap-6 pb-6 border-b font-sans ${
-      isDark ? "border-[#1f1f1f]" : "border-slate-200"
-    }`}>
+    <header
+      className={`flex flex-col xl:flex-row xl:items-center justify-between gap-6 pb-6 border-b font-sans ${
+        isDark ? "border-[#1f1f1f]" : "border-slate-200"
+      }`}
+    >
       <div>
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-none bg-white text-black font-bold shadow-sm">
             <BarChart2 className="w-6 h-6" />
           </div>
           <div>
-            <h1 className={`text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-2 ${
-              isDark ? "text-[#ededed]" : "text-slate-900"
-            }`}>
+            <h1
+              className={`text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-2 ${
+                isDark ? "text-[#ededed]" : "text-slate-900"
+              }`}
+            >
               Marketing Analytics Dashboard
-              <span className={`text-xs px-2.5 py-1 rounded-none font-semibold border ${
-                isDark
-                  ? "bg-[#111111] text-[#ededed] border-[#1f1f1f]"
-                  : "bg-slate-100 text-slate-900 border-slate-300"
-              }`}>
+              <span
+                className={`text-xs px-2.5 py-1 rounded-none font-semibold border ${
+                  isDark
+                    ? "bg-[#111111] text-[#ededed] border-[#1f1f1f]"
+                    : "bg-slate-100 text-slate-900 border-slate-300"
+                }`}
+              >
                 Live Admin
               </span>
             </h1>
-            <p className={`text-xs md:text-sm mt-1 font-medium ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>
+            <p
+              className={`text-xs md:text-sm mt-1 font-medium ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}
+            >
               Real-time website traffic, campaign ROI, lead attribution & visitor behavior.
             </p>
           </div>
@@ -85,7 +102,11 @@ export function DashboardHeader({
           }`}
           title="Toggle Light/Dark Theme"
         >
-          {isDark ? <Sun className="w-4 h-4 text-white" /> : <Moon className="w-4 h-4 text-slate-700" />}
+          {isDark ? (
+            <Sun className="w-4 h-4 text-white" />
+          ) : (
+            <Moon className="w-4 h-4 text-slate-700" />
+          )}
         </button>
 
         {/* Export Menu Toggle */}
@@ -100,9 +121,13 @@ export function DashboardHeader({
           </button>
 
           {isExportOpen && (
-            <div className={`absolute right-0 mt-2 w-48 border rounded-none shadow-2xl p-2 z-50 text-xs ${
-              isDark ? "bg-[#0a0a0a] border-[#1f1f1f]" : "bg-white border-slate-200 text-slate-900"
-            }`}>
+            <div
+              className={`absolute right-0 mt-2 w-48 border rounded-none shadow-2xl p-2 z-50 text-xs ${
+                isDark
+                  ? "bg-[#0a0a0a] border-[#1f1f1f]"
+                  : "bg-white border-slate-200 text-slate-900"
+              }`}
+            >
               <button
                 onClick={onExportJSON}
                 className={`w-full text-left px-3 py-2 rounded-none flex items-center gap-2 cursor-pointer ${
