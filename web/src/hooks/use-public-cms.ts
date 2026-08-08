@@ -11,7 +11,7 @@ import type { Service, WorkItem } from "@/modules/services-data";
 
 export function mergeBlogsFromApi(apiBlogs: BlogRecord[]): BlogPost[] {
   if (!apiBlogs || apiBlogs.length === 0) return blogPosts;
-  return apiBlogs.map((b) => ({
+  const mappedApi: BlogPost[] = apiBlogs.map((b) => ({
     slug: b.slug,
     title: b.title,
     excerpt: b.excerpt,
@@ -30,6 +30,10 @@ export function mergeBlogsFromApi(apiBlogs: BlogRecord[]): BlogPost[] {
     featured: b.featured ?? false,
     tags: b.tags || [b.category || "Tech"],
   }));
+
+  const apiSlugs = new Set(mappedApi.map((p) => p.slug));
+  const remainingStatic = blogPosts.filter((p) => !apiSlugs.has(p.slug));
+  return [...mappedApi, ...remainingStatic];
 }
 
 export function usePublicServices({ enabled = true }: { enabled?: boolean } = {}) {

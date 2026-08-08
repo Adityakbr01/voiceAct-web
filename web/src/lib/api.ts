@@ -7,9 +7,18 @@ const configured = process.env.NEXT_PUBLIC_API_URL;
 // and the Cloudflare tunnel URL. On the phone "localhost" would be the phone,
 // which is why we never hardcode it.
 function getApiBase(): string {
-  if (configured && !/^https?:\/\/(localhost|127\.0\.0\.1)/i.test(configured)) return configured;
+  if (process.env.API_URL) return process.env.API_URL.replace(/\/$/, "");
+  if (configured && !/^https?:\/\/(localhost|127\.0\.0\.1)/i.test(configured)) {
+    return configured.replace(/\/$/, "");
+  }
   if (typeof window !== "undefined") return "/api";
-  return "http://localhost:5000/api"; // server components / SSR
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "")}/api`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}/api`;
+  }
+  return "http://localhost:5000/api";
 }
 
 const api = axios.create({

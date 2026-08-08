@@ -68,9 +68,18 @@ export async function deleteProject(id: string) {
 }
 
 function getApiBaseUrl(): string {
+  if (process.env.API_URL) return process.env.API_URL.replace(/\/$/, "");
   const configured = process.env.NEXT_PUBLIC_API_URL;
-  if (configured && !/^https?:\/\/(localhost|127\.0\.0\.1)/i.test(configured)) return configured;
+  if (configured && !/^https?:\/\/(localhost|127\.0\.0\.1)/i.test(configured)) {
+    return configured.replace(/\/$/, "");
+  }
   if (typeof window !== "undefined") return "/api";
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "")}/api`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}/api`;
+  }
   return "http://localhost:5000/api";
 }
 
