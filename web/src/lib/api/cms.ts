@@ -1,5 +1,5 @@
 import api from "../api";
-import type { ApiSuccess, ProjectRecord, ServiceRecord } from "../types/cms";
+import type { ApiSuccess, BlogRecord, ProjectRecord, ServiceRecord } from "../types/cms";
 
 // ========== SERVICES ==========
 
@@ -65,6 +65,39 @@ export async function updateProject(id: string, payload: Partial<ProjectRecord>)
 
 export async function deleteProject(id: string) {
   await api.delete(`/projects/${id}`);
+}
+
+// ========== BLOGS ==========
+
+export async function listBlogs() {
+  const { data } = await api.get<ApiSuccess<BlogRecord[]>>("/blogs");
+  return data.data;
+}
+
+export async function listAdminBlogs() {
+  const { data } = await api.get<ApiSuccess<BlogRecord[]>>("/blogs/admin/all");
+  return data.data;
+}
+
+export async function getBlogBySlug(slug: string) {
+  const { data } = await api.get<ApiSuccess<BlogRecord>>(`/blogs/${slug}`);
+  return data.data;
+}
+
+export async function createBlog(
+  payload: Partial<BlogRecord> & { title: string; slug: string; excerpt: string; content: string },
+) {
+  const { data } = await api.post<ApiSuccess<BlogRecord>>("/blogs", payload);
+  return data.data;
+}
+
+export async function updateBlog(id: string, payload: Partial<BlogRecord>) {
+  const { data } = await api.put<ApiSuccess<BlogRecord>>(`/blogs/${id}`, payload);
+  return data.data;
+}
+
+export async function deleteBlog(id: string) {
+  await api.delete(`/blogs/${id}`);
 }
 
 export async function uploadImage(file: File) {

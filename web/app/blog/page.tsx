@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowLeft, Clock, Calendar, ArrowRight, BookOpen } from "lucide-react";
 import { company } from "@/modules/company-data";
 import { blogPosts } from "@/modules/blog-data";
+import { listBlogs } from "@/lib/api/cms";
+import { mergeBlogsFromApi } from "@/hooks/use-public-cms";
 import { Footer } from "@/components/layouts/footer";
 import { Cta } from "@/modules/home/sections/cta";
 
@@ -22,9 +24,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogIndexPage() {
-  const featuredPost = blogPosts.find((p) => p.featured) || blogPosts[0];
-  const regularPosts = blogPosts.filter((p) => p.slug !== featuredPost.slug);
+export default async function BlogIndexPage() {
+  let posts = blogPosts;
+  try {
+    const apiBlogs = await listBlogs();
+    if (apiBlogs && apiBlogs.length > 0) {
+      posts = mergeBlogsFromApi(apiBlogs);
+    }
+  } catch (error) {
+    // Graceful fallback to static blog data
+  }
+
+  const featuredPost = posts.find((p) => p.featured) || posts[0];
+  const regularPosts = posts.filter((p) => p?.slug !== featuredPost?.slug);
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">

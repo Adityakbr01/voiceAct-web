@@ -15,6 +15,7 @@ import projectRoutes from "./modules/project/project.routes.js";
 import trackingRoutes from "./modules/tracking/tracking.routes.js";
 import adminRoutes from "./modules/admin/admin.routes.js";
 import uploadRoutes from "./modules/upload/upload.routes.js";
+import blogRoutes from "./modules/blog/blog.routes.js";
 
 export const posthog = new PostHog(config.posthogKey || "dummy");
 
@@ -43,6 +44,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/blogs", blogRoutes);
+app.use("/api/tracking", trackingRoutes);
 app.use("/api/tracking", trackingRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);

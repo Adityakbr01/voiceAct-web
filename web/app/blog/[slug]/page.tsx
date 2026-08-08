@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar, ArrowRight, Share2, Tag } from "lucide-react";
-import { getBlogPostBySlug, blogPosts } from "@/modules/blog-data";
+import { getBlogPostBySlug, blogPosts, type BlogPost } from "@/modules/blog-data";
+import { getBlogBySlug } from "@/lib/api/cms";
+import { mergeBlogsFromApi } from "@/hooks/use-public-cms";
 import { company } from "@/modules/company-data";
 import { Footer } from "@/components/layouts/footer";
 import { Cta } from "@/modules/home/sections/cta";
@@ -13,9 +15,21 @@ interface PageProps {
   params: Promise<{ slug: string }> | { slug: string };
 }
 
+async function fetchPost(slug: string): Promise<BlogPost | undefined> {
+  try {
+    const apiBlog = await getBlogBySlug(slug);
+    if (apiBlog) {
+      return mergeBlogsFromApi([apiBlog])[0];
+    }
+  } catch (error) {
+    // Fallback to static blog list
+  }
+  return getBlogPostBySlug(slug);
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const post = getBlogPostBySlug(resolvedParams.slug);
+  const post = await fetchPost(resolvedParams.slug);
 
   if (!post) {
     return { title: `Post Not Found — ${company.name}` };
@@ -34,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPostDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const post = getBlogPostBySlug(resolvedParams.slug);
+  const post = await fetchPost(resolvedParams.slug);
 
   if (!post) {
     notFound();

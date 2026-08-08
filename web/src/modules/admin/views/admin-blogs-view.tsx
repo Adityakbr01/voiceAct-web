@@ -1,8 +1,12 @@
 "use client";
 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { blogPosts, type BlogPost } from "@/modules/blog-data";
+import { createBlog, deleteBlog, listAdminBlogs, updateBlog } from "@/lib/api/cms";
+import { queryKeys } from "@/lib/api/query-keys";
+import type { BlogRecord } from "@/lib/types/cms";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -47,32 +51,91 @@ const emptyForm: BlogFormState = {
 };
 
 export function AdminBlogsView() {
+  const queryClient = useQueryClient();
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const [posts, setPosts] = useState<BlogPost[]>(blogPosts);
   const [open, setOpen] = useState(false);
-  const [editingSlug, setEditingSlug] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<BlogFormState>(emptyForm);
 
+  const query = useQuery({
+    queryKey: queryKeys.admin.blogs,
+    queryFn: listAdminBlogs,
+    staleTime: 30_000,
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createBlog,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.admin.blogs });
+      queryClient.invalidateQueries({ queryKey: queryKeys.public.blogs });
+      setOpen(false);
+      setEditingId(null);
+      setForm(emptyForm);
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: Partial<BlogRecord> }) =>
+      updateBlog(id, payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.admin.blogs });
+      queryClient.invalidateQueries({ queryKey: queryKeys.public.blogs });
+      setOpen(false);
+      setEditingId(null);
+      setForm(emptyForm);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteBlog,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.admin.blogs });
+      queryClient.invalidateQueries({ queryKey: queryKeys.public.blogs });
+    },
+  });
+
+  // Map API records to local blog list with static fallback
+  const postsList: (BlogRecord | BlogPost)[] =
+    query.data && query.data.length > 0
+      ? query.data
+      : blogPosts.map((p, idx) => ({
+          _id: `static-${idx}`,
+          slug: p.slug,
+          title: p.title,
+          excerpt: p.excerpt,
+          content: p.content,
+          category: p.category,
+          readTime: p.readTime,
+          publishedAt: p.publishedAt,
+          author: p.author,
+          coverImage: p.coverImage,
+          featured: p.featured ?? false,
+          tags: p.tags,
+          active: true,
+          order: idx + 1,
+        }));
+
   function openCreate() {
-    setEditingSlug(null);
+    setEditingId(null);
     setForm(emptyForm);
     setOpen(true);
   }
 
-  function openEdit(post: BlogPost) {
-    setEditingSlug(post.slug);
+  function openEdit(post: BlogRecord | BlogPost) {
+    const id = "_id" in post && post._id && !post._id.startsWith("static-") ? post._id : null;
+    setEditingId(id);
     setForm({
       title: post.title,
       slug: post.slug,
-      category: post.category,
-      readTime: post.readTime,
+      category: (post.category as BlogPost["category"]) || "Engineering",
+      readTime: post.readTime || "5 min read",
       excerpt: post.excerpt,
       content: post.content,
       authorName: post.author.name,
-      authorRole: post.author.role,
-      active: true,
+      authorRole: post.author.role || "Architect",
+      active: ("active" in post ? post.active : true) ?? true,
     });
     setOpen(true);
   }
@@ -80,60 +143,40 @@ export function AdminBlogsView() {
   function handleSave() {
     if (!form.title || !form.slug || !form.content) return;
 
-    if (editingSlug) {
-      setPosts((prev) =>
-        prev.map((p) =>
-          p.slug === editingSlug
-            ? {
-                ...p,
-                title: form.title,
-                slug: form.slug,
-                category: form.category,
-                readTime: form.readTime,
-                excerpt: form.excerpt,
-                content: form.content,
-                author: {
-                  name: form.authorName,
-                  role: form.authorRole,
-                  avatar: p.author.avatar,
-                },
-              }
-            : p,
-        ),
-      );
+    const payload: Partial<BlogRecord> & { title: string; slug: string; excerpt: string; content: string } = {
+      title: form.title,
+      slug: form.slug,
+      category: form.category,
+      readTime: form.readTime,
+      excerpt: form.excerpt,
+      content: form.content,
+      author: {
+        name: form.authorName,
+        role: form.authorRole,
+        avatar: "https://github.com/Adityakbr01.png",
+      },
+      coverImage:
+        "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop",
+      tags: [form.category, "SEO", "Tech"],
+      active: form.active,
+    };
+
+    if (editingId) {
+      updateMutation.mutate({ id: editingId, payload });
     } else {
-      const newPost: BlogPost = {
-        slug: form.slug,
-        title: form.title,
-        excerpt: form.excerpt,
-        content: form.content,
-        category: form.category,
-        publishedAt: new Date().toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        }),
-        readTime: form.readTime,
-        coverImage:
-          "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop",
-        tags: [form.category, "SEO", "Tech"],
-        author: {
-          name: form.authorName,
-          role: form.authorRole,
-          avatar: "https://github.com/Adityakbr01.png",
-        },
-      };
-      setPosts((prev) => [newPost, ...prev]);
+      createMutation.mutate(payload);
     }
-
-    setOpen(false);
-    setEditingSlug(null);
-    setForm(emptyForm);
   }
 
-  function handleDelete(slug: string) {
-    setPosts((prev) => prev.filter((p) => p.slug !== slug));
+  function handleDelete(item: BlogRecord | BlogPost) {
+    if ("_id" in item && item._id && !item._id.startsWith("static-")) {
+      if (confirm(`Are you sure you want to delete "${item.title}"?`)) {
+        deleteMutation.mutate(item._id);
+      }
+    }
   }
+
+  const isSaving = createMutation.isPending || updateMutation.isPending;
 
   return (
     <div className="space-y-6 font-sans">
@@ -186,7 +229,7 @@ export function AdminBlogsView() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {posts.map((post) => (
+            {postsList.map((post) => (
               <TableRow
                 key={post.slug}
                 className={`border-b transition-colors ${
@@ -216,7 +259,7 @@ export function AdminBlogsView() {
                   </Badge>
                 </TableCell>
                 <TableCell className={`text-xs ${isDark ? "text-[#a1a1a1]" : "text-slate-600"}`}>
-                  {post.publishedAt}
+                  {post.publishedAt || "Recently"}
                 </TableCell>
                 <TableCell
                   className={`text-xs font-medium ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
@@ -236,14 +279,16 @@ export function AdminBlogsView() {
                   >
                     Edit
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="text-xs font-semibold text-red-500 hover:bg-red-500/10 rounded-none"
-                    onClick={() => handleDelete(post.slug)}
-                  >
-                    Delete
-                  </Button>
+                  {"_id" in post && post._id && !post._id.startsWith("static-") && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-xs font-semibold text-red-500 hover:bg-red-500/10 rounded-none"
+                      onClick={() => handleDelete(post)}
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
@@ -263,7 +308,7 @@ export function AdminBlogsView() {
             <DialogTitle
               className={`text-lg font-bold ${isDark ? "text-[#ededed]" : "text-slate-900"}`}
             >
-              {editingSlug ? "Edit Article" : "Create New Article"}
+              {editingId ? "Edit Article" : "Create New Article"}
             </DialogTitle>
           </DialogHeader>
           <div className="grid gap-3 py-2 text-xs">
@@ -391,10 +436,10 @@ export function AdminBlogsView() {
                   ? "bg-white text-black hover:bg-slate-200"
                   : "bg-black text-white hover:bg-slate-800"
               }`}
-              disabled={!form.title || !form.slug || !form.content}
+              disabled={!form.title || !form.slug || !form.content || isSaving}
               onClick={handleSave}
             >
-              Save Article
+              {isSaving ? "Saving..." : "Save Article"}
             </Button>
           </DialogFooter>
         </DialogContent>

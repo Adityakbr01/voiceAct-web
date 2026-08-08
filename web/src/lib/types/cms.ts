@@ -39,6 +39,29 @@ export interface ProjectRecord {
   updatedAt?: string;
 }
 
+export interface BlogRecord {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  readTime?: string;
+  publishedAt?: string;
+  author: {
+    name: string;
+    role?: string;
+    avatar?: string;
+  };
+  coverImage?: string;
+  featured?: boolean;
+  tags?: string[];
+  active?: boolean;
+  order?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface AdminUser {
   id: string;
   email: string;
