@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
 import { APP } from "@/config/constants";
-import { listProjects, listServices } from "@/lib/api/cms";
+import { listBlogs, listProjects, listServices } from "@/lib/api/cms";
 import { blogPosts } from "@/modules/blog-data";
+
+export const revalidate = 300;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech").replace(
@@ -172,11 +174,41 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Blog post detail pages (/blog/[slug])
+  const blogMap = new Map<string, { slug: string; updatedAt?: string; createdAt?: string }>();
+
   for (const post of blogPosts) {
+    if (post.slug) {
+      blogMap.set(post.slug, { slug: post.slug });
+    }
+  }
+
+  try {
+    const apiBlogs = await listBlogs();
+    if (Array.isArray(apiBlogs)) {
+      for (const blog of apiBlogs) {
+        if (blog.slug) {
+          blogMap.set(blog.slug, {
+            slug: blog.slug,
+            updatedAt: blog.updatedAt,
+            createdAt: blog.createdAt,
+          });
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Failed to fetch dynamic blog routes for sitemap:", error);
+  }
+
+  for (const post of blogMap.values()) {
+    const lastModDate = post.updatedAt
+      ? new Date(post.updatedAt)
+      : post.createdAt
+        ? new Date(post.createdAt)
+        : new Date();
     routes.push({
       url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      lastModified: lastModDate,
+      changeFrequency: "weekly",
       priority: 0.7,
     });
   }

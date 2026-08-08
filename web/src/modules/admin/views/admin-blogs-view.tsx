@@ -143,7 +143,12 @@ export function AdminBlogsView() {
   function handleSave() {
     if (!form.title || !form.slug || !form.content) return;
 
-    const payload: Partial<BlogRecord> & { title: string; slug: string; excerpt: string; content: string } = {
+    const payload: Partial<BlogRecord> & {
+      title: string;
+      slug: string;
+      excerpt: string;
+      content: string;
+    } = {
       title: form.title,
       slug: form.slug,
       category: form.category,

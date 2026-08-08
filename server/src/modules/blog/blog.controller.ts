@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as blogService from "./blog.service.js";
 import { sendSuccess, sendCreated } from "../../utils/response.js";
+import { triggerBlogRevalidation } from "../../utils/revalidate.js";
 
 export async function list(_req: Request, res: Response) {
   const blogs = await blogService.getAll();
@@ -19,15 +20,18 @@ export async function getBySlug(req: Request, res: Response) {
 
 export async function create(req: Request, res: Response) {
   const blog = await blogService.create(req.body);
+  triggerBlogRevalidation();
   sendCreated(res, blog);
 }
 
 export async function update(req: Request, res: Response) {
   const blog = await blogService.update(req.params.id as string, req.body);
+  triggerBlogRevalidation();
   sendSuccess(res, blog);
 }
 
 export async function remove(req: Request, res: Response) {
   await blogService.remove(req.params.id as string);
+  triggerBlogRevalidation();
   sendSuccess(res, null, "Blog post deleted");
 }

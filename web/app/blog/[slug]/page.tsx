@@ -15,6 +15,15 @@ interface PageProps {
   params: Promise<{ slug: string }> | { slug: string };
 }
 
+export const revalidate = 300;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  return blogPosts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
 async function fetchPost(slug: string): Promise<BlogPost | undefined> {
   try {
     const apiBlog = await getBlogBySlug(slug);

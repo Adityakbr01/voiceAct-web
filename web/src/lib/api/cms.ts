@@ -67,11 +67,28 @@ export async function deleteProject(id: string) {
   await api.delete(`/projects/${id}`);
 }
 
+function getApiBaseUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_API_URL;
+  if (configured && !/^https?:\/\/(localhost|127\.0\.0\.1)/i.test(configured)) return configured;
+  if (typeof window !== "undefined") return "/api";
+  return "http://localhost:5000/api";
+}
+
 // ========== BLOGS ==========
 
 export async function listBlogs() {
-  const { data } = await api.get<ApiSuccess<BlogRecord[]>>("/blogs");
-  return data.data;
+  try {
+    const baseUrl = getApiBaseUrl();
+    const res = await fetch(`${baseUrl}/blogs`, {
+      next: { tags: ["blog-posts"], revalidate: 300 },
+    });
+    if (!res.ok) return [];
+    const data: ApiSuccess<BlogRecord[]> = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error("Failed to fetch listBlogs:", error);
+    return [];
+  }
 }
 
 export async function listAdminBlogs() {
@@ -80,8 +97,18 @@ export async function listAdminBlogs() {
 }
 
 export async function getBlogBySlug(slug: string) {
-  const { data } = await api.get<ApiSuccess<BlogRecord>>(`/blogs/${slug}`);
-  return data.data;
+  try {
+    const baseUrl = getApiBaseUrl();
+    const res = await fetch(`${baseUrl}/blogs/${encodeURIComponent(slug)}`, {
+      next: { tags: ["blog-posts"], revalidate: 300 },
+    });
+    if (!res.ok) return null;
+    const data: ApiSuccess<BlogRecord> = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error(`Failed to fetch getBlogBySlug(${slug}):`, error);
+    return null;
+  }
 }
 
 export async function createBlog(

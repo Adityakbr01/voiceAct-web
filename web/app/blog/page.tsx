@@ -8,6 +8,8 @@ import { mergeBlogsFromApi } from "@/hooks/use-public-cms";
 import { Footer } from "@/components/layouts/footer";
 import { Cta } from "@/modules/home/sections/cta";
 
+export const revalidate = 300;
+
 export const metadata: Metadata = {
   title: `Blog & Insights — ${company.name}`,
   description:
