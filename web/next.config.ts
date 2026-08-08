@@ -37,14 +37,6 @@ const nextConfig: NextConfig = {
   // Dev-only: dynamically allow HMR/WebSocket from LAN & Hotspot IPs
   allowedDevOrigins: getAllowedDevOrigins(),
 
-  // Dev-only: proxy /api to the local Express server so the phone (and the
-  // Cloudflare tunnel fallback) reach the API same-origin. No CORS, no port
-  // confusion, and the tunnel URL works end to end.
-  rewrites: async () =>
-    process.env.NODE_ENV === "development"
-      ? [{ source: "/api/:path*", destination: "http://localhost:5000/api/:path*" }]
-      : [],
-
   // Docker standalone output
   output: "standalone",
   compress: true,

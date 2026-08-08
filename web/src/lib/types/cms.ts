@@ -107,9 +107,17 @@ export interface DashboardStats {
   };
 }
 
+export interface BlogPagination {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export interface ApiSuccess<T> {
   success: boolean;
   data: T;
   message?: string;
   meta?: ApiListMeta;
+  pagination?: BlogPagination;
 }

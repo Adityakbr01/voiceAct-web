@@ -4,7 +4,8 @@ import {
   type Service,
   type WorkItem,
 } from "@/modules/services-data";
-import type { ProjectRecord, ServiceRecord } from "@/lib/types/cms";
+import { blogPosts, type BlogPost } from "@/modules/blog-data";
+import type { BlogRecord, ProjectRecord, ServiceRecord } from "@/lib/types/cms";
 
 export function mergeServicesFromApi(apiServices: ServiceRecord[]): Service[] {
   if (!apiServices.length) return staticServices;
@@ -38,4 +39,27 @@ export function mergeProjectsToWork(projects: ProjectRecord[]): WorkItem[] {
       outcome: p.description,
     };
   });
+}
+
+export function mergeBlogsFromApi(apiBlogs: BlogRecord[]): BlogPost[] {
+  if (!apiBlogs || apiBlogs.length === 0) return blogPosts;
+  return apiBlogs.map((b) => ({
+    slug: b.slug,
+    title: b.title,
+    excerpt: b.excerpt,
+    content: b.content,
+    category: (b.category as BlogPost["category"]) || "Engineering",
+    readTime: b.readTime || "5 min read",
+    publishedAt: b.publishedAt || "Recently",
+    author: {
+      name: b.author?.name || "VoiceAct Team",
+      role: b.author?.role || "Engineering Team",
+      avatar: b.author?.avatar || "https://github.com/Adityakbr01.png",
+    },
+    coverImage:
+      b.coverImage ||
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop",
+    featured: b.featured ?? false,
+    tags: b.tags || [b.category || "Tech"],
+  }));
 }

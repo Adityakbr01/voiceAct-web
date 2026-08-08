@@ -1,8 +1,11 @@
 import * as blogDao from "./blog.dao.js";
 import { AppError } from "../../utils/AppError.js";
 
-export async function getAll() {
-  return blogDao.findAllActive();
+export async function getAll(options?: { page?: number; limit?: number; category?: string }) {
+  if (!options?.page && !options?.limit && !options?.category) {
+    return blogDao.findAllActive();
+  }
+  return blogDao.findPaginatedActive(options);
 }
 
 export async function getAllAdmin() {

@@ -68,35 +68,54 @@ export async function deleteProject(id: string) {
 }
 
 function getApiBaseUrl(): string {
+  if (typeof window !== "undefined") {
+    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+  }
   if (process.env.API_URL) return process.env.API_URL.replace(/\/$/, "");
-  const configured = process.env.NEXT_PUBLIC_API_URL;
-  if (configured && !/^https?:\/\/(localhost|127\.0\.0\.1)/i.test(configured)) {
-    return configured.replace(/\/$/, "");
-  }
-  if (typeof window !== "undefined") return "/api";
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
+  if (process.env.NEXT_PUBLIC_SITE_URL)
     return `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "")}/api`;
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}/api`;
-  }
-  return "http://localhost:5000/api";
+  return process.env.NODE_ENV === "production"
+    ? "http://server:5000/api"
+    : "http://localhost:5000/api";
 }
 
 // ========== BLOGS ==========
 
-export async function listBlogs() {
+export async function listBlogs(options?: { page?: number; limit?: number; category?: string }) {
+  const baseUrl = getApiBaseUrl();
+  const queryParams = new URLSearchParams();
+  if (options?.page) queryParams.append("page", String(options.page));
+  if (options?.limit) queryParams.append("limit", String(options.limit));
+  if (options?.category && options.category !== "All")
+    queryParams.append("category", options.category);
+
+  const queryString = queryParams.toString() ? `?${queryParams.toString()}` : "";
+  console.log(`[CMS DEBUG] listBlogs() fetching from: ${baseUrl}/blogs${queryString}`);
   try {
-    const baseUrl = getApiBaseUrl();
-    const res = await fetch(`${baseUrl}/blogs`, {
-      next: { tags: ["blog-posts"], revalidate: 300 },
+    const res = await fetch(`${baseUrl}/blogs${queryString}`, {
+      cache: "no-store",
     });
-    if (!res.ok) return [];
+    console.log(`[CMS DEBUG] listBlogs() HTTP status: ${res.status}`);
+    if (!res.ok) {
+      console.warn(
+        `[CMS DEBUG] Backend API at ${baseUrl}/blogs${queryString} returned error status ${res.status}`,
+      );
+      return { data: [], pagination: undefined };
+    }
     const data: ApiSuccess<BlogRecord[]> = await res.json();
-    return data.data || [];
-  } catch (error) {
-    console.error("Failed to fetch listBlogs:", error);
-    return [];
+    const count = data?.data?.length || 0;
+    console.log(`[CMS DEBUG] listBlogs() successfully fetched ${count} blogs from MongoDB API`);
+    return {
+      data: data.data || [],
+      pagination: data.pagination,
+    };
+  } catch (error: any) {
+    console.error(
+      `[CMS DEBUG ERROR] listBlogs() failed connecting to ${baseUrl}/blogs${queryString}:`,
+      error?.message || error,
+    );
+    return { data: [], pagination: undefined };
   }
 }
 
@@ -106,16 +125,19 @@ export async function listAdminBlogs() {
 }
 
 export async function getBlogBySlug(slug: string) {
+  const baseUrl = getApiBaseUrl();
+  console.log(`[CMS DEBUG] getBlogBySlug("${slug}") fetching from: ${baseUrl}/blogs/${slug}`);
   try {
-    const baseUrl = getApiBaseUrl();
     const res = await fetch(`${baseUrl}/blogs/${encodeURIComponent(slug)}`, {
-      next: { tags: ["blog-posts"], revalidate: 300 },
+      cache: "no-store",
     });
+    console.log(`[CMS DEBUG] getBlogBySlug("${slug}") HTTP status: ${res.status}`);
     if (!res.ok) return null;
     const data: ApiSuccess<BlogRecord> = await res.json();
+    console.log(`[CMS DEBUG] getBlogBySlug("${slug}") result found: ${!!data?.data}`);
     return data.data;
-  } catch (error) {
-    console.error(`Failed to fetch getBlogBySlug(${slug}):`, error);
+  } catch (error: any) {
+    console.error(`[CMS DEBUG ERROR] getBlogBySlug("${slug}") failed:`, error?.message || error);
     return null;
   }
 }

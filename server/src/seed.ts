@@ -237,7 +237,7 @@ For complex hardware integrations, custom Bluetooth LE protocols, or intensive r
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
     },
     coverImage:
-      "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
     featured: false,
     tags: ["AI", "LLM", "OpenAI", "SaaS"],
     active: true,

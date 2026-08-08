@@ -176,15 +176,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Blog post detail pages (/blog/[slug])
   const blogMap = new Map<string, { slug: string; updatedAt?: string; createdAt?: string }>();
 
-  for (const post of blogPosts) {
-    if (post.slug) {
-      blogMap.set(post.slug, { slug: post.slug });
-    }
-  }
-
   try {
-    const apiBlogs = await listBlogs();
-    if (Array.isArray(apiBlogs)) {
+    const res = await listBlogs();
+    const apiBlogs = res.data;
+    if (Array.isArray(apiBlogs) && apiBlogs.length > 0) {
       for (const blog of apiBlogs) {
         if (blog.slug) {
           blogMap.set(blog.slug, {
@@ -194,9 +189,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           });
         }
       }
+    } else {
+      for (const post of blogPosts) {
+        if (post.slug) {
+          blogMap.set(post.slug, { slug: post.slug });
+        }
+      }
     }
   } catch (error) {
     console.error("Failed to fetch dynamic blog routes for sitemap:", error);
+    for (const post of blogPosts) {
+      if (post.slug) {
+        blogMap.set(post.slug, { slug: post.slug });
+      }
+    }
   }
 
   for (const post of blogMap.values()) {

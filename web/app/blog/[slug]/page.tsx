@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Calendar, ArrowRight, Share2, Tag } from "lucide-react";
 import { getBlogPostBySlug, blogPosts, type BlogPost } from "@/modules/blog-data";
-import { getBlogBySlug } from "@/lib/api/cms";
-import { mergeBlogsFromApi } from "@/hooks/use-public-cms";
+import { getBlogBySlug, listBlogs } from "@/lib/api/cms";
+import { mergeBlogsFromApi } from "@/lib/cms-presentations";
+import { MarkdownRenderer } from "@/components/blog/markdown-renderer";
 import { company } from "@/modules/company-data";
 import { Footer } from "@/components/layouts/footer";
 import { Cta } from "@/modules/home/sections/cta";
@@ -19,9 +20,15 @@ export const revalidate = 300;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
+  try {
+    const res = await listBlogs();
+    if (res.data && res.data.length > 0) {
+      return res.data.map((post) => ({ slug: post.slug }));
+    }
+  } catch (error) {
+    // Fallback to static list
+  }
+  return blogPosts.map((post) => ({ slug: post.slug }));
 }
 
 async function fetchPost(slug: string): Promise<BlogPost | undefined> {
@@ -101,7 +108,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
       <JsonLd data={[articleSchema, breadcrumbsSchema]} />
       <main className="pt-24 pb-20">
-        <div className="max-w-4xl mx-auto px-6 md:px-10 mb-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 mb-8">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
@@ -111,7 +118,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
         </div>
 
         {/* Article Header */}
-        <section className="max-w-4xl mx-auto px-6 md:px-10 pb-8 space-y-6">
+        <section className="max-w-7xl mx-auto px-6 md:px-10 pb-8 space-y-6">
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <span className="rounded-full bg-primary/10 border border-primary/20 px-3 py-1 font-semibold text-primary uppercase tracking-wider">
               {post.category}
@@ -159,58 +166,20 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
         </section>
 
         {/* Cover Image */}
-        <section className="max-w-4xl mx-auto px-6 md:px-10 pb-12">
+        <section className="max-w-7xl mx-auto px-6 md:px-10 pb-12">
           <div className="overflow-hidden rounded-3xl border border-border/60 aspect-video">
             <img src={post.coverImage} alt={post.title} className="h-full w-full object-cover" />
           </div>
         </section>
 
         {/* Article Body */}
-        <article className="max-w-3xl mx-auto px-6 md:px-10 pb-16 prose prose-invert max-w-none text-foreground/90 space-y-6 text-base md:text-lg leading-relaxed">
-          {post.content.split("\n\n").map((paragraph, i) => {
-            if (paragraph.startsWith("### ")) {
-              return (
-                <h3
-                  key={i}
-                  className="text-xl md:text-2xl font-bold tracking-tight text-foreground pt-4"
-                >
-                  {paragraph.replace("### ", "")}
-                </h3>
-              );
-            }
-            if (paragraph.startsWith("- ")) {
-              return (
-                <ul key={i} className="space-y-2 my-4 pl-4 border-l-2 border-primary/40">
-                  {paragraph.split("\n").map((item, j) => (
-                    <li key={j} className="text-muted-foreground text-base">
-                      {item.replace("- ", "")}
-                    </li>
-                  ))}
-                </ul>
-              );
-            }
-            if (paragraph.startsWith("1. ")) {
-              return (
-                <ol key={i} className="space-y-2 my-4 pl-4 border-l-2 border-primary/40">
-                  {paragraph.split("\n").map((item, j) => (
-                    <li key={j} className="text-muted-foreground text-base">
-                      {item}
-                    </li>
-                  ))}
-                </ol>
-              );
-            }
-            return (
-              <p key={i} className="text-muted-foreground">
-                {paragraph}
-              </p>
-            );
-          })}
+        <article className="max-w-7xl mx-auto px-6 md:px-10 pb-16">
+          <MarkdownRenderer content={post.content} />
         </article>
 
         {/* Related Articles */}
         {relatedPosts.length > 0 && (
-          <section className="max-w-4xl mx-auto px-6 md:px-10 py-12 border-t border-border/60">
+          <section className="max-w-7xl mx-auto px-6 md:px-10 py-12 border-t border-border/60">
             <h3 className="text-xl font-bold tracking-tight mb-6">Related Articles</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {relatedPosts.map((related) => (
