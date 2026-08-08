@@ -179,9 +179,6 @@ export default async function BlogIndexPage() {
             ))}
           </div>
         </section>
-
-        {/* Embedded Interactive Contact Section */}
-        <Cta />
       </main>
     </div>
   );

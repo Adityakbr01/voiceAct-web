@@ -233,14 +233,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
             </div>
           </section>
         )}
-
-        {/* CTA */}
-        <div className="mt-8">
-          <Cta />
-        </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

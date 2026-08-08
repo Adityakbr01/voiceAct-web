@@ -302,10 +302,6 @@ export default async function HireDeveloperPage({ params }: PageProps) {
             ))}
           </div>
         </section>
-
-        <div className="mt-12">
-          <Cta />
-        </div>
       </main>
     </div>
   );

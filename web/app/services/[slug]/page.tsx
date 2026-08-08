@@ -359,11 +359,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             </ul>
           </section>
         )}
-
-        {/* CTA Section */}
-        <div className="mt-12">
-          <Cta />
-        </div>
       </main>
     </div>
   );

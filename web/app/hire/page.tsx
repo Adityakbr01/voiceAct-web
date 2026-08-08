@@ -153,10 +153,6 @@ export default function HireMainPage() {
             </div>
           </div>
         </section>
-
-        <div className="mt-12">
-          <Cta />
-        </div>
       </main>
     </div>
   );

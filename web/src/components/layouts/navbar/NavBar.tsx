@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
-import { site, nav } from "@/modules/site";
-import gsap from "gsap";
+import { nav } from "@/modules/site";
 import { useGSAP } from "@gsap/react";
-import { ThemeToggle } from "./ThemeToggle";
-import { Logo } from "./Logo";
+import gsap from "gsap";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CTA } from "./CTA";
 import { DesktopNav } from "./DesktopNav";
+import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 
 gsap.registerPlugin(useGSAP);

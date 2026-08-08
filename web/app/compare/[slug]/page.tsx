@@ -245,10 +245,6 @@ export default async function ComparisonPage({ params }: PageProps) {
             {data.verdict}
           </div>
         </section>
-
-        <div className="mt-12">
-          <Cta />
-        </div>
       </main>
     </div>
   );

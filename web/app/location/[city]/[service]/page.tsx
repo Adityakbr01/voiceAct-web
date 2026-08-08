@@ -220,11 +220,6 @@ export default async function CityServicePage({ params }: PageProps) {
             ))}
           </div>
         </section>
-
-        {/* CTA */}
-        <div className="mt-12">
-          <Cta />
-        </div>
       </main>
     </div>
   );
