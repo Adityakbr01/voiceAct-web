@@ -10,7 +10,7 @@ WORKDIR /app
 FROM base AS deps
 
 COPY package.json bun.lock* ./
-RUN bun install --frozen-lockfile --production
+RUN --mount=type=cache,target=/root/.bun/install/cache bun install --frozen-lockfile --production
 
 # ============================
 # Build TypeScript
@@ -20,7 +20,7 @@ FROM base AS builder
 COPY package.json bun.lock* tsconfig.json ./
 COPY src ./src
 
-RUN bun install --frozen-lockfile
+RUN --mount=type=cache,target=/root/.bun/install/cache bun install --frozen-lockfile
 RUN bun run build || bun tsc
 
 # ============================

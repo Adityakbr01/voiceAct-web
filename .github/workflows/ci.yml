@@ -47,15 +47,25 @@ jobs:
           cache: "npm"
           cache-dependency-path: web/package-lock.json
 
+      - name: Cache Next.js build & ESLint
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/web/.next/cache
+            ${{ github.workspace }}/web/.eslintcache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('web/package-lock.json') }}-${{ hashFiles('web/src/**/*', 'web/app/**/*') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('web/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-
+
       - name: Install dependencies
-        # Use npm ci if a package-lock exists, fall back to npm install
         run: |
           if [ -f package-lock.json ]; then npm ci
           elif [ -f bun.lock ]; then npm install
           else npm install; fi
 
       - name: Typecheck
-        run: npx tsc --noEmit
+        run: ./node_modules/.bin/tsc --noEmit
 
       - name: Lint
         run: npm run lint

@@ -108,7 +108,7 @@ export async function listBlogs(options?: { page?: number; limit?: number; categ
     console.log(`[CMS DEBUG] listBlogs() successfully fetched ${count} blogs from MongoDB API`);
     return {
       data: data.data || [],
-      pagination: data.pagination,
+      pagination: data.pagination || (data as any).meta?.pagination,
     };
   } catch (error: any) {
     console.error(

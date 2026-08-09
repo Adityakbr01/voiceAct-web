@@ -19,7 +19,8 @@ export async function findPaginatedActive({
 }) {
   const query: any = { active: true };
   if (category && category !== "All") {
-    query.category = { $regex: new RegExp(`^${category}$`, "i") };
+    const escapedCategory = category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    query.category = { $regex: new RegExp(`^${escapedCategory}$`, "i") };
   }
 
   const skip = (page - 1) * limit;

@@ -174,11 +174,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${data.title} | ${company.name}`;
   const description = `${data.description} Contact ${company.name} to hire vetted ${data.roleName} with zero hassle.`;
+  const baseUrl = company.website.replace(/\/$/, "");
+  const canonicalUrl = `${baseUrl}/hire/${slug.toLowerCase()}`;
 
   return {
     title,
     description,
-    openGraph: { title, description },
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+    },
   };
 }
 

@@ -119,13 +119,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${service.title} in ${city.label} | ${company.name}`;
   const description = `Looking for top-rated ${service.title.toLowerCase()} in ${city.label}, ${city.state}? ${service.description} Contact ${company.name} for a free consultation.`;
+  const baseUrl = company.website.replace(/\/$/, "");
+  const normalizedCity = citySlug.toLowerCase() === "bengaluru" ? "bangalore" : citySlug.toLowerCase();
+  const canonicalUrl = `${baseUrl}/location/${normalizedCity}/${serviceSlug.toLowerCase()}`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title,
       description,
+      url: canonicalUrl,
     },
   };
 }

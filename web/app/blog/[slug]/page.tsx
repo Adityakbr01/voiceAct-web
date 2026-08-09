@@ -51,12 +51,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: `Post Not Found — ${company.name}` };
   }
 
+  const baseUrl = company.website.replace(/\/$/, "");
+  const canonicalUrl = `${baseUrl}/blog/${resolvedParams.slug}`;
+
   return {
     title: `${post.title} — ${company.name} Blog`,
     description: post.excerpt,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: `${post.title} — ${company.name} Blog`,
       description: post.excerpt,
+      url: canonicalUrl,
       images: [{ url: post.coverImage }],
     },
   };

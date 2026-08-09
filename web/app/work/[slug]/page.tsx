@@ -9,14 +9,21 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const baseUrl = "https://voiceact.tech";
+  const canonicalUrl = `${baseUrl}/work/${params.slug}`;
+
   try {
     const project = await getProjectBySlug(params.slug);
     return {
       title: `${project.title} — VoiceAct Portfolio`,
       description: project.description,
+      alternates: {
+        canonical: canonicalUrl,
+      },
       openGraph: {
         title: project.title,
         description: project.description,
+        url: canonicalUrl,
         images: project.image ? [{ url: project.image }] : [],
       },
     };

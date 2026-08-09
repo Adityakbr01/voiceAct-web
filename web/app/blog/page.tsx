@@ -53,12 +53,17 @@ export default async function BlogIndexPage(props: BlogPageProps) {
     `[BLOG PAGE DEBUG] Rendering /blog (Page ${currentPage}, Category: "${currentCategory}")...`,
   );
 
-  let posts: BlogPost[] = blogPosts;
+  const filteredStatic =
+    currentCategory !== "All"
+      ? blogPosts.filter((p) => p.category.toLowerCase() === currentCategory.toLowerCase())
+      : blogPosts;
+
+  let posts: BlogPost[] = filteredStatic.slice((currentPage - 1) * 6, currentPage * 6);
   let pagination = {
     page: currentPage,
     limit: 6,
-    total: blogPosts.length,
-    totalPages: Math.ceil(blogPosts.length / 6) || 1,
+    total: filteredStatic.length,
+    totalPages: Math.ceil(filteredStatic.length / 6) || 1,
   };
 
   try {
@@ -78,15 +83,18 @@ export default async function BlogIndexPage(props: BlogPageProps) {
       );
     } else {
       console.warn(
-        `[BLOG PAGE DEBUG] API returned 0 posts for page ${currentPage}, category ${currentCategory}.`,
+        `[BLOG PAGE DEBUG] API returned 0 posts for page ${currentPage}, category ${currentCategory}. Using static fallback (${posts.length} posts).`,
       );
     }
   } catch (error) {
     console.error("[BLOG PAGE DEBUG ERROR] Exception loading blog posts:", error);
   }
 
-  const featuredPost = posts.find((p) => p.featured) || posts[0];
-  const regularPosts = posts.filter((p) => p?.slug !== featuredPost?.slug);
+  const featuredPost =
+    currentPage === 1 ? posts.find((p) => p.featured) || posts[0] : undefined;
+  const regularPosts = featuredPost
+    ? posts.filter((p) => p?.slug !== featuredPost.slug)
+    : posts;
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">

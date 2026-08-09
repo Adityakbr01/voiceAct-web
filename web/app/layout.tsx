@@ -25,6 +25,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech"),
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech",
+  },
   title: {
     default: APP.seoTitle,
     template: `%s | ${APP.name}`,

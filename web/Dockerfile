@@ -7,7 +7,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json bun.lock* package-lock.json* yarn.lock* pnpm-lock.yaml* ./
-RUN \
+RUN --mount=type=cache,target=/root/.npm \
   if [ -f package-lock.json ]; then npm ci; \
   elif [ -f bun.lock ]; then npm install -g bun && bun install --frozen-lockfile; \
   elif [ -f yarn.lock ]; then corepack enable && yarn --frozen-lockfile; \
@@ -39,7 +39,7 @@ ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 ENV SENTRY_ORG=${SENTRY_ORG}
 ENV SENTRY_PROJECT=${SENTRY_PROJECT}
 
-RUN \
+RUN --mount=type=cache,target=/app/.next/cache \
   if [ -f package-lock.json ]; then npm run build; \
   elif [ -f bun.lock ]; then npm install -g bun && bun run build; \
   elif [ -f yarn.lock ]; then corepack enable && yarn build; \

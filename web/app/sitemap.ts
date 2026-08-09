@@ -220,7 +220,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Programmatic Location Pages (/location/[city]/[service])
-  const cities = ["bangalore", "bengaluru", "hyderabad", "pune", "mumbai", "delhi"];
+  const cities = ["bangalore", "hyderabad", "pune", "mumbai", "delhi"];
   const locationServices = [
     "web-development",
     "mobile-development",
