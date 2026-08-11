@@ -3,11 +3,13 @@ import { company } from "@/modules/company-data";
 import { PrivacyPolicyPage } from "@/modules/pages/privacy-policy";
 
 export const metadata: Metadata = {
-  title: `Privacy Policy — ${company.name}`,
-  description: `Privacy policy for ${company.name}. Learn how we collect, use, and protect your personal information.`,
+  title: "Privacy Policy",
+  description:
+    "Read the privacy policy for VoiceAct Solutions. Learn how we handle client data, analytics security, and protect your privacy rights.",
   openGraph: {
-    title: `Privacy Policy — ${company.name}`,
-    description: `Privacy policy for ${company.name}.`,
+    title: "Privacy Policy",
+    description:
+      "Read the privacy policy for VoiceAct Solutions. Learn how we handle client data and protect your privacy rights.",
     type: "website",
     url: `${company.website}/privacy-policy`,
   },

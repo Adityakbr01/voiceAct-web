@@ -55,13 +55,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonicalUrl = `${baseUrl}/blog/${resolvedParams.slug}`;
 
   return {
-    title: `${post.title} — ${company.name} Blog`,
+    title: post.title,
     description: post.excerpt,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${post.title} — ${company.name} Blog`,
+      title: post.title,
       description: post.excerpt,
       url: canonicalUrl,
       images: [{ url: post.coverImage }],
@@ -151,6 +151,9 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
               <img
                 src={post.author.avatar}
                 alt={post.author.name}
+                width={40}
+                height={40}
+                loading="eager"
                 className="size-10 rounded-full object-cover border border-border"
               />
               <div>
@@ -175,7 +178,14 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
         {/* Cover Image */}
         <section className="max-w-7xl mx-auto px-6 md:px-10 pb-12">
           <div className="overflow-hidden rounded-3xl border border-border/60 aspect-video">
-            <img src={post.coverImage} alt={post.title} className="h-full w-full object-cover" />
+            <img
+              src={post.coverImage}
+              alt={post.title}
+              width={1200}
+              height={675}
+              loading="eager"
+              className="h-full w-full object-cover"
+            />
           </div>
         </section>
 

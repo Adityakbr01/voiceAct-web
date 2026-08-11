@@ -169,11 +169,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const data = hirePagesData[slug.toLowerCase()];
 
   if (!data) {
-    return { title: `Hire Developers — ${company.name}` };
+    return { title: "Hire Developers" };
   }
 
-  const title = `${data.title} | ${company.name}`;
-  const description = `${data.description} Contact ${company.name} to hire vetted ${data.roleName} with zero hassle.`;
+  const title = data.title;
+  const description = data.description;
   const baseUrl = company.website.replace(/\/$/, "");
   const canonicalUrl = `${baseUrl}/hire/${slug.toLowerCase()}`;
 

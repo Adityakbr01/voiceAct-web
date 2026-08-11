@@ -238,7 +238,7 @@ const PillNav = ({
             ref={logoRef as any}
           >
             {logo ? (
-              <img src={logo} alt={logoAlt} ref={logoImgRef} />
+              <img src={logo} alt={logoAlt} width={120} height={32} ref={logoImgRef} />
             ) : (
               <span className="font-display text-sm font-bold text-white">{logoAlt}</span>
             )}

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState, useEffect, type ReactNode } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { captureUTMParams, trackPageView } from "@/lib/tracking";
 import { usePathname } from "next/navigation";
 import { NavBar } from "@/components/layouts/nav-bar";
@@ -52,9 +53,11 @@ export function Providers({ children }: { children: ReactNode }) {
       <PostHogInit />
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          {!isAdmin && <NavBar />}
-          {children}
-          {!isAdmin && <Footer />}
+          <SmoothScroll>
+            {!isAdmin && <NavBar />}
+            {children}
+            {!isAdmin && <Footer />}
+          </SmoothScroll>
         </ThemeProvider>
       </QueryClientProvider>
     </>

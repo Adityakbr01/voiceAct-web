@@ -3,11 +3,13 @@ import { company } from "@/modules/company-data";
 import { CookiePolicyPage } from "@/modules/pages/cookie-policy";
 
 export const metadata: Metadata = {
-  title: `Cookie Policy — ${company.name}`,
-  description: `Cookie policy for ${company.name}. Learn about the cookies we use and how to manage them.`,
+  title: "Cookie Policy",
+  description:
+    "Understand how VoiceAct Solutions uses cookies and tracking technologies to ensure site functionality and performance.",
   openGraph: {
-    title: `Cookie Policy — ${company.name}`,
-    description: `Cookie policy for ${company.name}.`,
+    title: "Cookie Policy",
+    description:
+      "Understand how VoiceAct Solutions uses cookies and tracking technologies to ensure site functionality and performance.",
     type: "website",
     url: `${company.website}/cookie-policy`,
   },

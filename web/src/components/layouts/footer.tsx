@@ -12,7 +12,6 @@ import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
 import { ThemeToggle } from "@/components/layouts/navbar/ThemeToggle";
 
 const Grainient = dynamic(() => import("@/components/grainient"), { ssr: false });
-const Ballpit = dynamic(() => import("@/components/ui/ballpit"), { ssr: false });
 
 interface SafeBallpitProps {
   children?: ReactNode;
@@ -35,23 +34,6 @@ class SafeBallpit extends Component<SafeBallpitProps> {
 function FooterEffects({ isMobile }: { isMobile: boolean }) {
   return (
     <>
-      <div className="absolute inset-0 z-[2] pointer-events-none">
-        <SafeBallpit>
-          <Ballpit
-            count={isMobile ? 12 : 40}
-            gravity={0.3}
-            friction={0.98}
-            wallBounce={0.9}
-            followCursor={false}
-            colors={["#e9d5d5", "#A1A1AA", "#3F3F46", "#5227FF"]}
-            ambientColor={16777215}
-            ambientIntensity={2}
-            minSize={isMobile ? 0.5 : 0.7}
-            maxSize={isMobile ? 0.7 : 1.1}
-          />
-        </SafeBallpit>
-      </div>
-
       <div className="absolute inset-0 z-0">
         <SafeBallpit>
           <Grainient

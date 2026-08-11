@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   try {
     const project = await getProjectBySlug(params.slug);
     return {
-      title: `${project.title} — VoiceAct Portfolio`,
+      title: project.title,
       description: project.description,
       alternates: {
         canonical: canonicalUrl,
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   } catch {
     return {
-      title: "Project Not Found — VoiceAct",
+      title: "Project Not Found",
     };
   }
 }

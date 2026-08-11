@@ -3,11 +3,13 @@ import { company } from "@/modules/company-data";
 import { TermsPage } from "@/modules/pages/terms";
 
 export const metadata: Metadata = {
-  title: `Terms & Conditions — ${company.name}`,
-  description: `Terms and conditions for ${company.name} software development services.`,
+  title: "Terms & Conditions",
+  description:
+    "Review the terms and conditions for VoiceAct Solutions. Intellectual property terms, service deliverables, and client agreements.",
   openGraph: {
-    title: `Terms & Conditions — ${company.name}`,
-    description: `Terms and conditions for ${company.name} software development services.`,
+    title: "Terms & Conditions",
+    description:
+      "Review the terms and conditions for VoiceAct Solutions. Intellectual property terms, service deliverables, and client agreements.",
     type: "website",
     url: `${company.website}/terms-and-conditions`,
   },

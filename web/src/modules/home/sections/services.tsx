@@ -86,7 +86,9 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         ${isWide ? "md:col-span-2" : ""}
       `}
     >
-      <Link href={href} className="absolute inset-0 z-10" aria-label={`Explore ${service.title}`} />
+      <Link href={href} className="absolute inset-0 z-10" aria-label={`Explore ${service.title}`}>
+        <span className="sr-only">Explore {service.title}</span>
+      </Link>
 
       {/* Mouse-following glow */}
       <motion.div

@@ -97,20 +97,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const data = comparisonsData[slug.toLowerCase()];
 
   if (!data) {
-    return { title: `Comparison Guide — ${company.name}` };
+    return { title: "Comparison Guide" };
   }
 
   const baseUrl = company.website.replace(/\/$/, "");
   const canonicalUrl = `${baseUrl}/compare/${slug.toLowerCase()}`;
 
   return {
-    title: `${data.title} | ${company.name}`,
+    title: data.title,
     description: data.description,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${data.title} | ${company.name}`,
+      title: data.title,
       description: data.description,
       url: canonicalUrl,
     },

@@ -114,13 +114,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = serviceMap[serviceSlug.toLowerCase()];
 
   if (!city || !service) {
-    return { title: `Services — ${company.name}` };
+    return { title: "Services" };
   }
 
-  const title = `${service.title} in ${city.label} | ${company.name}`;
-  const description = `Looking for top-rated ${service.title.toLowerCase()} in ${city.label}, ${city.state}? ${service.description} Contact ${company.name} for a free consultation.`;
+  const title = `${service.title} in ${city.label}`;
+  const description = `Top-rated ${service.title.toLowerCase()} services in ${city.label}, ${city.state}. We build production-ready web and mobile software for scaleups.`;
   const baseUrl = company.website.replace(/\/$/, "");
-  const normalizedCity = citySlug.toLowerCase() === "bengaluru" ? "bangalore" : citySlug.toLowerCase();
+  const normalizedCity =
+    citySlug.toLowerCase() === "bengaluru" ? "bangalore" : citySlug.toLowerCase();
   const canonicalUrl = `${baseUrl}/location/${normalizedCity}/${serviceSlug.toLowerCase()}`;
 
   return {

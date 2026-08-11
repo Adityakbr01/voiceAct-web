@@ -20,13 +20,13 @@ import { Cta } from "@/modules/home/sections/cta";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: `Blog & Insights — ${company.name}`,
+  title: "Engineering Blog & Software Insights",
   description:
-    "Engineering insights, web & mobile app architecture, design systems, and AI workflows from senior developers at VoiceAct Solutions.",
+    "Technical insights, web and mobile app architecture, design systems, and AI workflows from senior software engineers at VoiceAct.",
   openGraph: {
-    title: `Blog & Insights — ${company.name}`,
+    title: "Engineering Blog & Software Insights",
     description:
-      "Engineering insights, web & mobile app architecture, design systems, and AI workflows from senior developers at VoiceAct Solutions.",
+      "Technical insights, web and mobile app architecture, design systems, and AI workflows from senior software engineers at VoiceAct.",
     type: "website",
     url: `${company.website}/blog`,
   },
@@ -90,11 +90,8 @@ export default async function BlogIndexPage(props: BlogPageProps) {
     console.error("[BLOG PAGE DEBUG ERROR] Exception loading blog posts:", error);
   }
 
-  const featuredPost =
-    currentPage === 1 ? posts.find((p) => p.featured) || posts[0] : undefined;
-  const regularPosts = featuredPost
-    ? posts.filter((p) => p?.slug !== featuredPost.slug)
-    : posts;
+  const featuredPost = currentPage === 1 ? posts.find((p) => p.featured) || posts[0] : undefined;
+  const regularPosts = featuredPost ? posts.filter((p) => p?.slug !== featuredPost.slug) : posts;
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
@@ -161,6 +158,9 @@ export default async function BlogIndexPage(props: BlogPageProps) {
                 <img
                   src={featuredPost.coverImage || FALLBACK_IMAGE}
                   alt={featuredPost.title}
+                  width={800}
+                  height={450}
+                  loading="eager"
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4 rounded-full bg-primary/90 backdrop-blur-md px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">
@@ -245,6 +245,9 @@ export default async function BlogIndexPage(props: BlogPageProps) {
                       <img
                         src={post.coverImage || FALLBACK_IMAGE}
                         alt={post.title}
+                        width={600}
+                        height={338}
+                        loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
@@ -270,6 +273,9 @@ export default async function BlogIndexPage(props: BlogPageProps) {
                       <img
                         src={post.author.avatar}
                         alt={post.author.name}
+                        width={24}
+                        height={24}
+                        loading="lazy"
                         className="size-6 rounded-full object-cover"
                       />
                       <span className="text-muted-foreground text-[11px]">{post.author.name}</span>

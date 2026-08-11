@@ -3,11 +3,13 @@ import { company } from "@/modules/company-data";
 import { AboutPage } from "@/modules/pages/about";
 
 export const metadata: Metadata = {
-  title: `About Us — ${company.name}`,
-  description: `Learn about ${company.name}, a software development agency building production-grade web and mobile applications.`,
+  title: "About Our Software Studio",
+  description:
+    "Learn about VoiceAct Solutions, a senior software agency building production-grade web applications, mobile products, and custom CRMs.",
   openGraph: {
-    title: `About Us — ${company.name}`,
-    description: `Learn about ${company.name}, a software development agency building production-grade web and mobile applications.`,
+    title: "About Our Software Studio",
+    description:
+      "Learn about VoiceAct Solutions, a senior software agency building production-grade web applications, mobile products, and custom CRMs.",
     type: "website",
     url: `${company.website}/about`,
   },

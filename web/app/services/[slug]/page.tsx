@@ -254,16 +254,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = await getServiceData(resolvedParams.slug);
   const baseUrl = company.website.replace(/\/$/, "");
   const canonicalUrl = `${baseUrl}/services/${resolvedParams.slug.toLowerCase()}`;
+  const metaDescription =
+    service.description.length > 165
+      ? `${service.description.slice(0, 157).trim()}...`
+      : service.description;
 
   return {
     title: service.title,
-    description: service.description,
+    description: metaDescription,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${service.title} — ${company.name}`,
-      description: service.description,
+      title: service.title,
+      description: metaDescription,
       url: canonicalUrl,
     },
   };

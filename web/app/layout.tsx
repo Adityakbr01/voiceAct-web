@@ -26,7 +26,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech"),
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech",
+    canonical: "./",
   },
   title: {
     default: APP.seoTitle,
@@ -71,23 +71,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >
-      <head>
+      <body suppressHydrationWarning>
         <script
-          // ponytail: flash-free dark mode, kept as-is from TanStack version
+          // ponytail: flash-free dark mode
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var k='voiceact-theme';var t=localStorage.getItem(k);if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}var r=document.documentElement;if(t==='dark'){r.classList.add('dark');}r.style.colorScheme=t;}catch(e){}})();`,
           }}
         />
         <JsonLd data={[orgSchema, localBizSchema]} />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
-      </head>
-      <body suppressHydrationWarning>
         <Providers>
           <a
             href="#main-content"

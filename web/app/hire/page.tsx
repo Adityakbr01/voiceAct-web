@@ -7,13 +7,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: `Hire Dedicated Developers & AI Engineers | ${company.name}`,
+  title: "Hire Senior Developers & AI Engineers",
   description:
     "Hire senior React, Next.js, React Native developers, and AI engineers. Scale your engineering team with pre-vetted senior software talent within 48 hours.",
   openGraph: {
-    title: `Hire Dedicated Developers | ${company.name}`,
+    title: "Hire Senior Developers & AI Engineers",
     description:
       "Scale your engineering team with pre-vetted senior software talent within 48 hours.",
+    url: `${company.website}/hire`,
+  },
+  alternates: {
+    canonical: `${company.website}/hire`,
   },
 };
 
