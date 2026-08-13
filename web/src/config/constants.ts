@@ -11,8 +11,8 @@ export const APP = {
   version: "1.0.0",
   tagline: company.tagline,
   description: company.description,
-  seoTitle: `${company.name} — Software Development Agency`,
-  seoDescription: `${company.name} is a software development agency building production-grade web and mobile apps and custom CRMs. From MVP to App Store launch.`,
+  seoTitle: `${company.name} — Software Development Agency India | Next.js, Mobile & CRM`,
+  seoDescription: `${company.name} is a premier software development agency in India. We build production-grade Next.js web applications, React Native mobile apps, custom CRMs, and SaaS MVPs for startups.`,
 } as const;
 
 export const OWNER = {

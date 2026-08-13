@@ -43,8 +43,8 @@ export const getOrganizationSchema = () => {
     sameAs: [
       company.socials.linkedin.href,
       company.socials.twitter.href,
-      company.socials.github.href,
-    ],
+      company.socials.instagram?.href,
+    ].filter(Boolean),
   };
 };
 

@@ -39,9 +39,9 @@ export const company = {
   },
 
   registrations: {
-    gst: "29AADCV1234F1Z5",
-    udyam: "UDYAM-KA-03-0123456",
-    duns: "87-654-3210",
+    gst: "Available upon request",
+    udyam: "Registered Micro Enterprise",
+    duns: "Available upon request",
   },
 
   socials: {

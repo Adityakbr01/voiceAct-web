@@ -12,6 +12,13 @@ import { Cta } from "@/modules/home/sections/cta";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getBreadcrumbSchema } from "@/lib/seo/schema";
 
+const authorProfiles: Record<string, { url: string; sameAs: string[] }> = {
+  "Aditya Kumar": {
+    url: "https://www.linkedin.com/in/aditya-kbr-3b833731b/",
+    sameAs: ["https://www.linkedin.com/in/aditya-kbr-3b833731b/", company.socials.developer.href],
+  },
+};
+
 interface PageProps {
   params: Promise<{ slug: string }> | { slug: string };
 }
@@ -91,6 +98,10 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
       "@type": "Person",
       name: post.author.name,
       jobTitle: post.author.role,
+      ...(authorProfiles[post.author.name] && {
+        url: authorProfiles[post.author.name].url,
+        sameAs: authorProfiles[post.author.name].sameAs,
+      }),
     },
     publisher: {
       "@type": "Organization",
@@ -157,7 +168,12 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
                 className="size-10 rounded-full object-cover border border-border"
               />
               <div>
-                <p className="text-sm font-bold text-foreground">{post.author.name}</p>
+                <Link
+                  href="/about"
+                  className="text-sm font-bold text-foreground hover:text-primary transition-colors"
+                >
+                  {post.author.name}
+                </Link>
                 <p className="text-xs text-muted-foreground">{post.author.role}</p>
               </div>
             </div>

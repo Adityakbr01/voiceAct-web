@@ -68,6 +68,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/open-source`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/hire/react-developers`,
       lastModified: new Date(),
       changeFrequency: "weekly",
@@ -237,27 +243,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Programmatic Location Pages (/location/[city]/[service])
-  const cities = ["bangalore", "hyderabad", "pune", "mumbai", "delhi"];
-  const locationServices = [
-    "web-development",
-    "mobile-development",
-    "crm-development",
-    "saas-development",
-    "ai-solutions",
-    "ui-ux-design",
-  ];
-
-  for (const city of cities) {
-    for (const service of locationServices) {
-      routes.push({
-        url: `${baseUrl}/location/${city}/${service}`,
-        lastModified: new Date(),
-        changeFrequency: "weekly",
-        priority: 0.8,
-      });
-    }
-  }
+  // Note: Programmatic Location Pages are excluded from sitemap while set to noindex (de-risking doorway penalties)
 
   return routes;
 }

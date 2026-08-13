@@ -41,15 +41,34 @@ export const metadata: Metadata = {
   },
   description: APP.seoDescription,
   authors: [{ name: APP.name }],
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+  },
   openGraph: {
     title: APP.seoTitle,
     description: APP.seoDescription,
     type: "website",
     siteName: APP.name,
+    url: APP.url,
+    locale: "en_IN",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "VoiceAct Solutions - Software Development Agency",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     site: SOCIALS.twitter.handle,
+    title: APP.seoTitle,
+    description: APP.seoDescription,
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,

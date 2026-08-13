@@ -122,6 +122,11 @@ const staticFooterLinks: {
       href: "/audit",
       badge: { text: "Free", color: "bg-amber-500/15 text-amber-400 border-amber-500/30" },
     },
+    {
+      label: "Open Source & Tools",
+      href: "/open-source",
+      badge: { text: "Free", color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+    },
     { label: "CRM vs ERP Guide", href: "/compare/crm-vs-erp" },
     { label: "Next.js vs React", href: "/compare/nextjs-vs-react" },
   ],
@@ -165,7 +170,9 @@ function BottomBar() {
               )}
               <span
                 className="relative inline-flex h-2 w-2 rounded-full"
-                style={{ backgroundColor: isCustomized ? "var(--primary)" : "rgba(255,255,255,0.3)" }}
+                style={{
+                  backgroundColor: isCustomized ? "var(--primary)" : "rgba(255,255,255,0.3)",
+                }}
               />
             </span>
             Customize

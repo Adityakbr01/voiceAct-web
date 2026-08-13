@@ -4,7 +4,7 @@ export const hero = {
   eyebrow: "Web apps · Mobile apps · CRM · Product design",
   title: ["Web & mobile apps,", "designed to convert,", "engineered to ship."],
   description:
-    "We're a small, senior studio that partners with founders and product teams to design and build production-grade web and mobile applications — from first prototype to App Store launch.",
+    "We're a senior software development studio in India. We partner with founders and scaleups to design and build production-grade Next.js web applications, React Native mobile apps, and custom CRMs — from MVP prototype to App Store launch.",
   primaryCta: { label: "Start your project", href: "#contact" },
   secondaryCta: { label: "See our work", href: "#work" },
   stats: [

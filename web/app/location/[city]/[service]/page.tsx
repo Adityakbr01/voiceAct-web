@@ -100,6 +100,8 @@ export async function generateStaticParams() {
   const params: Array<{ city: string; service: string }> = [];
 
   for (const citySlug of Object.keys(supportedCities)) {
+    // Skip alias routes to avoid generating duplicate static pages
+    if (citySlug === "bengaluru") continue;
     for (const serviceSlug of Object.keys(serviceMap)) {
       params.push({ city: citySlug, service: serviceSlug });
     }
@@ -127,6 +129,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    robots: {
+      index: false,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalUrl,
     },
