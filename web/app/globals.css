@@ -36,7 +36,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-1: var(--accent-1);
   --color-accent-2: var(--accent-2);
-  --color-signal-orange: #FF4D00;
+  --color-signal-orange: var(--primary);
   --color-logic-blue: #0055FF;
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);

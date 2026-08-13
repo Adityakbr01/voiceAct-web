@@ -15,25 +15,25 @@
 :root {
   --radius: 0.875rem;
 
-  /* Optic Clarity Palette (Light Canvas) */
-  --background: #FDFDFD;
+  /* Optic Clarity Palette (Light Theme Default) */
+  --background: #f2f2f2;
   --foreground: #080A0C;
 
-  --card: #F2F2F2;
+  --card: #f2f2f2;
   --card-foreground: #080A0C;
-  --popover: #FDFDFD;
+  --popover: #f2f2f2;
   --popover-foreground: #080A0C;
 
-  --primary: #FF4D00;
+  --primary: #e64500;
   --primary-foreground: #FFFFFF;
-  --primary-glow: rgba(255, 77, 0, 0.4);
+  --primary-glow: rgba(230, 69, 0, 0.4);
 
   --secondary: #0055FF;
   --secondary-foreground: #FFFFFF;
 
   --accent: #0055FF;
   --accent-foreground: #FFFFFF;
-  --accent-1: #FF4D00;
+  --accent-1: #e64500;
   --accent-2: #0055FF;
 
   --muted: #F2F2F2;
@@ -48,9 +48,9 @@
   --success: #10B981;
   --warning: #F59E0B;
 
-  --sidebar: #FDFDFD;
+  --sidebar: #f2f2f2;
   --sidebar-foreground: #080A0C;
-  --sidebar-primary: #FF4D00;
+  --sidebar-primary: #e64500;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #0055FF;
   --sidebar-accent-foreground: #FFFFFF;
@@ -65,36 +65,36 @@
   /* Signature Optic Clarity Gradients & Shadows */
   --gradient-hero: radial-gradient(
     ellipse 80% 60% at 50% -10%,
-    rgba(255, 77, 0, 0.22),
+    rgba(230, 69, 0, 0.22),
     rgba(0, 85, 255, 0.15) 40%,
     transparent 70%
   );
   --gradient-accent: linear-gradient(
     135deg,
     #0055FF 0%,
-    #FF4D00 100%
+    #e64500 100%
   );
   --gradient-text: linear-gradient(
     135deg,
     #080A0C 0%,
-    #FF4D00 50%,
+    #e64500 50%,
     #0055FF 100%
   );
-  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #F2F2F2 100%);
+  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #f2f2f2 100%);
   --gradient-border: linear-gradient(
     135deg,
     rgba(0, 85, 255, 0.4),
-    rgba(255, 77, 0, 0.4),
+    rgba(230, 69, 0, 0.4),
     transparent
   );
 
-  --shadow-glow: 0 0 40px rgba(255, 77, 0, 0.25);
+  --shadow-glow: 0 0 40px rgba(230, 69, 0, 0.25);
   --shadow-glow-accent: 0 0 60px rgba(0, 85, 255, 0.3);
   --shadow-card: 0 1px 3px rgba(8, 10, 12, 0.05), 0 8px 24px -12px rgba(8, 10, 12, 0.08);
 
   /* Glass tokens — light theme */
-  --glass-bg: rgba(253, 253, 253, 0.75);
-  --glass-bg-strong: rgba(253, 253, 253, 0.9);
+  --glass-bg: rgba(242, 242, 242, 0.75);
+  --glass-bg-strong: rgba(242, 242, 242, 0.9);
   --glass-border: rgba(229, 231, 234, 0.8);
   --glass-highlight: rgba(255, 255, 255, 0.9);
   --glass-shadow: 0 1px 0 var(--glass-highlight) inset, 0 10px 30px -12px rgba(8, 10, 12, 0.08);
@@ -104,40 +104,40 @@
 
 .dark {
   color-scheme: dark;
-  --background: #0F1117;        /* rich deep charcoal — not pure black */
+  --background: #0F1117;
   --foreground: #F2F4F7;
-  --card: #1A1D24;              /* clearly lifted surface above bg */
+  --card: #0e0e10;
   --card-foreground: #F2F4F7;
-  --popover: #1A1D24;
+  --popover: #0e0e10;
   --popover-foreground: #F2F4F7;
-  --primary: #FF4D00;
+  --primary: #f04800;
   --primary-foreground: #FFFFFF;
   --secondary: #0055FF;
   --secondary-foreground: #FFFFFF;
-  --muted: #21252E;             /* section wash, slightly lighter than card */
+  --muted: #0d0f11;
   --muted-foreground: #8B92A5;
   --accent: #0055FF;
   --accent-foreground: #FFFFFF;
-  --accent-1: #FF4D00;
+  --accent-1: #f04800;
   --accent-2: #0055FF;
-  --border: #2A2F3A;            /* visible but soft dividers */
-  --input: #2A2F3A;
+  --border: #27282b;
+  --input: #27282b;
   --ring: #0055FF;
   --sidebar: #0F1117;
   --sidebar-foreground: #F2F4F7;
-  --sidebar-primary: #FF4D00;
+  --sidebar-primary: #f04800;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #0055FF;
   --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #2A2F3A;
+  --sidebar-border: #27282b;
   --sidebar-ring: #0055FF;
 
-  --gradient-card: linear-gradient(145deg, #1E222B 0%, #1A1D24 100%);
+  --gradient-card: linear-gradient(145deg, #14161F 0%, #0e0e10 100%);
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5), 0 20px 40px -20px rgba(0, 0, 0, 0.6);
 
   --glass-bg: rgba(15, 17, 23, 0.72);
-  --glass-bg-strong: rgba(26, 29, 36, 0.88);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg-strong: rgba(14, 14, 16, 0.88);
+  --glass-border: rgba(39, 40, 43, 0.8);
   --glass-highlight: rgba(255, 255, 255, 0.06);
   --glass-shadow: 0 1px 0 var(--glass-highlight) inset, 0 20px 50px -20px rgba(0, 0, 0, 0.7);
 }
