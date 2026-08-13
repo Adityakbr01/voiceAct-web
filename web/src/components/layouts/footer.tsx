@@ -10,6 +10,8 @@ import { listServices } from "@/lib/api/cms";
 import { queryKeys } from "@/lib/api/query-keys";
 import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
 import { ThemeToggle } from "@/components/layouts/navbar/ThemeToggle";
+import { ThemeCustomizer } from "@/components/theme-customizer";
+import { useTheme } from "@/components/theme-provider";
 
 const Grainient = dynamic(() => import("@/components/grainient"), { ssr: false });
 
@@ -141,6 +143,40 @@ const staticFooterLinks: {
     },
   ],
 };
+
+function BottomBar() {
+  const [customizerOpen, setCustomizerOpen] = useState(false);
+  const { isCustomized } = useTheme();
+  return (
+    <>
+      <div className="mx-auto mt-12 flex w-full max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row">
+        <div suppressHydrationWarning>
+          © {new Date().getFullYear()} {company.name}. All rights reserved.
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setCustomizerOpen(true)}
+            className="group inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-white/70 backdrop-blur-sm transition-all hover:border-white/40 hover:text-white"
+            aria-label="Open theme customizer"
+          >
+            <span className="relative flex h-2 w-2">
+              {isCustomized && (
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60 opacity-75" />
+              )}
+              <span
+                className="relative inline-flex h-2 w-2 rounded-full"
+                style={{ backgroundColor: isCustomized ? "var(--primary)" : "rgba(255,255,255,0.3)" }}
+              />
+            </span>
+            Customize
+          </button>
+          <ThemeToggle />
+        </div>
+      </div>
+      <ThemeCustomizer open={customizerOpen} onClose={() => setCustomizerOpen(false)} />
+    </>
+  );
+}
 
 export function Footer() {
   const [isMobile, setIsMobile] = useState(false);
@@ -443,12 +479,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mx-auto mt-12 flex w-full max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row">
-          <div suppressHydrationWarning>
-            © {new Date().getFullYear()} {company.name}. All rights reserved.
-          </div>
-          <ThemeToggle />
-        </div>
+        <BottomBar />
       </div>
     </footer>
   );
