@@ -34,9 +34,8 @@
 
 .scroll-stack-card {
   transform-origin: top center;
-  will-change: transform, filter;
+  will-change: transform;
   backface-visibility: hidden;
-  transform-style: preserve-3d;
   position: relative;
   width: 100%;
 }

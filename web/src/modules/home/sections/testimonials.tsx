@@ -9,7 +9,7 @@ const ITEMS = [...testimonials, ...testimonials, ...testimonials];
 
 export function Testimonials() {
   return (
-    <Section id="testimonials" className="cv-auto overflow-hidden">
+    <Section id="testimonials" className="overflow-hidden">
       <SectionHeader
         eyebrow="Testimonials"
         title={

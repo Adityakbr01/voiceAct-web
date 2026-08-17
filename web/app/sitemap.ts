@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { APP } from "@/config/constants";
+import { getAllBlogPosts } from "@/lib/blog-api";
 import { listBlogs, listProjects, listServices } from "@/lib/api/cms";
 import { blogPosts } from "@/modules/blog-data";
 
@@ -10,126 +11,127 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     /\/$/,
     "",
   );
+  const now = new Date();
 
   // Base static routes
   const routes: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "daily",
       priority: 1.0,
     },
     {
       url: `${baseUrl}/services`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/work`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/hire`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/calculator`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/audit`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/open-source`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/hire/react-developers`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/hire/nextjs-developers`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/hire/react-native-developers`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/hire/ai-engineers`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/compare/crm-vs-erp`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/compare/nextjs-vs-react`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${baseUrl}/terms-and-conditions`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${baseUrl}/cookie-policy`,
-      lastModified: new Date(),
+      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
   ];
 
-  // Static fallback service routes
+  // Static fallback service slugs
   const defaultServiceSlugs = [
     "web-development",
     "mobile-development",
@@ -151,7 +153,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (project.slug) {
           routes.push({
             url: `${baseUrl}/work/${project.slug}`,
-            lastModified: project.updatedAt ? new Date(project.updatedAt) : new Date(),
+            lastModified: project.updatedAt ? new Date(project.updatedAt) : now,
             changeFrequency: "weekly",
             priority: 0.7,
           });
@@ -170,7 +172,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (service.slug) {
           routes.push({
             url: `${baseUrl}/services/${service.slug}`,
-            lastModified: service.updatedAt ? new Date(service.updatedAt) : new Date(),
+            lastModified: service.updatedAt ? new Date(service.updatedAt) : now,
             changeFrequency: "weekly",
             priority: 0.7,
           });
@@ -180,7 +182,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const slug of defaultServiceSlugs) {
         routes.push({
           url: `${baseUrl}/services/${slug}`,
-          lastModified: new Date(),
+          lastModified: now,
           changeFrequency: "weekly",
           priority: 0.7,
         });
@@ -190,33 +192,45 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const slug of defaultServiceSlugs) {
       routes.push({
         url: `${baseUrl}/services/${slug}`,
-        lastModified: new Date(),
+        lastModified: now,
         changeFrequency: "weekly",
         priority: 0.7,
       });
     }
   }
 
-  // Blog post detail pages (/blog/[slug])
+  // Dynamic blog post detail pages (/blog/[slug])
   const blogMap = new Map<string, { slug: string; updatedAt?: string; createdAt?: string }>();
 
   try {
-    const res = await listBlogs();
-    const apiBlogs = res.data;
-    if (Array.isArray(apiBlogs) && apiBlogs.length > 0) {
-      for (const blog of apiBlogs) {
-        if (blog.slug) {
-          blogMap.set(blog.slug, {
-            slug: blog.slug,
-            updatedAt: blog.updatedAt,
-            createdAt: blog.createdAt,
+    const posts = await getAllBlogPosts();
+    if (Array.isArray(posts) && posts.length > 0) {
+      for (const post of posts) {
+        if (post.slug && post.active !== false) {
+          blogMap.set(post.slug, {
+            slug: post.slug,
+            updatedAt: post.updatedAt,
+            createdAt: post.createdAt,
           });
         }
       }
     } else {
-      for (const post of blogPosts) {
-        if (post.slug) {
-          blogMap.set(post.slug, { slug: post.slug });
+      const res = await listBlogs();
+      if (res.data && res.data.length > 0) {
+        for (const blog of res.data) {
+          if (blog.slug && blog.active !== false) {
+            blogMap.set(blog.slug, {
+              slug: blog.slug,
+              updatedAt: blog.updatedAt,
+              createdAt: blog.createdAt,
+            });
+          }
+        }
+      } else {
+        for (const post of blogPosts) {
+          if (post.slug) {
+            blogMap.set(post.slug, { slug: post.slug });
+          }
         }
       }
     }
@@ -234,16 +248,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ? new Date(post.updatedAt)
       : post.createdAt
         ? new Date(post.createdAt)
-        : new Date();
+        : now;
     routes.push({
       url: `${baseUrl}/blog/${post.slug}`,
       lastModified: lastModDate,
       changeFrequency: "weekly",
-      priority: 0.7,
+      priority: 0.8,
     });
   }
 
-  // Note: Programmatic Location Pages are excluded from sitemap while set to noindex (de-risking doorway penalties)
-
   return routes;
 }
+

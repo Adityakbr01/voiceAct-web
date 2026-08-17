@@ -69,10 +69,15 @@ export async function deleteProject(id: string) {
 
 function getApiBaseUrl(): string {
   if (typeof window !== "undefined") {
-    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+    return (
+      process.env.NEXT_PUBLIC_API_URL ||
+      process.env.NEXT_PUBLIC_API_BASE ||
+      "http://localhost:5000/api"
+    );
   }
   if (process.env.API_URL) return process.env.API_URL.replace(/\/$/, "");
   if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
+  if (process.env.NEXT_PUBLIC_API_BASE) return process.env.NEXT_PUBLIC_API_BASE.replace(/\/$/, "");
   if (process.env.NEXT_PUBLIC_SITE_URL)
     return `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "")}/api`;
   return process.env.NODE_ENV === "production"

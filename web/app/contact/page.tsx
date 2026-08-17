@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { company } from "@/modules/company-data";
 import { ContactPage } from "@/modules/pages/contact";
+import { JsonLd } from "@/components/seo/json-ld";
+import { getBreadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Contact Our Engineering Team",
@@ -19,5 +21,16 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <ContactPage />;
+  const baseUrl = company.website.replace(/\/$/, "");
+  const breadcrumbsSchema = getBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Contact", url: `${baseUrl}/contact` },
+  ]);
+
+  return (
+    <>
+      <JsonLd data={[breadcrumbsSchema]} />
+      <ContactPage />
+    </>
+  );
 }

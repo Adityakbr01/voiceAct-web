@@ -164,7 +164,7 @@ export function Cta() {
   }
 
   return (
-    <section id="contact" className="relative px-0 pb-32 md:px-10 cv-auto">
+    <section id="contact" className="relative px-0 pb-32 md:px-10">
       <div ref={ref}>
         <div className="relative mx-auto md:max-w-6xl w-full overflow-hidden md:rounded-[2rem] border border-border/60 bg-card dark:bg-transparent shadow-none p-8 md:p-14">
           <div className="relative grid gap-10 md:grid-cols-[1.05fr_1fr] md:gap-14">

@@ -187,11 +187,13 @@ const ScrollStack = ({
 
         if (hasChanged) {
           const transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)}) rotate(${rotation.toFixed(2)}deg)`;
-          const filter = blur > 0 ? `blur(${blur.toFixed(1)}px)` : "";
 
           card.style.transform = transform;
-          if (card.style.filter !== filter) {
-            card.style.filter = filter;
+          if (blurAmount > 0) {
+            const filter = blur > 0 ? `blur(${blur.toFixed(1)}px)` : "";
+            if (card.style.filter !== filter) {
+              card.style.filter = filter;
+            }
           }
 
           lastTransformsRef.current.set(i, newTransform);
@@ -259,13 +261,11 @@ const ScrollStack = ({
 
     cardsRef.current.forEach((card) => {
       if (!card) return;
-      card.style.willChange = "transform, filter";
+      card.style.willChange = "transform";
       card.style.transformOrigin = "top center";
       card.style.backfaceVisibility = "hidden";
       card.style.transform = "translateZ(0)";
       card.style.webkitTransform = "translateZ(0)";
-      card.style.perspective = "1000px";
-      card.style.webkitPerspective = "1000px";
     });
 
     if (useWindowScroll) {

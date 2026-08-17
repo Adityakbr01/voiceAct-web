@@ -304,11 +304,6 @@
   --animate-aurora: aurora 45s linear infinite alternate;
 }
 
-/* Lighthouse: skip rendering work for off-screen sections */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 800px;
-}
 
 /* Nav pill text flip hover */
 .nav-pill-flip {

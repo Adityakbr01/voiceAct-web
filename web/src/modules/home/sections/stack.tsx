@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export default function Stack() {
   return (
-    <Section id="stack" className="cv-auto">
+    <Section id="stack">
       <SectionHeader
         eyebrow="Tech"
         title={

@@ -5,6 +5,7 @@ import { nav } from "@/modules/site";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLenis } from "lenis/react";
 import { CTA } from "./CTA";
 import { DesktopNav } from "./DesktopNav";
 import { Logo } from "./Logo";
@@ -36,9 +37,7 @@ export function NavBar() {
     setActiveHref(href);
   }, []);
 
-  const handleScroll = useCallback(() => {
-    const y = window.scrollY;
-
+  useLenis(({ scroll: y }) => {
     if (y > 12 !== scrolledRef.current) {
       scrolledRef.current = y > 12;
       setScrolled(y > 12);
@@ -50,36 +49,19 @@ export function NavBar() {
       if (y < 40) {
         if (hiddenRef.current) {
           hiddenRef.current = false;
-          gsap.to(headerRef.current, { y: 0, duration: 0.5, ease: "expo.out" });
+          gsap.to(headerRef.current, { y: 0, duration: 0.4, ease: "power2.out" });
         }
       } else if (dy > 6 && y > 120 && !hiddenRef.current) {
         hiddenRef.current = true;
-        gsap.to(headerRef.current, { y: -140, duration: 0.5, ease: "expo.inOut" });
+        gsap.to(headerRef.current, { y: -140, duration: 0.4, ease: "power2.inOut" });
       } else if (dy < -6 && hiddenRef.current) {
         hiddenRef.current = false;
-        gsap.to(headerRef.current, { y: 0, duration: 0.5, ease: "expo.out" });
+        gsap.to(headerRef.current, { y: 0, duration: 0.4, ease: "power2.out" });
       }
     }
 
     lastYRef.current = y;
-  }, [menuState]);
-
-  useEffect(() => {
-    let raf = 0;
-    const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        handleScroll();
-      });
-    };
-    handleScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [handleScroll]);
+  });
 
   useEffect(() => {
     const ids = nav.map((n) => n.href.replace(/^#/, ""));

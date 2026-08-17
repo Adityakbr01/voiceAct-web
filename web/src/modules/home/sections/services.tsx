@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
 import type { Service } from "@/modules/services-data";
@@ -36,8 +36,6 @@ function getServiceHref(service: Service & { slug?: string }) {
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
 
   const handleMouseEnter = () => {
     if (cardRef.current) {
@@ -46,23 +44,16 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
     let rect = rectRef.current;
-    if (!rect && cardRef.current) {
-      rect = cardRef.current.getBoundingClientRect();
+    if (!rect) {
+      rect = card.getBoundingClientRect();
       rectRef.current = rect;
     }
-    if (!rect) return;
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
+    card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+    card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
   };
-
-  const background = useMotionTemplate`
-    radial-gradient(
-      320px circle at ${mouseX}px ${mouseY}px,
-      ${service.color}22,
-      transparent 70%
-    )
-  `;
 
   const Icon = service.icon;
   const isWide = service.span === "wide";
@@ -75,7 +66,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       className={`
@@ -90,10 +81,12 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <span className="sr-only">Explore {service.title}</span>
       </Link>
 
-      {/* Mouse-following glow */}
-      <motion.div
+      {/* Mouse-following glow (GPU CSS variable driven) */}
+      <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background }}
+        style={{
+          background: `radial-gradient(320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${service.color}22, transparent 70%)`,
+        }}
       />
 
       {/* Soft orb */}
@@ -156,7 +149,7 @@ export function Services() {
   const { data: services = [] } = usePublicServices({ enabled: isNearViewport });
 
   return (
-    <Section id="services" className="cv-auto">
+    <Section id="services">
       <div ref={ref}>
         <SectionHeader
           eyebrow="Services"
