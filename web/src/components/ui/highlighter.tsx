@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import type React from "react";
 import { useInView } from "framer-motion";
 import { annotate } from "rough-notation";
@@ -43,35 +43,39 @@ export function Highlighter({
   // If isView is false, always show. If isView is true, wait for inView
   const shouldShow = !isView || isInView;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const element = elementRef.current;
     let annotation: RoughAnnotation | null = null;
     let handleResize: (() => void) | null = null;
+    let rafId: number;
 
     if (shouldShow && element) {
-      const annotationConfig = {
-        type: action,
-        color,
-        strokeWidth,
-        animationDuration,
-        iterations,
-        padding,
-        multiline,
-      };
+      rafId = requestAnimationFrame(() => {
+        const annotationConfig = {
+          type: action,
+          color,
+          strokeWidth,
+          animationDuration,
+          iterations,
+          padding,
+          multiline,
+        };
 
-      const currentAnnotation = annotate(element, annotationConfig);
-      annotation = currentAnnotation;
-      currentAnnotation.show();
-
-      handleResize = () => {
-        currentAnnotation.hide();
+        const currentAnnotation = annotate(element, annotationConfig);
+        annotation = currentAnnotation;
         currentAnnotation.show();
-      };
 
-      window.addEventListener("resize", handleResize);
+        handleResize = () => {
+          currentAnnotation.hide();
+          currentAnnotation.show();
+        };
+
+        window.addEventListener("resize", handleResize);
+      });
     }
 
     return () => {
+      cancelAnimationFrame(rafId);
       annotation?.remove();
       if (handleResize) {
         window.removeEventListener("resize", handleResize);

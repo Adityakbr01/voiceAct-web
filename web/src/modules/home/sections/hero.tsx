@@ -30,19 +30,14 @@ export function Hero() {
           <span className="truncate">{hero.eyebrow}</span>
         </motion.span>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.05 }}
-          className="relative mt-6 sm:mt-8 max-w-4xl text-balance text-3xl sm:text-5xl md:text-7xl font-semibold leading-[1.1] sm:leading-[0.95] tracking-tight"
-        >
+        <h1 className="relative mt-6 sm:mt-8 max-w-4xl text-balance text-3xl sm:text-5xl md:text-7xl font-semibold leading-[1.1] sm:leading-[0.95] tracking-tight">
           <motion.svg
             aria-hidden
             viewBox="0 0 71 72"
             fill="none"
             initial={{ opacity: 0, pathLength: 0 }}
             animate={{ opacity: 0.5, pathLength: 1 }}
-            transition={{ duration: 1.2, delay: 1.3, ease: "easeOut" }}
+            transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
             className="pointer-events-none absolute -left-20 size-28 -rotate-36 text-foreground max-md:hidden"
           >
             <motion.path
@@ -52,7 +47,7 @@ export function Hero() {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 1, delay: 1.3, ease: "easeOut" }}
+              transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
             />
             <motion.path
               d="M28.56 48.47L20.51 57.73C20.26 58.02 19.82 58.05 19.52 57.8L9.74 49.29"
@@ -61,7 +56,7 @@ export function Hero() {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.6, delay: 1.9, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: 1.4, ease: "easeOut" }}
             />
           </motion.svg>
           <span className="block">{hero.title[0]}</span>
@@ -74,16 +69,11 @@ export function Hero() {
           <span className="block font-display italic tracking-tight text-primary mt-1 sm:mt-0">
             {hero.title[2]}
           </span>
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-          className="mt-6 sm:mt-8 max-w-2xl text-pretty text-sm sm:text-base text-muted-foreground leading-relaxed md:text-lg px-2 sm:px-0"
-        >
+        <p className="mt-6 sm:mt-8 max-w-2xl text-pretty text-sm sm:text-base text-muted-foreground leading-relaxed md:text-lg px-2 sm:px-0">
           {hero.description}
-        </motion.p>
+        </p>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}

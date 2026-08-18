@@ -1,21 +1,6 @@
-export interface BlogPost {
-  _id?: string;
-  title: string;
-  slug: string;
-  excerpt?: string;
-  content?: string;
-  category?: "Engineering" | "Mobile" | "Design" | "AI & Automation" | "SaaS" | string;
-  readTime?: string;
-  publishedAt?: string;
-  author?: { name: string; role: string; avatar: string };
-  coverImage?: string;
-  featured?: boolean;
-  tags?: string[];
-  active?: boolean;
-  order?: number;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import type { BlogPost } from "@/types/blog";
+
+export type { BlogPost };
 
 const getApiBase = (): string => {
   if (process.env.API_URL) return process.env.API_URL.replace(/\/$/, "");

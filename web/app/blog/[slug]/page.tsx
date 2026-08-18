@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock, Calendar, ArrowRight, Share2, Tag } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, ArrowRight, Tag } from "lucide-react";
 import { getBlogPostBySlug, blogPosts, type BlogPost } from "@/modules/blog-data";
 import { getBlogBySlug, listBlogs } from "@/lib/api/cms";
 import { mergeBlogsFromApi } from "@/lib/cms-presentations";
 import { MarkdownRenderer } from "@/components/blog/markdown-renderer";
+import { ServiceCTA } from "@/components/blog/service-cta";
+import { FAQSchema } from "@/components/blog/faq-schema";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { company } from "@/modules/company-data";
-import { Footer } from "@/components/layouts/footer";
-import { Cta } from "@/modules/home/sections/cta";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getBreadcrumbSchema } from "@/lib/seo/schema";
 
@@ -23,7 +25,7 @@ interface PageProps {
   params: Promise<{ slug: string }> | { slug: string };
 }
 
-export const revalidate = 300;
+export const revalidate = 3600;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
@@ -123,119 +125,142 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
   const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
-      <JsonLd data={[articleSchema, breadcrumbsSchema]} />
-      <main className="pt-24 pb-20">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 mb-8">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft className="size-4" /> Back to Blog
-          </Link>
-        </div>
-
-        {/* Article Header */}
-        <section className="max-w-7xl mx-auto px-6 md:px-10 pb-8 space-y-6">
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="rounded-full bg-primary/10 border border-primary/20 px-3 py-1 font-semibold text-primary uppercase tracking-wider">
-              {post.category}
-            </span>
-            <span>·</span>
-            <span className="inline-flex items-center gap-1">
-              <Clock className="size-3.5" /> {post.readTime}
-            </span>
-            <span>·</span>
-            <span className="inline-flex items-center gap-1">
-              <Calendar className="size-3.5" /> {post.publishedAt}
-            </span>
+    <ErrorBoundary
+      fallback={<div className="p-8 text-center">Something went wrong loading this post.</div>}
+    >
+      <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
+        <JsonLd data={[articleSchema, breadcrumbsSchema]} />
+        <main className="pt-24 pb-20">
+          <div className="max-w-7xl mx-auto px-6 md:px-10 mb-8">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="size-4" /> Back to Blog
+            </Link>
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
-            {post.title}
-          </h1>
+          {/* Article Header */}
+          <section className="max-w-7xl mx-auto px-6 md:px-10 pb-8 space-y-6">
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <span className="rounded-full bg-primary/10 border border-primary/20 px-3 py-1 font-semibold text-primary uppercase tracking-wider">
+                {post.category}
+              </span>
+              <span>·</span>
+              <span className="inline-flex items-center gap-1">
+                <Clock className="size-3.5" /> {post.readTime}
+              </span>
+              <span>·</span>
+              <span className="inline-flex items-center gap-1">
+                <Calendar className="size-3.5" /> {post.publishedAt}
+              </span>
+            </div>
 
-          <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">{post.excerpt}</p>
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+              {post.title}
+            </h1>
 
-          <div className="flex items-center justify-between border-y border-border/60 py-4">
-            <div className="flex items-center gap-3">
-              <img
-                src={post.author.avatar}
-                alt={post.author.name}
-                width={40}
-                height={40}
-                loading="eager"
-                className="size-10 rounded-full object-cover border border-border"
-              />
-              <div>
-                <Link
-                  href="/about"
-                  className="text-sm font-bold text-foreground hover:text-primary transition-colors"
-                >
-                  {post.author.name}
-                </Link>
-                <p className="text-xs text-muted-foreground">{post.author.role}</p>
+            <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">{post.excerpt}</p>
+
+            <div className="flex items-center justify-between border-y border-border/60 py-4">
+              <div className="flex items-center gap-3">
+                <Image
+                  src={post.author.avatar}
+                  alt={post.author.name}
+                  width={40}
+                  height={40}
+                  priority
+                  className="size-10 rounded-full object-cover border border-border"
+                />
+                <div>
+                  <Link
+                    href="/author/aditya-kumar"
+                    className="text-sm font-bold text-foreground hover:text-primary transition-colors"
+                  >
+                    {post.author.name}
+                  </Link>
+                  <p className="text-xs text-muted-foreground">{post.author.role}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="hidden sm:inline-flex items-center gap-1 rounded-full border border-border/60 bg-card/50 px-2.5 py-0.5 text-xs text-muted-foreground"
+                  >
+                    <Tag className="size-3" /> {tag}
+                  </span>
+                ))}
               </div>
             </div>
+          </section>
 
-            <div className="flex items-center gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="hidden sm:inline-flex items-center gap-1 rounded-full border border-border/60 bg-card/50 px-2.5 py-0.5 text-xs text-muted-foreground"
-                >
-                  <Tag className="size-3" /> {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Cover Image */}
-        <section className="max-w-7xl mx-auto px-6 md:px-10 pb-12">
-          <div className="overflow-hidden rounded-3xl border border-border/60 aspect-video">
-            <img
-              src={post.coverImage}
-              alt={post.title}
-              width={1200}
-              height={675}
-              loading="eager"
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </section>
-
-        {/* Article Body */}
-        <article className="max-w-7xl mx-auto px-6 md:px-10 pb-16">
-          <MarkdownRenderer content={post.content} />
-        </article>
-
-        {/* Related Articles */}
-        {relatedPosts.length > 0 && (
-          <section className="max-w-7xl mx-auto px-6 md:px-10 py-12 border-t border-border/60">
-            <h3 className="text-xl font-bold tracking-tight mb-6">Related Articles</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {relatedPosts.map((related) => (
-                <Link
-                  key={related.slug}
-                  href={`/blog/${related.slug}`}
-                  className="group p-5 rounded-2xl border border-border/60 bg-card/40 hover:border-primary/40 transition flex flex-col justify-between"
-                >
-                  <div className="space-y-2">
-                    <span className="text-xs font-semibold text-primary">{related.category}</span>
-                    <h4 className="font-bold text-base group-hover:text-primary transition-colors">
-                      {related.title}
-                    </h4>
-                  </div>
-                  <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">
-                    Read Post <ArrowRight className="size-3" />
-                  </span>
-                </Link>
-              ))}
+          {/* Cover Image */}
+          <section className="max-w-7xl mx-auto px-6 md:px-10 pb-12">
+            <div className="overflow-hidden rounded-3xl border border-border/60 aspect-video relative">
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                width={1200}
+                height={675}
+                priority
+                sizes="(max-width: 768px) 100vw, 1200px"
+                className="h-full w-full object-cover"
+              />
             </div>
           </section>
-        )}
-      </main>
-    </div>
+
+          {/* Article Body */}
+          <article className="max-w-7xl mx-auto px-6 md:px-10 pb-16">
+            <MarkdownRenderer content={post.content} />
+            {/* Internal linking to services */}
+            <ServiceCTA category={post.category} />
+          </article>
+
+          {/* FAQ Schema */}
+          <FAQSchema
+            faqs={[
+              {
+                question: "How much does Next.js development cost in India?",
+                answer:
+                  "Next.js development in India typically costs ₹1.5L-₹5L for an MVP depending on scope, complexity, and team size.",
+              },
+              {
+                question: "React Native vs Flutter: which is better for Indian startups?",
+                answer:
+                  "React Native is the better default for most Indian startups due to JS talent availability and web codebase synergy.",
+              },
+            ]}
+          />
+
+          {/* Related Articles */}
+          {relatedPosts.length > 0 && (
+            <section className="max-w-7xl mx-auto px-6 md:px-10 py-12 border-t border-border/60">
+              <h3 className="text-xl font-bold tracking-tight mb-6">Related Articles</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {relatedPosts.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/blog/${related.slug}`}
+                    className="group p-5 rounded-2xl border border-border/60 bg-card/40 hover:border-primary/40 transition flex flex-col justify-between"
+                  >
+                    <div className="space-y-2">
+                      <span className="text-xs font-semibold text-primary">{related.category}</span>
+                      <h4 className="font-bold text-base group-hover:text-primary transition-colors">
+                        {related.title}
+                      </h4>
+                    </div>
+                    <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                      Read Post <ArrowRight className="size-3" />
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+        </main>
+      </div>
+    </ErrorBoundary>
   );
 }

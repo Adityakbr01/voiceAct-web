@@ -283,11 +283,11 @@ export function Footer() {
                 <li key={n.label}>
                   <Link
                     href={n.href}
-                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
-                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block">{n.label}</span>
-                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block text-white">{n.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {n.label}
                       </span>
                     </span>
@@ -314,11 +314,11 @@ export function Footer() {
                 <li key={h.label}>
                   <Link
                     href={h.href}
-                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
-                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block">{h.label}</span>
-                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block text-white">{h.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {h.label}
                       </span>
                     </span>
@@ -345,11 +345,11 @@ export function Footer() {
                 <li key={s.label}>
                   <Link
                     href={s.href}
-                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
-                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block">{s.label}</span>
-                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block text-white">{s.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {s.label}
                       </span>
                     </span>
@@ -376,11 +376,11 @@ export function Footer() {
                 <li key={t.label}>
                   <Link
                     href={t.href}
-                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
-                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block">{t.label}</span>
-                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block text-white">{t.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {t.label}
                       </span>
                     </span>
@@ -410,7 +410,7 @@ export function Footer() {
                 <Link
                   key={loc.label}
                   href={loc.href}
-                  className="rounded-full border border-white/10 px-3 py-1 transition-colors hover:border-white/40 hover:text-white"
+                  className="rounded-full border border-white/10 px-3 py-1 transition-colors hover:border-white/40 hover:text-white text-white/80"
                 >
                   {loc.label}
                 </Link>
@@ -428,11 +428,11 @@ export function Footer() {
                 <li key={l.label}>
                   <Link
                     href={l.href}
-                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white/80 transition-colors hover:text-white"
+                    className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
-                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block">{l.label}</span>
-                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block">
+                    <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
+                      <span className="nav-pill-flip-current relative block text-white">{l.label}</span>
+                      <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {l.label}
                       </span>
                     </span>

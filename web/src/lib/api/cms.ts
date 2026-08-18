@@ -96,30 +96,30 @@ export async function listBlogs(options?: { page?: number; limit?: number; categ
     queryParams.append("category", options.category);
 
   const queryString = queryParams.toString() ? `?${queryParams.toString()}` : "";
-  console.log(`[CMS DEBUG] listBlogs() fetching from: ${baseUrl}/blogs${queryString}`);
   try {
     const res = await fetch(`${baseUrl}/blogs${queryString}`, {
       cache: "no-store",
     });
-    console.log(`[CMS DEBUG] listBlogs() HTTP status: ${res.status}`);
     if (!res.ok) {
-      console.warn(
-        `[CMS DEBUG] Backend API at ${baseUrl}/blogs${queryString} returned error status ${res.status}`,
-      );
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          `[CMS] Backend API at ${baseUrl}/blogs${queryString} returned error status ${res.status}`,
+        );
+      }
       return { data: [], pagination: undefined };
     }
     const data: ApiSuccess<BlogRecord[]> = await res.json();
-    const count = data?.data?.length || 0;
-    console.log(`[CMS DEBUG] listBlogs() successfully fetched ${count} blogs from MongoDB API`);
     return {
       data: data.data || [],
       pagination: data.pagination || (data as any).meta?.pagination,
     };
   } catch (error: any) {
-    console.error(
-      `[CMS DEBUG ERROR] listBlogs() failed connecting to ${baseUrl}/blogs${queryString}:`,
-      error?.message || error,
-    );
+    if (process.env.NODE_ENV === "development") {
+      console.error(
+        `[CMS ERROR] listBlogs() failed connecting to ${baseUrl}/blogs${queryString}:`,
+        error?.message || error,
+      );
+    }
     return { data: [], pagination: undefined };
   }
 }
@@ -131,18 +131,17 @@ export async function listAdminBlogs() {
 
 export async function getBlogBySlug(slug: string) {
   const baseUrl = getApiBaseUrl();
-  console.log(`[CMS DEBUG] getBlogBySlug("${slug}") fetching from: ${baseUrl}/blogs/${slug}`);
   try {
     const res = await fetch(`${baseUrl}/blogs/${encodeURIComponent(slug)}`, {
       cache: "no-store",
     });
-    console.log(`[CMS DEBUG] getBlogBySlug("${slug}") HTTP status: ${res.status}`);
     if (!res.ok) return null;
     const data: ApiSuccess<BlogRecord> = await res.json();
-    console.log(`[CMS DEBUG] getBlogBySlug("${slug}") result found: ${!!data?.data}`);
     return data.data;
   } catch (error: any) {
-    console.error(`[CMS DEBUG ERROR] getBlogBySlug("${slug}") failed:`, error?.message || error);
+    if (process.env.NODE_ENV === "development") {
+      console.error(`[CMS ERROR] getBlogBySlug("${slug}") failed:`, error?.message || error);
+    }
     return null;
   }
 }

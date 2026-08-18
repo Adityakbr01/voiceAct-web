@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   Clock,
@@ -17,7 +18,7 @@ import { mergeBlogsFromApi } from "@/lib/cms-presentations";
 import { Footer } from "@/components/layouts/footer";
 import { Cta } from "@/modules/home/sections/cta";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Engineering Blog & Software Insights",
@@ -49,9 +50,11 @@ export default async function BlogIndexPage(props: BlogPageProps) {
   const currentPage = Math.max(1, Number(resolvedParams.page) || 1);
   const currentCategory = resolvedParams.category || "All";
 
-  console.log(
-    `[BLOG PAGE DEBUG] Rendering /blog (Page ${currentPage}, Category: "${currentCategory}")...`,
-  );
+  if (process.env.NODE_ENV === "development") {
+    console.log(
+      `[BLOG PAGE] Rendering /blog (Page ${currentPage}, Category: "${currentCategory}")...`,
+    );
+  }
 
   const filteredStatic =
     currentCategory !== "All"
@@ -78,16 +81,11 @@ export default async function BlogIndexPage(props: BlogPageProps) {
       if (apiResult.pagination) {
         pagination = apiResult.pagination;
       }
-      console.log(
-        `[BLOG PAGE DEBUG] Successfully loaded ${posts.length} blogs from API (Total: ${pagination.total}).`,
-      );
-    } else {
-      console.warn(
-        `[BLOG PAGE DEBUG] API returned 0 posts for page ${currentPage}, category ${currentCategory}. Using static fallback (${posts.length} posts).`,
-      );
     }
   } catch (error) {
-    console.error("[BLOG PAGE DEBUG ERROR] Exception loading blog posts:", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("[BLOG PAGE ERROR] Exception loading blog posts:", error);
+    }
   }
 
   const featuredPost = currentPage === 1 ? posts.find((p) => p.featured) || posts[0] : undefined;
@@ -155,12 +153,14 @@ export default async function BlogIndexPage(props: BlogPageProps) {
               className="group relative block overflow-hidden rounded-3xl border border-border/70 bg-card/60 transition-all duration-500 hover:border-primary/50 hover:shadow-2xl md:grid md:grid-cols-12"
             >
               <div className="relative aspect-video md:aspect-auto md:col-span-7 overflow-hidden">
-                <img
+                <Image
                   src={featuredPost.coverImage || FALLBACK_IMAGE}
                   alt={featuredPost.title}
-                  width={800}
-                  height={450}
+                  width={1200}
+                  height={675}
+                  priority
                   loading="eager"
+                  sizes="(max-width: 768px) 100vw, 60vw"
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4 rounded-full bg-primary/90 backdrop-blur-md px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">
@@ -186,9 +186,11 @@ export default async function BlogIndexPage(props: BlogPageProps) {
 
                 <div className="flex items-center justify-between border-t border-border/50 pt-4">
                   <div className="flex items-center gap-3">
-                    <img
+                    <Image
                       src={featuredPost.author.avatar}
                       alt={featuredPost.author.name}
+                      width={32}
+                      height={32}
                       className="size-8 rounded-full object-cover border border-border"
                     />
                     <div>
@@ -234,20 +236,21 @@ export default async function BlogIndexPage(props: BlogPageProps) {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {regularPosts.map((post) => (
+              {regularPosts.map((post, index) => (
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
                   className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/60 bg-card/40 p-5 transition-all duration-300 hover:border-primary/40 hover:-translate-y-1"
                 >
                   <div className="space-y-4">
-                    <div className="aspect-video w-full overflow-hidden rounded-xl bg-muted">
-                      <img
+                    <div className="aspect-video w-full overflow-hidden rounded-xl bg-muted relative">
+                      <Image
                         src={post.coverImage || FALLBACK_IMAGE}
                         alt={post.title}
                         width={600}
                         height={338}
-                        loading="lazy"
+                        loading={index === 0 && !featuredPost ? "eager" : "lazy"}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
@@ -270,12 +273,11 @@ export default async function BlogIndexPage(props: BlogPageProps) {
 
                   <div className="mt-6 flex items-center justify-between border-t border-border/40 pt-4 text-xs">
                     <div className="flex items-center gap-2">
-                      <img
+                      <Image
                         src={post.author.avatar}
                         alt={post.author.name}
                         width={24}
                         height={24}
-                        loading="lazy"
                         className="size-6 rounded-full object-cover"
                       />
                       <span className="text-muted-foreground text-[11px]">{post.author.name}</span>

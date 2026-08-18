@@ -121,22 +121,35 @@
 
 @utility grid-bg {
   background-image:
-    linear-gradient(oklch(1 0 0 / 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(1 0 0 / 0.06) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 80%);
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black 40%, transparent 85%);
 }
 
 @utility glow-ring {
   box-shadow:
-    0 0 0 1px oklch(0.62 0.24 0 / 0.3),
+    0 0 0 1px rgba(255, 85, 0, 0.35),
     var(--shadow-glow);
 }
 
 @utility card-surface {
   background: var(--gradient-card);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+@utility card-surface-hover {
+  background: var(--gradient-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 8px 30px -4px rgba(0, 0, 0, 0.85);
+  }
 }
 
 @keyframes float-slow {
@@ -329,11 +342,26 @@
 }
 
 .nav-pill-flip:hover .nav-pill-flip-current {
-  color: var(--foreground);
+  color: inherit;
   transform: translateY(-100%);
 }
 
 .nav-pill-flip:hover .nav-pill-flip-next {
-  color: var(--foreground);
+  color: inherit;
   transform: translateY(0);
+}
+
+footer a,
+footer .nav-pill-flip,
+footer .nav-pill-flip-inner,
+footer .nav-pill-flip-current,
+footer .nav-pill-flip-next {
+  color: #ffffff !important;
+}
+
+footer a:hover,
+footer .nav-pill-flip:hover,
+footer .nav-pill-flip:hover .nav-pill-flip-current,
+footer .nav-pill-flip:hover .nav-pill-flip-next {
+  color: #ffffff !important;
 }

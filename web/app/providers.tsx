@@ -6,6 +6,7 @@ import { useState, useEffect, type ReactNode } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { captureUTMParams, trackPageView } from "@/lib/tracking";
+import { initWebVitals } from "@/lib/web-vitals";
 import { usePathname } from "next/navigation";
 import { NavBar } from "@/components/layouts/nav-bar";
 import { Footer } from "@/components/layouts/footer";
@@ -20,6 +21,11 @@ function PostHogInit() {
       if (cancelled) return;
       posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
         api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com",
+        capture_pageview: false,
+        autocapture: false,
+        disable_surveys: true,
+        disable_session_recording: true,
+        advanced_disable_decide: true,
       });
     };
 
@@ -42,6 +48,10 @@ export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin") ?? false;
+
+  useEffect(() => {
+    initWebVitals();
+  }, []);
 
   useEffect(() => {
     captureUTMParams();

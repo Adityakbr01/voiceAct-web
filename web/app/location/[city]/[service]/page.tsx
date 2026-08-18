@@ -173,7 +173,7 @@ export default async function CityServicePage({ params }: PageProps) {
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
       <JsonLd data={[localBizSchema, serviceSchema, breadcrumbsSchema]} />
       <main className="pt-24 pb-20">
-        <div className="max-w-4xl mx-auto px-6 md:px-10 mb-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 mb-8">
           <Link
             href="/services"
             className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
@@ -183,7 +183,7 @@ export default async function CityServicePage({ params }: PageProps) {
         </div>
 
         {/* Hero */}
-        <section className="max-w-4xl mx-auto px-6 md:px-10 pb-12 space-y-6">
+        <section className="max-w-7xl mx-auto px-6 md:px-10 pb-12 space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
             <MapPin className="size-3.5" aria-hidden />
             {city.label}, {city.state}
@@ -216,7 +216,7 @@ export default async function CityServicePage({ params }: PageProps) {
         </section>
 
         {/* Deliverables */}
-        <section className="max-w-4xl mx-auto px-6 md:px-10 py-12 border-t border-border/60">
+        <section className="max-w-7xl mx-auto px-6 md:px-10 py-12 border-t border-border/60">
           <h2 className="text-2xl font-bold tracking-tight mb-8">
             Why {city.label} Companies Choose {company.name}
           </h2>

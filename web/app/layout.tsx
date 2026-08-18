@@ -14,6 +14,7 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   display: "swap",
   preload: true,
+  fallback: ["system-ui", "sans-serif"],
 });
 
 const inter = Inter({
@@ -21,13 +22,14 @@ const inter = Inter({
   variable: "--font-inter",
   display: "swap",
   preload: true,
+  fallback: ["system-ui", "sans-serif"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {

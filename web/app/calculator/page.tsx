@@ -49,7 +49,7 @@ export default function WebsiteCostCalculatorPage() {
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
       <main className="pt-24 pb-20">
-        <div className="max-w-4xl mx-auto px-6 md:px-10 mb-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 mb-8">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
@@ -58,7 +58,7 @@ export default function WebsiteCostCalculatorPage() {
           </Link>
         </div>
 
-        <section className="max-w-4xl mx-auto px-6 md:px-10 pb-12 space-y-6">
+        <section className="max-w-7xl mx-auto px-6 md:px-10 pb-12 space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
             <Calculator className="size-3.5" aria-hidden />
             Interactive Lead Magnet Tool
@@ -74,7 +74,7 @@ export default function WebsiteCostCalculatorPage() {
           </p>
         </section>
 
-        <section className="max-w-4xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <section className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Controls */}
           <div className="lg:col-span-2 space-y-8">
             {/* Project Type */}
@@ -86,11 +86,10 @@ export default function WebsiteCostCalculatorPage() {
                     key={type.id}
                     type="button"
                     onClick={() => setSelectedType(type.id)}
-                    className={`p-4 text-left border rounded-2xl transition-all cursor-pointer ${
-                      selectedType === type.id
+                    className={`p-4 text-left border rounded-2xl transition-all cursor-pointer ${selectedType === type.id
                         ? "border-primary bg-primary/10 ring-1 ring-primary"
                         : "border-border/60 bg-card/40 hover:border-primary/40"
-                    }`}
+                      }`}
                   >
                     <p className="font-bold text-sm">{type.name}</p>
                     <p className="text-xs text-muted-foreground mt-1">
@@ -126,11 +125,10 @@ export default function WebsiteCostCalculatorPage() {
                 {featureAddons.map((addon) => (
                   <label
                     key={addon.id}
-                    className={`flex items-center justify-between p-4 border rounded-2xl transition-all cursor-pointer ${
-                      selectedAddons.includes(addon.id)
+                    className={`flex items-center justify-between p-4 border rounded-2xl transition-all cursor-pointer ${selectedAddons.includes(addon.id)
                         ? "border-primary bg-primary/10"
                         : "border-border/60 bg-card/40 hover:border-primary/40"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       <input

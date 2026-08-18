@@ -1,28 +1,24 @@
 import type { MetadataRoute } from "next";
-import { APP } from "@/config/constants";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech").replace(
-    /\/$/,
-    "",
-  );
-
+  const baseUrl = "https://voiceact.tech";
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: [
-          "/admin",
-          "/admin/*",
-          "/api/",
-          "/sentry-example-page",
-          "/sentry-example-page/*",
-          "/test",
-          "/test/*",
-        ],
+        disallow: ["/admin/", "/api/", "/sentry-example-page", "/test/"],
+      },
+      {
+        userAgent: "GPTBot",
+        disallow: "/",
+      },
+      {
+        userAgent: "CCBot",
+        disallow: "/",
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }

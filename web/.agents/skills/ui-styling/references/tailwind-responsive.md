@@ -92,7 +92,7 @@ Tailwind uses mobile-first responsive design. Base styles apply to all screen si
 <div class="w-full lg:w-1/2 xl:w-1/3">Responsive width</div>
 
 <!-- Responsive max-width -->
-<div class="max-w-sm md:max-w-2xl lg:max-w-4xl mx-auto">Centered with responsive max width</div>
+<div class="max-w-sm md:max-w-2xl lg:max-w-7xl mx-auto">Centered with responsive max width</div>
 ```
 
 ## Common Responsive Layouts

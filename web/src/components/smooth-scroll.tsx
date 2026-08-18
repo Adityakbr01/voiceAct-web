@@ -3,8 +3,6 @@
 import { ReactLenis, useLenis, type LenisRef } from "lenis/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function LenisSyncHandler() {
   const pathname = usePathname();
@@ -16,23 +14,42 @@ function LenisSyncHandler() {
     // Reset scroll position on route changes
     lenis.scrollTo(0, { immediate: true });
 
-    // Sync Lenis with GSAP ScrollTrigger
-    if (typeof window !== "undefined") {
+    let update: ((time: number) => void) | null = null;
+    let gsapInstance: any = null;
+    let scrollTriggerInstance: any = null;
+
+    // Dynamically import GSAP to keep initial critical path payload ultra-light
+    import("gsap").then(async ({ default: gsap }) => {
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       gsap.registerPlugin(ScrollTrigger);
+      gsapInstance = gsap;
+      scrollTriggerInstance = ScrollTrigger;
       lenis.on("scroll", ScrollTrigger.update);
-    }
 
-    // Connect Lenis to GSAP ticker for a single unified 60/120fps animation loop
-    const update = (time: number) => {
-      lenis.raf(time * 1000);
-    };
+      update = (time: number) => {
+        lenis.raf(time * 1000);
+      };
 
-    gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0);
+      gsap.ticker.add(update);
+      gsap.ticker.lagSmoothing(0);
+    }).catch(() => {
+      // Fallback requestAnimationFrame if GSAP is unavailable
+      let rafId: number;
+      const fallbackUpdate = (time: number) => {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(fallbackUpdate);
+      };
+      rafId = requestAnimationFrame(fallbackUpdate);
+      return () => cancelAnimationFrame(rafId);
+    });
 
     return () => {
-      gsap.ticker.remove(update);
-      lenis.off("scroll", ScrollTrigger.update);
+      if (gsapInstance && update) {
+        gsapInstance.ticker.remove(update);
+      }
+      if (lenis && scrollTriggerInstance) {
+        lenis.off("scroll", scrollTriggerInstance.update);
+      }
     };
   }, [pathname, lenis]);
 

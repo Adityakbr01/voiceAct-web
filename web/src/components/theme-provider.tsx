@@ -36,13 +36,13 @@ export const DEFAULT_LIGHT_PALETTE: CustomPalette = {
 };
 
 export const DEFAULT_DARK_PALETTE: CustomPalette = {
-  primary: "#FF4D00",
-  secondary: "#0055FF",
-  background: "#0F1117",
-  foreground: "#F2F4F7",
-  card: "#1A1D24",
-  border: "#2A2F3A",
-  muted: "#21252E",
+  primary: "#FF5500",
+  secondary: "#0070F3",
+  background: "#000000",
+  foreground: "#EDEDED",
+  card: "#0A0A0A",
+  border: "#222226",
+  muted: "#121214",
 };
 
 type ThemeContextValue = {
@@ -92,12 +92,31 @@ function savePalette(key: string, p: CustomPalette | null) {
 }
 
 const CSS_VAR_KEYS = [
-  "--primary", "--primary-glow", "--secondary", "--accent",
+  "--primary", "--primary-foreground", "--primary-glow", "--secondary",
+  "--secondary-foreground", "--accent", "--accent-foreground",
   "--accent-1", "--accent-2", "--ring", "--background", "--foreground",
   "--card", "--card-foreground", "--popover", "--popover-foreground",
   "--border", "--input", "--muted", "--sidebar", "--sidebar-primary",
-  "--sidebar-accent", "--sidebar-border", "--sidebar-ring",
+  "--sidebar-primary-foreground", "--sidebar-accent", "--sidebar-accent-foreground",
+  "--sidebar-border", "--sidebar-ring",
 ];
+
+function getContrastForeground(hex: string): string {
+  if (!hex || typeof hex !== "string") return "#FFFFFF";
+  const clean = hex.replace("#", "");
+  let r = 0, g = 0, b = 0;
+  if (clean.length === 3) {
+    r = parseInt(clean[0] + clean[0], 16) || 0;
+    g = parseInt(clean[1] + clean[1], 16) || 0;
+    b = parseInt(clean[2] + clean[2], 16) || 0;
+  } else if (clean.length === 6) {
+    r = parseInt(clean.substring(0, 2), 16) || 0;
+    g = parseInt(clean.substring(2, 4), 16) || 0;
+    b = parseInt(clean.substring(4, 6), 16) || 0;
+  }
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 140 ? "#000000" : "#FFFFFF";
+}
 
 /**
  * Clear all custom inline CSS vars so the stylesheet :root / .dark rules
@@ -115,10 +134,16 @@ function clearCSSVars() {
  */
 function applyCSSVars(palette: CustomPalette) {
   const root = document.documentElement;
+  const primaryFg = getContrastForeground(palette.primary);
+  const secondaryFg = getContrastForeground(palette.secondary);
+
   root.style.setProperty("--primary", palette.primary);
+  root.style.setProperty("--primary-foreground", primaryFg);
   root.style.setProperty("--primary-glow", palette.primary + "66");
   root.style.setProperty("--secondary", palette.secondary);
+  root.style.setProperty("--secondary-foreground", secondaryFg);
   root.style.setProperty("--accent", palette.secondary);
+  root.style.setProperty("--accent-foreground", secondaryFg);
   root.style.setProperty("--accent-1", palette.primary);
   root.style.setProperty("--accent-2", palette.secondary);
   root.style.setProperty("--ring", palette.secondary);
@@ -133,7 +158,9 @@ function applyCSSVars(palette: CustomPalette) {
   root.style.setProperty("--muted", palette.muted);
   root.style.setProperty("--sidebar", palette.background);
   root.style.setProperty("--sidebar-primary", palette.primary);
+  root.style.setProperty("--sidebar-primary-foreground", primaryFg);
   root.style.setProperty("--sidebar-accent", palette.secondary);
+  root.style.setProperty("--sidebar-accent-foreground", secondaryFg);
   root.style.setProperty("--sidebar-border", palette.border);
   root.style.setProperty("--sidebar-ring", palette.secondary);
 }
