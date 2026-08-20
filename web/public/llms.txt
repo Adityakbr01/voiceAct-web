@@ -2,32 +2,81 @@
 > Web & mobile apps, engineered to ship. Senior software development studio building production-grade web applications, mobile products, AI integrations, and custom CRMs for startups and growing businesses.
 
 ## Overview
-VoiceAct Solutions (https://voiceact.tech) is a full-stack digital product engineering studio based in Bengaluru, India. We partner with founders, venture-backed startups, and scale-ups to design, architect, build, and scale high-performance software products.
+VoiceAct Solutions (https://voiceact.tech) is a full-stack digital product engineering studio based in Bengaluru, India. We partner with founders, venture-backed startups, and scale-ups to design, architect, build, and scale high-performance software products. Founded in 2020, we have completed 120+ projects for 50+ clients across India.
+
+## Who We Are
+- **Founded**: 2020
+- **Team Size**: 10–50 senior engineers and designers
+- **Headquarters**: Whitefield, Bengaluru, Karnataka 560066, India
+- **Email**: hello@voiceact.tech | Phone: +91 93049 22632
+- **Specialisation**: Production-grade web apps, React Native mobile apps, custom CRM/ERP systems, SaaS platforms, and AI-powered workflows
 
 ## Core Services
 - **Custom Web Application Development**: High-scale frontend & backend systems using Next.js, React, Node.js, Fastify, TypeScript, and Tailwind CSS.
 - **Custom CRM & ERP Systems**: Tailored business workflow automation, lead management, pipeline tracking, and internal tooling designed to replace expensive COTS subscriptions.
-- **Mobile App Development**: Native and cross-platform mobile apps for iOS and Android using React Native and Flutter.
-- **AI Solutions & Integrations**: LLM agents, Retrieval-Augmented Generation (RAG) pipelines, automated workflow engines, and smart AI features.
+- **Mobile App Development**: Native and cross-platform mobile apps for iOS and Android using React Native, Expo, Swift, and Kotlin.
+- **AI Solutions & Integrations**: LLM agents, Retrieval-Augmented Generation (RAG) pipelines, automated workflow engines, and smart AI features using OpenAI, Anthropic, and Google APIs.
 - **SaaS Architecture & Cloud Infrastructure**: Scalable cloud infrastructure, PostgreSQL databases, Docker containerization, and AWS/Cloudflare deployments.
-- **Dedicated Engineering Teams & Staff Augmentation**: Hire dedicated React, Next.js, and Full-Stack engineers on flexible monthly retainer models.
+- **Dedicated Engineering Teams & Staff Augmentation**: Hire dedicated React, Next.js, React Native, and Full-Stack engineers on flexible monthly retainer models.
+- **UI/UX Design**: User research, wireframing, and pixel-precise Figma design systems that translate directly into production code.
 
 ## Technology Stack
 - **Frontend**: Next.js (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion, GSAP, Radix UI.
-- **Backend & APIs**: Node.js, Fastify, Express, Python, REST APIs, GraphQL, WebSockets.
+- **Backend & APIs**: Node.js, Fastify, Express, Python, REST APIs, GraphQL, tRPC, WebSockets.
 - **Databases & Cache**: PostgreSQL, Supabase, Redis, PlanetScale, Prisma, Drizzle ORM.
+- **Mobile**: React Native, Expo, Swift (iOS), Kotlin (Android).
 - **DevOps & Cloud**: Docker, AWS, Cloudflare, Vercel, CI/CD GitHub Actions.
+- **Payments**: Razorpay, Stripe, Plaid.
+
+## MVP Sprint Model
+VoiceAct builds MVPs in 6–8 weeks using a fixed-scope sprint methodology:
+1. **Week 1 — Discover**: User research, job mapping, success metrics, scope definition
+2. **Weeks 2–3 — Design**: Wireframes, flows, pixel-precise Figma interfaces
+3. **Weeks 3–7 — Build**: Senior engineers ship production-grade code, weekly demos
+4. **Week 8 — Launch**: App Store / Play Store / web deploy with analytics and monitoring
+5. **Ongoing — Iterate**: Monthly releases, on-call support, measurable product wins
 
 ## Key Links
 - **Website**: https://voiceact.tech
 - **Services**: https://voiceact.tech/services
 - **Work & Portfolio**: https://voiceact.tech/work
+- **About**: https://voiceact.tech/about
 - **Hire Engineers**: https://voiceact.tech/hire
 - **Cost Calculator**: https://voiceact.tech/calculator
 - **Free Architecture Audit**: https://voiceact.tech/audit
 - **Technical Blog**: https://voiceact.tech/blog
 - **Contact & Inquiries**: https://voiceact.tech/contact (Email: hello@voiceact.tech, Phone: +91 93049 22632)
 
+## Service Detail Pages
+- **Web Development**: https://voiceact.tech/services/web-development
+- **Mobile App Development**: https://voiceact.tech/services/mobile-development
+- **Custom CRM Development**: https://voiceact.tech/services/custom-crm
+- **SaaS Development**: https://voiceact.tech/services/saas-development
+- **AI Solutions**: https://voiceact.tech/services/ai-solutions
+- **UI/UX Design**: https://voiceact.tech/services/ui-ux-design
+- **Cloud & DevOps**: https://voiceact.tech/services/cloud-solutions
+- **API Development**: https://voiceact.tech/services/api-development
+
+## Hire Developers
+- **Hire React Developers**: https://voiceact.tech/hire/react-developers
+- **Hire Next.js Developers**: https://voiceact.tech/hire/nextjs-developers
+- **Hire React Native Developers**: https://voiceact.tech/hire/react-native-developers
+- **Hire AI Engineers**: https://voiceact.tech/hire/ai-engineers
+
 ## Comparison Guides
 - **Custom CRM vs Commercial ERP**: https://voiceact.tech/compare/crm-vs-erp
 - **Next.js vs Plain React**: https://voiceact.tech/compare/nextjs-vs-react
+- **Custom CRM vs Off-the-Shelf (Salesforce/HubSpot)**: https://voiceact.tech/compare/custom-crm-vs-off-the-shelf
+
+## Cities We Serve
+- **Bangalore (Bengaluru)**: https://voiceact.tech/location/bangalore/web-development
+- **Hyderabad**: https://voiceact.tech/location/hyderabad/web-development
+- **Pune**: https://voiceact.tech/location/pune/web-development
+- **Mumbai**: https://voiceact.tech/location/mumbai/web-development
+- **Delhi NCR**: https://voiceact.tech/location/delhi/web-development
+
+## Pricing & Engagement
+- Discovery & design sprints: Fixed scope, fixed timeline
+- Build & iteration: Flat monthly retainer (no hourly billing)
+- Starting from ₹25,000/month for MVP sprints
+- Free 30-minute product audit + scoped roadmap (no obligation)

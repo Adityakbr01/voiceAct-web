@@ -1,45 +1,61 @@
 import { OWNER } from "@/config/constants";
 
 export const hero = {
-  eyebrow: "Web apps · Mobile apps · CRM · Product design",
-  title: ["Web & mobile apps,", "designed to convert,", "engineered to ship."],
+  eyebrow: "Senior Engineering Studio · Next.js · React Native · Custom CRM · AI Workflows",
+  title: ["Production-Grade Apps,", "engineered to scale,", "built without templates."],
   description:
-    "We're a senior software development studio in India. We partner with founders and scaleups to design and build production-grade Next.js web applications, React Native mobile apps, and custom CRMs — from MVP prototype to App Store launch.",
-  primaryCta: { label: "Start your project", href: "#contact" },
-  secondaryCta: { label: "See our work", href: "#work" },
+    "We partner with ambitious founders and scaling companies to design, architect, and ship high-performance Next.js SaaS platforms, React Native mobile apps, and custom CRM systems — from initial architecture to production launch in 6–8 week sprints.",
+  primaryCta: { label: "Book 20-Min Architecture Call", href: "#contact" },
+  secondaryCta: { label: "Explore Shipped Work", href: "#work" },
   stats: [
-    { value: "120+", label: "Apps shipped to production" },
-    { value: "8 wks", label: "Average MVP launch time" },
-    { value: "94%", label: "Client retention after launch" },
-    { value: "4.9/5", label: "App Store & Play Store average" },
+    { value: "6–8 wks", label: "Average MVP Launch Sprint" },
+    { value: "<400ms", label: "Target TTFB & Sub-Second Loads" },
+    { value: "100%", label: "Senior Engineer Led" },
+    { value: "99.9%", label: "Production Uptime Guarantee" },
   ],
-  trustedBy: ["NORDVEIL", "HELIA", "SIGNAL9", "LATTICE", "OAKRIDGE", "KESTREL"],
+  techStackBadges: [
+    "Next.js 16",
+    "React 19",
+    "TypeScript",
+    "React Native",
+    "PostgreSQL",
+    "Supabase",
+    "Fastify / Node.js",
+    "Docker / AWS",
+    "Tailwind CSS",
+  ],
 };
 
 export const stats = [
-  { value: "120+", label: "Apps shipped worldwide" },
-  { value: "8 wks", label: "Average MVP launch time" },
-  { value: "94%", label: "Client retention" },
-  { value: "24/7", label: "Post-launch support" },
+  { value: "6–8 wks", label: "Average MVP launch sprint" },
+  { value: "100%", label: "TypeScript & strict type safety" },
+  { value: "<400ms", label: "Target server response latency" },
+  { value: "24/7", label: "Post-launch monitoring & CI/CD" },
 ];
 
 export const cta = {
-  eyebrow: "3 discovery slots left this month",
-  title: "Ship your app in weeks, not quarters.",
+  eyebrow: "Free Technical Architecture Review",
+  title: "Ship your product in weeks, not quarters.",
   description:
-    "Free 30-minute product audit + scoped roadmap delivered within 24 hours. No sales call, no obligation — you keep the roadmap either way.",
+    "Get a 30-minute technical audit + scoped architecture roadmap delivered within 24 hours. No high-pressure sales pitch, no obligation — you keep the roadmap and system design either way.",
   anchor: {
-    typical: { label: "Typical agency engagement", value: "6 months · ₹150k+" },
-    ours: { label: "Our sprint", value: "8 weeks · from ₹25k" },
+    typical: { label: "Traditional agency engagement", value: "6+ months · ₹150k+" },
+    ours: { label: "Our senior agile sprint", value: "6–8 weeks · from ₹25k" },
   },
   defaults: {
-    projectType: "Mobile + Web app",
-    timeline: "8 weeks",
+    projectType: "Full-Stack SaaS / Web App",
+    timeline: "6–8 weeks",
     budget: "₹25k – ₹50k",
   },
-  projectTypes: ["Mobile app", "Web app", "Mobile + Web app", "CRM / internal tool"],
-  timelines: ["4 weeks", "8 weeks", "12 weeks", "Flexible"],
-  budgets: ["₹10k – ₹25k", "₹25k – ₹50k", "₹50k – ₹100k", "₹100k+"],
-  primary: { label: "Claim my discovery slot", href: "#contact" },
-  secondary: { label: "Email the studio", href: `mailto:${OWNER.email}` },
+  projectTypes: [
+    "Full-Stack SaaS / Web App",
+    "React Native Mobile App",
+    "Custom CRM / Internal Tool",
+    "AI Workflow / LLM Integration",
+    "Performance Optimization",
+  ],
+  timelines: ["4 weeks (Rapid MVP)", "6–8 weeks (Standard)", "12 weeks (Complex)", "Flexible Retainer"],
+  budgets: ["₹25k – ₹50k", "₹50k – ₹100k", "₹100k – ₹250k", "₹250k+"],
+  primary: { label: "Schedule My Architecture Call", href: "#contact" },
+  secondary: { label: "Email Technical Lead", href: `mailto:${OWNER.email}` },
 };

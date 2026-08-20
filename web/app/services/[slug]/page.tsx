@@ -1,6 +1,6 @@
 import { JsonLd } from "@/components/seo/json-ld";
 import { getServiceBySlug } from "@/lib/api/cms";
-import { getBreadcrumbSchema, getServiceSchema } from "@/lib/seo/schema";
+import { getBreadcrumbSchema, getServiceSchema, getWebPageSchema } from "@/lib/seo/schema";
 import { company } from "@/modules/company-data";
 import { Cta } from "@/modules/home/sections/cta";
 import { ArrowLeft, ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
@@ -282,17 +282,30 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     name: service.title,
     description: service.description,
     url: `${baseUrl}/services/${resolvedParams.slug}`,
+    category: service.title,
   });
 
   const breadcrumbsSchema = getBreadcrumbSchema([
     { name: "Home", url: baseUrl },
-    { name: "Services", url: `${baseUrl}/#services` },
+    { name: "Services", url: `${baseUrl}/services` },
     { name: service.title, url: `${baseUrl}/services/${resolvedParams.slug}` },
   ]);
 
+  const webPageSchema = getWebPageSchema({
+    name: `${service.title} | VoiceAct Solutions`,
+    description: service.description,
+    url: `${baseUrl}/services/${resolvedParams.slug}`,
+    speakableSelectors: ["h1", "h2", "p"],
+    breadcrumbs: [
+      { name: "Home", url: baseUrl },
+      { name: "Services", url: `${baseUrl}/services` },
+      { name: service.title, url: `${baseUrl}/services/${resolvedParams.slug}` },
+    ],
+  });
+
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
-      <JsonLd data={[serviceSchema, breadcrumbsSchema]} />
+      <JsonLd data={[serviceSchema, breadcrumbsSchema, webPageSchema]} />
       <main className="pt-24 pb-20">
         <div className="max-w-7xl mx-auto px-6 md:px-10 mb-8">
           <Link

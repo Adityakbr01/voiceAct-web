@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "Contact Our Engineering Team",
   description:
     "Get in touch with VoiceAct Solutions. Claim your free 30-minute product audit and scoped development roadmap for your software project.",
+  keywords: [
+    "contact software development agency India",
+    "hire Next.js developers",
+    "free software audit",
+    "VoiceAct contact",
+  ],
   openGraph: {
     title: "Contact Our Engineering Team",
     description:
@@ -27,9 +33,39 @@ export default function Page() {
     { name: "Contact", url: `${baseUrl}/contact` },
   ]);
 
+  // ContactPage schema — helps Google understand this is a contact/lead page
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${baseUrl}/contact/#webpage`,
+    url: `${baseUrl}/contact`,
+    name: "Contact VoiceAct Solutions — Free Software Audit",
+    description:
+      "Claim a free 30-minute product audit and scoped development roadmap. No sales pressure — you keep the roadmap.",
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${baseUrl}/#website`,
+    },
+    mainEntity: {
+      "@type": "Organization",
+      "@id": `${baseUrl}/#organization`,
+      name: company.name,
+      telephone: company.contact.phone,
+      email: company.contact.email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: company.address.street,
+        addressLocality: company.address.city,
+        addressRegion: company.address.state,
+        postalCode: company.address.pincode,
+        addressCountry: "IN",
+      },
+    },
+  };
+
   return (
     <>
-      <JsonLd data={[breadcrumbsSchema]} />
+      <JsonLd data={[breadcrumbsSchema, contactPageSchema]} />
       <ContactPage />
     </>
   );

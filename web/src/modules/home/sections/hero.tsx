@@ -6,6 +6,15 @@ import { Button } from "@/components/ui/button";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { Highlighter } from "@/components/ui/highlighter";
 import { hero } from "@/modules/home-data";
+import { stack } from "@/modules/services-data";
+
+// Split stack into 2 rows for balanced variety
+const ROW1_SOURCE = stack.slice(0, 8);
+const ROW2_SOURCE = stack.slice(8);
+
+// 2x duplication for smooth 50% translation loop
+const ROW1 = [...ROW1_SOURCE, ...ROW1_SOURCE];
+const ROW2 = [...ROW2_SOURCE, ...ROW2_SOURCE];
 
 export function Hero() {
   return (
@@ -120,61 +129,90 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Trusted by — dual-direction marquee (full viewport width) */}
+      {/* ─── Production Tech Stack Marquee ─── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="my-10 sm:my-12 flex w-full flex-col items-center gap-6 sm:gap-8 transform-gpu"
+        className="my-10 sm:my-14 flex w-full flex-col items-center gap-5 sm:gap-7 transform-gpu"
       >
-        <p className="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-muted-foreground text-center px-4">
-          Trusted by teams shipping in production
-        </p>
+        {/* Eyebrow Label with Animated Pulse */}
+        <div className="flex items-center gap-2.5 text-[11px] sm:text-xs uppercase tracking-[0.25em] text-muted-foreground font-semibold select-none px-4 text-center">
+          <span className="relative flex size-2 shrink-0">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+            <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+          </span>
+          Production-Grade Technology Stack &amp; Tooling
+        </div>
+
+        {/* Marquee Strip with Side Fades */}
         <div className="trusted-wrap relative w-full overflow-hidden">
+          {/* Left edge fade */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 sm:w-24 md:w-40"
-            style={{
-              background: "linear-gradient(to right, var(--color-background) 0%, transparent 100%)",
-            }}
+            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 sm:w-32 md:w-52"
+            style={{ background: "linear-gradient(to right, var(--color-background) 0%, transparent 100%)" }}
           />
+          {/* Right edge fade */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 sm:w-24 md:w-40"
-            style={{
-              background: "linear-gradient(to left, var(--color-background) 0%, transparent 100%)",
-            }}
+            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 sm:w-32 md:w-52"
+            style={{ background: "linear-gradient(to left, var(--color-background) 0%, transparent 100%)" }}
           />
 
-          <div className="flex overflow-hidden py-2 [--gap:2rem] sm:[--gap:3rem]">
+          {/* Row 1 — Forward (Scrolls Left) */}
+          <div className="flex overflow-hidden pb-2 pt-1 [--gap:1rem] sm:[--gap:1.5rem]">
             <div className="trusted-row flex shrink-0 items-center gap-[var(--gap)] pr-[var(--gap)] transform-gpu">
-              {[...hero.trustedBy, ...hero.trustedBy, ...hero.trustedBy, ...hero.trustedBy].map(
-                (brand, i) => (
+              {ROW1.map((item, i) => {
+                const Icon = item.icon;
+                return (
                   <span
-                    key={`a-${brand}-${i}`}
-                    className="trusted-item font-display cursor-default text-xs sm:text-sm font-semibold tracking-[0.18em] text-muted-foreground transition-all duration-300 md:text-base"
+                    key={`row1-${item.name}-${i}`}
+                    className="trusted-item inline-flex items-center gap-2.5 rounded-2xl border border-border/50 bg-card/60 px-4 py-2 text-xs sm:text-sm font-semibold tracking-wide text-foreground/90 cursor-default select-none whitespace-nowrap backdrop-blur-md transition-all duration-200"
                     tabIndex={0}
+                    aria-label={item.name}
                   >
-                    {brand}
+                    <span
+                      className="flex size-5 items-center justify-center rounded-md"
+                      style={{ backgroundColor: `${item.color}15` }}
+                    >
+                      <Icon size={14} color={item.color} />
+                    </span>
+                    <span>{item.name}</span>
+                    <span className="text-[10px] font-normal uppercase tracking-wider text-muted-foreground/60">
+                      {item.category}
+                    </span>
                   </span>
-                ),
-              )}
+                );
+              })}
             </div>
           </div>
 
-          <div className="flex overflow-hidden py-2 [--gap:2rem] sm:[--gap:3rem]">
+          {/* Row 2 — Reverse (Scrolls Right) */}
+          <div className="flex overflow-hidden pb-1 pt-2 [--gap:1rem] sm:[--gap:1.5rem]">
             <div className="trusted-row-reverse flex shrink-0 items-center gap-[var(--gap)] pr-[var(--gap)] transform-gpu">
-              {[...hero.trustedBy, ...hero.trustedBy, ...hero.trustedBy, ...hero.trustedBy]
-                .reverse()
-                .map((brand, i) => (
+              {ROW2.map((item, i) => {
+                const Icon = item.icon;
+                return (
                   <span
-                    key={`b-${brand}-${i}`}
-                    className="trusted-item font-display cursor-default text-xs sm:text-sm font-semibold tracking-[0.18em] text-muted-foreground transition-all duration-300 md:text-base"
+                    key={`row2-${item.name}-${i}`}
+                    className="trusted-item inline-flex items-center gap-2.5 rounded-2xl border border-border/40 bg-card/40 px-4 py-2 text-xs sm:text-sm font-medium tracking-wide text-foreground/80 cursor-default select-none whitespace-nowrap backdrop-blur-md transition-all duration-200"
                     tabIndex={0}
+                    aria-label={item.name}
                   >
-                    {brand}
+                    <span
+                      className="flex size-5 items-center justify-center rounded-md"
+                      style={{ backgroundColor: `${item.color}15` }}
+                    >
+                      <Icon size={14} color={item.color} />
+                    </span>
+                    <span>{item.name}</span>
+                    <span className="text-[10px] font-normal uppercase tracking-wider text-muted-foreground/50">
+                      {item.category}
+                    </span>
                   </span>
-                ))}
+                );
+              })}
             </div>
           </div>
         </div>

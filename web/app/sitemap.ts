@@ -112,6 +112,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/compare/custom-crm-vs-off-the-shelf`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
       url: `${baseUrl}/privacy-policy`,
       lastModified: now,
       changeFrequency: "yearly",
@@ -129,9 +135,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    // Location landing pages — important for local SEO
+    ...(["bangalore", "hyderabad", "pune", "mumbai", "delhi"] as const).map((city) => ({
+      url: `${baseUrl}/location/${city}/web-development`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
   ];
 
-  // Static fallback service slugs
+  // Static fallback service slugs — must match actual /services/[slug] pages
   const defaultServiceSlugs = [
     "web-development",
     "mobile-development",
@@ -140,7 +153,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "saas-development",
     "ai-solutions",
     "ui-ux-design",
-    "ecommerce-development",
     "api-development",
     "cloud-solutions",
   ];

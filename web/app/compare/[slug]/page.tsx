@@ -86,6 +86,39 @@ const comparisonsData: Record<
     verdict:
       "For any public-facing app where search engine rankings, performance, and instant page loads matter, Next.js is the clear industry choice in 2026.",
   },
+  "custom-crm-vs-off-the-shelf": {
+    title: "Custom CRM vs Off-the-Shelf (Salesforce / HubSpot) (2026)",
+    headline: "Custom CRM vs Off-the-Shelf: Stop Paying Per-Seat SaaS Taxes",
+    description:
+      "Compare bespoke custom CRM engineering against off-the-shelf enterprise platforms like Salesforce and HubSpot to optimize cost, control, and operational velocity.",
+    optionA: {
+      name: "Bespoke Custom CRM (VoiceAct)",
+      pros: [
+        "Zero per-user monthly subscription fees — you own 100% of the code and data",
+        "100% matched to your exact company sales pipeline, custom fields, and workflows",
+        "Direct automated integration with WhatsApp API, Razorpay, Stripe, and internal ERPs",
+        "Blazing fast sub-second query response without SaaS bloat and unused features",
+      ],
+      cons: ["Requires upfront engineering investment and 6–8 week build timeline"],
+      bestFor: "Growing businesses with 10+ reps, unique sales processes, or high annual SaaS licensing bills.",
+    },
+    optionB: {
+      name: "Off-the-Shelf SaaS (Salesforce / HubSpot)",
+      pros: [
+        "Immediate same-day account activation",
+        "Standard pre-built integrations with third-party marketing tools",
+        "Familiar interface for sales reps who have previously used it",
+      ],
+      cons: [
+        "Expensive per-seat pricing that compounds dramatically as your team grows",
+        "Rigid workflow constraints — forcing your business to adapt to the software",
+        "Expensive certified consultants required for any custom automations",
+      ],
+      bestFor: "Small teams (<5 people) with standard sales funnels and basic lead capture needs.",
+    },
+    verdict:
+      "If you have standard sales needs with 2–3 reps, an off-the-shelf CRM works. But once you scale past 10 users or have proprietary workflows, building a custom CRM pays for itself in under 12 months while giving you complete data ownership.",
+  },
 };
 
 export async function generateStaticParams() {

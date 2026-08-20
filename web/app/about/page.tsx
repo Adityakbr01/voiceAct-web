@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "About Our Software Studio",
   description:
     "Learn about VoiceAct Solutions, a senior software agency building production-grade web applications, mobile products, and custom CRMs.",
+  keywords: [
+    "about VoiceAct Solutions",
+    "software development studio India",
+    "senior engineers Bangalore",
+    "Next.js agency about",
+  ],
   openGraph: {
     title: "About Our Software Studio",
     description:
@@ -34,18 +40,29 @@ export default function Page() {
     url: `${baseUrl}/about`,
     name: "About Our Software Studio | VoiceAct Solutions",
     description: company.description,
+    inLanguage: "en-IN",
     isPartOf: {
       "@type": "WebSite",
       "@id": `${baseUrl}/#website`,
       url: baseUrl,
       name: company.name,
     },
+    publisher: {
+      "@id": `${baseUrl}/#organization`,
+    },
     about: {
       "@type": "Organization",
       "@id": `${baseUrl}/#organization`,
       name: company.name,
       url: baseUrl,
-      logo: `${baseUrl}/icon.png`,
+      logo: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/icon.png`,
+      },
+    },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "h2", "p"],
     },
   };
 

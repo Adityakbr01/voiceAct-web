@@ -7,7 +7,7 @@ import { APP, SOCIALS } from "@/config/constants";
 import { Providers } from "./providers";
 
 import { JsonLd } from "@/components/seo/json-ld";
-import { getOrganizationSchema, getLocalBusinessSchema, getWebSiteSchema } from "@/lib/seo/schema";
+import { getOrganizationSchema, getLocalBusinessSchema, getWebSiteSchema, getWebPageSchema } from "@/lib/seo/schema";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -32,22 +32,40 @@ const jetbrainsMono = JetBrains_Mono({
   preload: false,
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech"),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: "./",
+    languages: {
+      "en-IN": SITE_URL,
+      "en": SITE_URL,
+    },
   },
   title: {
     default: APP.seoTitle,
     template: `%s | ${APP.name}`,
   },
   description: APP.seoDescription,
-  authors: [{ name: APP.name }],
+  keywords: [
+    "software development agency India",
+    "Next.js development company",
+    "React Native mobile app development",
+    "custom CRM development India",
+    "SaaS development Bangalore",
+    "MVP development company",
+    "web application development India",
+  ],
+  authors: [{ name: APP.name, url: APP.url }],
+  creator: APP.name,
+  publisher: APP.name,
   icons: {
     icon: [
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
       { url: "/favicon.ico", sizes: "any" },
     ],
+    apple: [{ url: "/icon.png", sizes: "512x512" }],
   },
   openGraph: {
     title: APP.seoTitle,
@@ -56,18 +74,20 @@ export const metadata: Metadata = {
     siteName: APP.name,
     url: APP.url,
     locale: "en_IN",
+    countryName: "India",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "VoiceAct Solutions - Software Development Agency",
+        alt: `${APP.name} — Custom Next.js, React Native & CRM development studio in Bengaluru, India`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     site: SOCIALS.twitter.handle,
+    creator: SOCIALS.twitter.handle,
     title: APP.seoTitle,
     description: APP.seoDescription,
     images: ["/og-image.png"],
@@ -80,8 +100,10 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
+  category: "technology",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -92,10 +114,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const orgSchema = getOrganizationSchema();
   const localBizSchema = getLocalBusinessSchema();
   const webSiteSchema = getWebSiteSchema();
+  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech").replace(/\/$/, "");
+  const webPageSchema = getWebPageSchema({
+    name: APP.seoTitle,
+    description: APP.seoDescription,
+    url: baseUrl,
+    speakableSelectors: ["h1", "h2", ".hero-description"],
+  });
 
   return (
     <html
-      lang="en"
+      lang="en-IN"
       className={`dark ${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
@@ -107,7 +136,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var k='voiceact-theme';var t=localStorage.getItem(k);if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}var r=document.documentElement;if(t==='dark'){r.classList.add('dark');}r.style.colorScheme=t;}catch(e){}})();`,
           }}
         />
-        <JsonLd data={[orgSchema, localBizSchema, webSiteSchema]} />
+        <JsonLd data={[orgSchema, localBizSchema, webSiteSchema, webPageSchema]} />
         <Providers>
           <a
             href="#main-content"
