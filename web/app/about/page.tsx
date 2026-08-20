@@ -27,10 +27,33 @@ export default function Page() {
     { name: "About", url: `${baseUrl}/about` },
   ]);
 
+  const aboutPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${baseUrl}/about/#webpage`,
+    url: `${baseUrl}/about`,
+    name: "About Our Software Studio | VoiceAct Solutions",
+    description: company.description,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${baseUrl}/#website`,
+      url: baseUrl,
+      name: company.name,
+    },
+    about: {
+      "@type": "Organization",
+      "@id": `${baseUrl}/#organization`,
+      name: company.name,
+      url: baseUrl,
+      logo: `${baseUrl}/icon.png`,
+    },
+  };
+
   return (
     <>
-      <JsonLd data={[breadcrumbsSchema]} />
+      <JsonLd data={[breadcrumbsSchema, aboutPageSchema]} />
       <AboutPage />
     </>
   );
 }
+

@@ -133,3 +133,49 @@ export const getBreadcrumbSchema = (items: BreadcrumbItem[]) => {
     })),
   };
 };
+
+export const getWebSiteSchema = () => {
+  const baseUrl = company.website.replace(/\/$/, "");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${baseUrl}/#website`,
+    url: baseUrl,
+    name: company.name,
+    description: company.description,
+    publisher: {
+      "@id": `${baseUrl}/#organization`,
+    },
+    inLanguage: "en-IN",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${baseUrl}/blog?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+};
+
+export const getPersonSchema = (person: {
+  name: string;
+  jobTitle?: string;
+  url?: string;
+  image?: string;
+  sameAs?: string[];
+}) => {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: person.name,
+    ...(person.jobTitle && { jobTitle: person.jobTitle }),
+    ...(person.url && { url: person.url }),
+    ...(person.image && { image: person.image }),
+    worksFor: {
+      "@type": "Organization",
+      name: company.name,
+      url: company.website,
+    },
+    ...(person.sameAs && { sameAs: person.sameAs }),
+  };
+};
+

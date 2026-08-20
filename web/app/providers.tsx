@@ -10,6 +10,7 @@ import { initWebVitals } from "@/lib/web-vitals";
 import { usePathname } from "next/navigation";
 import { NavBar } from "@/components/layouts/nav-bar";
 import { Footer } from "@/components/layouts/footer";
+import { FigmaCursor } from "@/components/ui/figma-cursor";
 
 function PostHogInit() {
   useEffect(() => {
@@ -63,6 +64,7 @@ export function Providers({ children }: { children: ReactNode }) {
       <PostHogInit />
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
+          <FigmaCursor />
           <SmoothScroll>
             {!isAdmin && <NavBar />}
             {children}

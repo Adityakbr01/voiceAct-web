@@ -365,3 +365,43 @@ footer .nav-pill-flip:hover .nav-pill-flip-current,
 footer .nav-pill-flip:hover .nav-pill-flip-next {
   color: #ffffff !important;
 }
+
+/* ==========================================================================
+   Figma Custom Cursor Mode
+   Hides the native OS cursor on desktop devices with mouse/trackpad
+   ========================================================================== */
+@media (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  [role="button"],
+  select,
+  summary,
+  .cursor-pointer,
+  .trusted-item,
+  div,
+  section,
+  main,
+  nav,
+  header,
+  footer,
+  span,
+  p,
+  h1, h2, h3, h4, h5, h6 {
+    cursor: none !important;
+  }
+
+  /* Allow native text selection cursor on text inputs & textareas */
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="search"],
+  textarea {
+    cursor: text !important;
+  }
+}
+

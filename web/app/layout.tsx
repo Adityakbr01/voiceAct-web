@@ -7,7 +7,7 @@ import { APP, SOCIALS } from "@/config/constants";
 import { Providers } from "./providers";
 
 import { JsonLd } from "@/components/seo/json-ld";
-import { getOrganizationSchema, getLocalBusinessSchema } from "@/lib/seo/schema";
+import { getOrganizationSchema, getLocalBusinessSchema, getWebSiteSchema } from "@/lib/seo/schema";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -91,6 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   const orgSchema = getOrganizationSchema();
   const localBizSchema = getLocalBusinessSchema();
+  const webSiteSchema = getWebSiteSchema();
 
   return (
     <html
@@ -106,7 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var k='voiceact-theme';var t=localStorage.getItem(k);if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}var r=document.documentElement;if(t==='dark'){r.classList.add('dark');}r.style.colorScheme=t;}catch(e){}})();`,
           }}
         />
-        <JsonLd data={[orgSchema, localBizSchema]} />
+        <JsonLd data={[orgSchema, localBizSchema, webSiteSchema]} />
         <Providers>
           <a
             href="#main-content"
