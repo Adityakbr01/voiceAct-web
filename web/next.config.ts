@@ -42,11 +42,19 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  productionBrowserSourceMaps: false,
+
+  // Strip console.log/debugger in production for smaller bundles
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
+  },
 
   // Allow external images from trusted CDNs with AVIF/WebP compression
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 31536000,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       { protocol: "https", hostname: "ik.imagekit.io" },
       { protocol: "https", hostname: "images.unsplash.com" },
@@ -60,6 +68,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: [
       "lucide-react",
       "framer-motion",
+      "motion",
       "@tabler/icons-react",
       "@radix-ui/react-icons",
       "recharts",
@@ -130,10 +139,11 @@ export default withSentryConfig(nextConfig, {
   widenClientFileUpload: false,
   hideSourceMaps: true,
   disableLogger: true,
-  tunnelRoute: "/monitoring",
+  // tunnelRoute removed — direct upload to Sentry is faster and avoids
+  // proxying every error event through our origin (was: "/monitoring")
 
   webpack: {
-    automaticVercelMonitors: true,
+    automaticVercelMonitors: false,
     treeshake: {
       removeDebugLogging: true,
     },

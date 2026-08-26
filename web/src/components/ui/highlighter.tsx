@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type React from "react";
-import { useInView } from "framer-motion";
 import { annotate } from "rough-notation";
 
 import { type RoughAnnotation } from "rough-notation/lib/model";
@@ -34,14 +33,30 @@ export function Highlighter({
   isView = false,
 }: HighlighterProps) {
   const elementRef = useRef<HTMLSpanElement>(null);
+  // Use native IntersectionObserver instead of pulling framer-motion into this leaf
+  const [isInView, setIsInView] = useState(!isView);
 
-  const isInView = useInView(elementRef, {
-    once: true,
-    margin: "-10%",
-  });
+  useEffect(() => {
+    if (!isView) return;
+    const el = elementRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setIsInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "-10%" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [isView]);
 
-  // If isView is false, always show. If isView is true, wait for inView
-  const shouldShow = !isView || isInView;
+  const shouldShow = isInView;
 
   useEffect(() => {
     const element = elementRef.current;

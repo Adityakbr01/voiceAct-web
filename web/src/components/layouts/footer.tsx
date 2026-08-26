@@ -34,37 +34,61 @@ class SafeBallpit extends Component<SafeBallpitProps> {
 }
 
 function FooterEffects({ isMobile }: { isMobile: boolean }) {
+  // Skip the heavy WebGL background on mobile / coarse-pointer devices
+  // and when the user prefers reduced motion — saves a WebGL context per
+  // page and the per-frame fragment shader cost on devices that can't keep up.
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setShouldRender(!isMobile && !coarse && !reduced);
+  }, [isMobile]);
+
+  if (!shouldRender) {
+    // Static CSS gradient fallback so the footer still looks intentional
+    return (
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(82,39,255,0.25), transparent 70%)",
+        }}
+        aria-hidden
+      />
+    );
+  }
+
   return (
-    <>
-      <div className="absolute inset-0 z-0">
-        <SafeBallpit>
-          <Grainient
-            color1="#494349"
-            color2="#5227FF"
-            color3="#777777"
-            timeSpeed={0.3}
-            colorBalance={-0.33}
-            warpStrength={1.0}
-            warpFrequency={11.9}
-            warpSpeed={4}
-            warpAmplitude={24}
-            blendAngle={0.0}
-            blendSoftness={0.05}
-            rotationAmount={500.0}
-            noiseScale={2.0}
-            grainAmount={0.1}
-            grainScale={2.0}
-            grainAnimated={false}
-            contrast={1.5}
-            gamma={1.0}
-            saturation={1.0}
-            centerX={0.1}
-            centerY={0.0}
-            zoom={0.9}
-          />
-        </SafeBallpit>
-      </div>
-    </>
+    <div className="absolute inset-0 z-0">
+      <SafeBallpit>
+        <Grainient
+          color1="#494349"
+          color2="#5227FF"
+          color3="#777777"
+          timeSpeed={0.3}
+          colorBalance={-0.33}
+          warpStrength={1.0}
+          warpFrequency={11.9}
+          warpSpeed={4}
+          warpAmplitude={24}
+          blendAngle={0.0}
+          blendSoftness={0.05}
+          rotationAmount={500.0}
+          noiseScale={2.0}
+          grainAmount={0.1}
+          grainScale={2.0}
+          grainAnimated={false}
+          contrast={1.5}
+          gamma={1.0}
+          saturation={1.0}
+          centerX={0.1}
+          centerY={0.0}
+          zoom={0.9}
+        />
+      </SafeBallpit>
+    </div>
   );
 }
 
@@ -286,7 +310,9 @@ export function Footer() {
                     className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
                     <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block text-white">{n.label}</span>
+                      <span className="nav-pill-flip-current relative block text-white">
+                        {n.label}
+                      </span>
                       <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {n.label}
                       </span>
@@ -317,7 +343,9 @@ export function Footer() {
                     className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
                     <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block text-white">{h.label}</span>
+                      <span className="nav-pill-flip-current relative block text-white">
+                        {h.label}
+                      </span>
                       <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {h.label}
                       </span>
@@ -348,7 +376,9 @@ export function Footer() {
                     className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
                     <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block text-white">{s.label}</span>
+                      <span className="nav-pill-flip-current relative block text-white">
+                        {s.label}
+                      </span>
                       <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {s.label}
                       </span>
@@ -379,7 +409,9 @@ export function Footer() {
                     className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
                     <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block text-white">{t.label}</span>
+                      <span className="nav-pill-flip-current relative block text-white">
+                        {t.label}
+                      </span>
                       <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {t.label}
                       </span>
@@ -431,7 +463,9 @@ export function Footer() {
                     className="group nav-pill-flip inline-flex items-center overflow-hidden text-white transition-colors hover:text-white"
                   >
                     <span className="nav-pill-flip-inner relative block h-[1.2em] leading-[1.2em] whitespace-nowrap text-white group-hover:text-white">
-                      <span className="nav-pill-flip-current relative block text-white">{l.label}</span>
+                      <span className="nav-pill-flip-current relative block text-white">
+                        {l.label}
+                      </span>
                       <span className="nav-pill-flip-next absolute inset-x-0 top-0 block text-white">
                         {l.label}
                       </span>
