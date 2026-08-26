@@ -1,7 +1,14 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "VoiceAct — Next.js, React Native & CRM Development Studio",
+  "short_name": "VoiceAct",
+  "description": "Bengaluru-based software studio building production-grade Next.js apps, React Native mobile apps, custom CRMs, and SaaS platforms for startups and enterprises in India.",
   "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
@@ -15,7 +22,10 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "categories": ["business", "productivity", "developer"]
 }
