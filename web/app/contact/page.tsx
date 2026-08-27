@@ -7,7 +7,7 @@ import { getBreadcrumbSchema } from "@/lib/seo/schema";
 export const metadata: Metadata = {
   title: "Contact Our Engineering Team",
   description:
-    "Get in touch with VoiceAct Solutions. Claim your free 30-minute product audit and scoped development roadmap for your software project.",
+    "Get in touch with VoiceAct Solutions. Claim a free 30-minute product audit and scoped development roadmap.",
   keywords: [
     "contact software development agency India",
     "hire Next.js developers",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Our Engineering Team",
     description:
-      "Get in touch with VoiceAct Solutions. Claim your free 30-minute product audit and scoped development roadmap for your software project.",
+      "Get in touch with VoiceAct Solutions. Claim a free 30-minute product audit and scoped development roadmap.",
     type: "website",
     url: `${company.website}/contact`,
   },

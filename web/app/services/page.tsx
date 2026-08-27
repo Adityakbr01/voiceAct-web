@@ -20,16 +20,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Software Engineering & Custom Development Services",
+  // Base: 40 chars → with template ` | VoiceAct Solutions` = 59 chars (under 60)
+  title: "Web, Mobile, CRM & SaaS Development Services",
   description:
-    "Explore VoiceAct Solutions' full range of services: Web Development, Mobile Apps, Custom CRMs, SaaS, AI Workflows, Cloud, and Headless CMS.",
+    "VoiceAct Solutions' services: Web, Mobile, Custom CRM, SaaS, AI workflows, Cloud, and Headless CMS engineering.",
   alternates: {
     canonical: `${company.website}/services`,
   },
   openGraph: {
     title: `Software Development Services | ${company.name}`,
-    description:
-      "Explore VoiceAct Solutions' services: Web, Mobile, Custom CRM, SaaS, AI, and Cloud engineering.",
+    description: "VoiceAct's services: Web, Mobile, Custom CRM, SaaS, AI, and Cloud engineering.",
     url: `${company.website}/services`,
   },
 };

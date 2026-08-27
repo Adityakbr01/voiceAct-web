@@ -4,23 +4,23 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { getBreadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: "Free Website & Technical Audit Tool | Performance & SEO",
+  // Base: 38 chars → with template ` | VoiceAct Solutions` = 57 chars (under 60)
+  title: "Free Website & Technical Audit Tool",
   description:
-    "Run a free website performance, Core Web Vitals, and SEO audit. Get instant scores and an actionable technical optimization roadmap.",
+    "Free website performance, Core Web Vitals, and SEO audit. Instant scores and an actionable optimization roadmap.",
   alternates: {
     canonical: `${company.website}/audit`,
   },
   openGraph: {
     title: "Free Website & Technical Audit Tool | VoiceAct Solutions",
     description:
-      "Run a free website performance, Core Web Vitals, and SEO audit. Get instant scores and an actionable roadmap.",
+      "Free website performance, Core Web Vitals, and SEO audit. Instant scores and an actionable roadmap.",
     url: `${company.website}/audit`,
   },
   twitter: {
     card: "summary_large_image",
     title: "Free Website & Technical Audit Tool | VoiceAct Solutions",
-    description:
-      "Run a free website performance, Core Web Vitals, and SEO audit. Instant technical breakdown.",
+    description: "Free performance, Core Web Vitals, and SEO audit. Instant technical breakdown.",
   },
 };
 
@@ -40,8 +40,7 @@ export default function AuditLayout({ children }: { children: React.ReactNode })
     applicationCategory: "BusinessApplication",
     operatingSystem: "All",
     url: auditUrl,
-    description:
-      "Instant free website performance, Core Web Vitals, and SEO technical audit tool.",
+    description: "Instant free website performance, Core Web Vitals, and SEO technical audit tool.",
     offers: {
       "@type": "Offer",
       price: "0",

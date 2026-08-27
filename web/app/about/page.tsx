@@ -7,7 +7,7 @@ import { getBreadcrumbSchema } from "@/lib/seo/schema";
 export const metadata: Metadata = {
   title: "About Our Software Studio",
   description:
-    "Learn about VoiceAct Solutions, a senior software agency building production-grade web applications, mobile products, and custom CRMs.",
+    "VoiceAct Solutions — a senior software agency building production-grade web apps, mobile products, and custom CRMs.",
   keywords: [
     "about VoiceAct Solutions",
     "software development studio India",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Our Software Studio",
     description:
-      "Learn about VoiceAct Solutions, a senior software agency building production-grade web applications, mobile products, and custom CRMs.",
+      "VoiceAct Solutions — a senior software agency building production-grade web apps, mobile products, and custom CRMs.",
     type: "website",
     url: `${company.website}/about`,
   },
@@ -73,4 +73,3 @@ export default function Page() {
     </>
   );
 }
-

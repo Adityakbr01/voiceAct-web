@@ -9,11 +9,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Hire Senior Developers & AI Engineers",
   description:
-    "Hire senior React, Next.js, React Native developers, and AI engineers. Scale your engineering team with pre-vetted senior software talent within 48 hours.",
+    "Hire senior React, Next.js, React Native developers & AI engineers. Pre-vetted talent, onboarded within 48 hours.",
   openGraph: {
     title: "Hire Senior Developers & AI Engineers",
     description:
-      "Scale your engineering team with pre-vetted senior software talent within 48 hours.",
+      "Pre-vetted React, Next.js, React Native & AI engineers, onboarded within 48 hours.",
     url: `${company.website}/hire`,
   },
   alternates: {

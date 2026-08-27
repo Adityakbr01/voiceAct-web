@@ -48,8 +48,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!author) return { title: "Author Not Found" };
   const normalizedSlug = decodeURIComponent(slug).toLowerCase().trim().replace(/\s+/g, "-");
   return {
-    title: `${author.name} — ${author.role} | ${company.name}`,
-    description: author.bio,
+    // Use the layout title template — do not append `${company.name}` here or
+    // it gets duplicated by the root `%s | ${APP.name}` template.
+    title: `${author.name} — ${author.role}`,
+    description: author.bio.slice(0, 155),
     alternates: { canonical: `${company.website}/author/${normalizedSlug}` },
   };
 }
@@ -59,7 +61,9 @@ export default async function AuthorPage({ params }: PageProps) {
   const author = getAuthor(slug);
   if (!author) notFound();
 
-  const authorPosts = blogPosts.filter((p) => p.author.name.toLowerCase() === author.name.toLowerCase());
+  const authorPosts = blogPosts.filter(
+    (p) => p.author.name.toLowerCase() === author.name.toLowerCase(),
+  );
 
   const personSchema = {
     "@context": "https://schema.org",

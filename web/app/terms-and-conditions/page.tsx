@@ -5,11 +5,11 @@ import { TermsPage } from "@/modules/pages/terms";
 export const metadata: Metadata = {
   title: "Terms & Conditions",
   description:
-    "Review the terms and conditions for VoiceAct Solutions. Intellectual property terms, service deliverables, and client agreements.",
+    "Terms and conditions for VoiceAct Solutions — IP, service deliverables, and client agreements.",
   openGraph: {
     title: "Terms & Conditions",
     description:
-      "Review the terms and conditions for VoiceAct Solutions. Intellectual property terms, service deliverables, and client agreements.",
+      "Terms and conditions for VoiceAct Solutions — IP, service deliverables, and client agreements.",
     type: "website",
     url: `${company.website}/terms-and-conditions`,
   },

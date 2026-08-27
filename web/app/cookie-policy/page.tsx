@@ -5,11 +5,11 @@ import { CookiePolicyPage } from "@/modules/pages/cookie-policy";
 export const metadata: Metadata = {
   title: "Cookie Policy",
   description:
-    "Understand how VoiceAct Solutions uses cookies and tracking technologies to ensure site functionality and performance.",
+    "How VoiceAct Solutions uses cookies and tracking to ensure site functionality and performance.",
   openGraph: {
     title: "Cookie Policy",
     description:
-      "Understand how VoiceAct Solutions uses cookies and tracking technologies to ensure site functionality and performance.",
+      "How VoiceAct Solutions uses cookies and tracking to ensure site functionality and performance.",
     type: "website",
     url: `${company.website}/cookie-policy`,
   },

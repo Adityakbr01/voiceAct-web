@@ -129,6 +129,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    // Intentional `noindex`: each city × service page is a thin programmatic
+    // variation of the main `/services/[slug]` page. Indexing all
+    // permutations creates near-duplicate content that dilutes ranking
+    // signals. The `follow: true` still passes link equity to the canonical.
+    // Reference: SEO Spider flags this as a warning; it is a deliberate
+    // consolidation strategy, not a configuration error.
     robots: {
       index: false,
       follow: true,

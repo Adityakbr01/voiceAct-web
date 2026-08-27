@@ -31,15 +31,7 @@ export interface WebPageSchemaInput {
   breadcrumbs?: BreadcrumbItem[];
 }
 
-const SERVICES_AREA = [
-  "Bengaluru",
-  "Hyderabad",
-  "Pune",
-  "Mumbai",
-  "Delhi NCR",
-  "Chennai",
-  "India",
-];
+const SERVICES_AREA = ["Bengaluru", "Hyderabad", "Pune", "Mumbai", "Delhi NCR", "Chennai", "India"];
 
 export const getOrganizationSchema = () => {
   const baseUrl = company.website.replace(/\/$/, "");

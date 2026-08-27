@@ -38,7 +38,7 @@ By combining Turbopack, route handler caching, and localized state isolation, ap
   },
   {
     slug: "react-native-vs-native-swift-kotlin",
-    title: "Cross-Platform vs. Native Mobile Development: How to Choose for Your MVP",
+    title: "Cross-Platform vs Native Mobile: How to Choose for Your MVP",
     excerpt:
       "Should you build separate iOS and Android apps or adopt React Native? Here is how startup teams ship 40% faster without compromising native quality.",
     content: `

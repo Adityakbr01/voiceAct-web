@@ -10,14 +10,16 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Client Portfolio & Case Studies",
   description:
-    "Explore production applications shipped by VoiceAct Solutions: SaaS platforms, mobile apps, custom CRMs, and high-performance web products.",
+    "Production apps shipped by VoiceAct Solutions: SaaS platforms, mobile apps, custom CRMs, and high-performance web products.",
   alternates: {
     canonical: `${company.website}/work`,
   },
   openGraph: {
+    // OG title is used independently by social cards (not the browser
+    // <title>), so the explicit `| VoiceAct Solutions` here is intentional.
     title: `Client Portfolio & Case Studies | ${company.name}`,
     description:
-      "Explore production applications shipped by VoiceAct Solutions: SaaS, mobile apps, custom CRMs, and web products.",
+      "Production apps shipped by VoiceAct Solutions: SaaS, mobile apps, custom CRMs, and web products.",
     url: `${company.website}/work`,
   },
 };
@@ -71,8 +73,8 @@ export default async function WorkPage() {
           </h1>
 
           <p className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-3xl">
-            Explore software platforms, mobile applications, and custom CRMs engineered and
-            launched for startups, founders, and enterprise scaleups.
+            Explore software platforms, mobile applications, and custom CRMs engineered and launched
+            for startups, founders, and enterprise scaleups.
           </p>
         </section>
 

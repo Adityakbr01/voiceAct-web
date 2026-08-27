@@ -11,10 +11,10 @@ export const APP = {
   version: "1.0.0",
   tagline: company.tagline,
   description: company.description,
-  // Title: 54 chars — within Google's 50-60 char optimal range
-  seoTitle: `${company.name} — Software Dev Agency, India`,
-  // Description: 158 chars — action-oriented, keyword-rich
-  seoDescription: `Custom Next.js web apps, React Native mobile apps & CRM systems built in India. Senior engineers, 6–8 week MVP sprints, production-grade code. Get a free audit.`,
+  // Title: 49 chars — within Google's 50-60 char optimal range (with the %s | suffix it's 68, so we keep base short)
+  seoTitle: `${company.name} — Software Dev Agency India`,
+  // Description: 153 chars — under the 155-char SERP limit, action-oriented
+  seoDescription: `Custom Next.js apps, React Native mobile apps & CRM systems built in India. Senior engineers, 6–8 week MVP sprints, production-grade code. Free audit.`,
 } as const;
 
 export const OWNER = {

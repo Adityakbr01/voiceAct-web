@@ -26,7 +26,7 @@ const comparisonsData: Record<
     title: "CRM vs ERP Comparison Guide (2026)",
     headline: "CRM vs ERP: Which Software System Does Your Business Need?",
     description:
-      "Understand the key technical and operational differences between Customer Relationship Management (CRM) and Enterprise Resource Planning (ERP) software.",
+      "Key technical and operational differences between CRM and ERP — pick the right system for your business.",
     optionA: {
       name: "Custom CRM System",
       pros: [
@@ -55,10 +55,10 @@ const comparisonsData: Record<
       "If your main goal is getting more clients, organizing your sales team, and automating lead follow-ups, build a custom CRM. If your bottleneck is manufacturing, inventory, and supply chain logistics, implement an ERP.",
   },
   "nextjs-vs-react": {
-    title: "Next.js vs React: Architectural Comparison for 2026",
+    title: "Next.js vs React: Framework Comparison 2026",
     headline: "Next.js vs React: Choosing the Right Framework for Production",
     description:
-      "Compare Next.js App Router vs standalone Client-Side React to choose the best architecture for your web product.",
+      "Next.js App Router vs plain client-side React — pick the right architecture for your web product.",
     optionA: {
       name: "Next.js (App Router)",
       pros: [
@@ -87,10 +87,10 @@ const comparisonsData: Record<
       "For any public-facing app where search engine rankings, performance, and instant page loads matter, Next.js is the clear industry choice in 2026.",
   },
   "custom-crm-vs-off-the-shelf": {
-    title: "Custom CRM vs Off-the-Shelf (Salesforce / HubSpot) (2026)",
+    title: "Custom CRM vs Salesforce / HubSpot (2026)",
     headline: "Custom CRM vs Off-the-Shelf: Stop Paying Per-Seat SaaS Taxes",
     description:
-      "Compare bespoke custom CRM engineering against off-the-shelf enterprise platforms like Salesforce and HubSpot to optimize cost, control, and operational velocity.",
+      "Bespoke custom CRM vs Salesforce/HubSpot — optimize cost, control, and operational velocity.",
     optionA: {
       name: "Bespoke Custom CRM (VoiceAct)",
       pros: [
@@ -100,7 +100,8 @@ const comparisonsData: Record<
         "Blazing fast sub-second query response without SaaS bloat and unused features",
       ],
       cons: ["Requires upfront engineering investment and 6–8 week build timeline"],
-      bestFor: "Growing businesses with 10+ reps, unique sales processes, or high annual SaaS licensing bills.",
+      bestFor:
+        "Growing businesses with 10+ reps, unique sales processes, or high annual SaaS licensing bills.",
     },
     optionB: {
       name: "Off-the-Shelf SaaS (Salesforce / HubSpot)",

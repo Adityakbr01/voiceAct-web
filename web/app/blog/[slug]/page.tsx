@@ -160,7 +160,9 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
               {post.title}
             </h1>
 
-            <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">{post.excerpt}</p>
+            <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
+              {post.excerpt}
+            </p>
 
             <div className="flex items-center justify-between border-y border-border/60 py-4">
               <div className="flex items-center gap-3">
@@ -237,7 +239,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
           {/* Related Articles */}
           {relatedPosts.length > 0 && (
             <section className="max-w-7xl mx-auto px-6 md:px-10 py-12 border-t border-border/60">
-              <h3 className="text-xl font-bold tracking-tight mb-6">Related Articles</h3>
+              <h2 className="text-xl font-bold tracking-tight mb-6">Related Articles</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {relatedPosts.map((related) => (
                   <Link

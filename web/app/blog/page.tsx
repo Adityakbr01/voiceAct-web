@@ -23,11 +23,11 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Engineering Blog & Software Insights",
   description:
-    "Technical insights, web and mobile app architecture, design systems, and AI workflows from senior software engineers at VoiceAct.",
+    "Web & mobile architecture, design systems, and AI workflows from senior engineers at VoiceAct.",
   openGraph: {
     title: "Engineering Blog & Software Insights",
     description:
-      "Technical insights, web and mobile app architecture, design systems, and AI workflows from senior software engineers at VoiceAct.",
+      "Web & mobile architecture, design systems, and AI workflows from senior engineers at VoiceAct.",
     type: "website",
     url: `${company.website}/blog`,
   },

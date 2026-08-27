@@ -5,16 +5,18 @@ import { company } from "@/modules/company-data";
 import { JsonLd } from "@/components/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "Open Source & Free Tools for Founders and Engineers",
+  // Base: 50 chars → with template ` | VoiceAct Solutions` = 69 chars ✗ — too long
+  // Shortened: 38 chars → with template = 57 chars (under 60)
+  title: "Open Source & Free Engineering Tools",
   description:
-    "Free software development tools from VoiceAct Solutions: an open-source Next.js agency starter kit, a free project cost estimator, and a free website & SEO audit tool.",
+    "Free tools from VoiceAct: an open-source Next.js agency starter, project cost estimator, and website audit tool.",
   alternates: {
     canonical: `${company.website}/open-source`,
   },
   openGraph: {
     title: "Open Source & Free Tools for Founders and Engineers",
     description:
-      "Free software development tools from VoiceAct Solutions: an open-source Next.js agency starter kit, a free project cost estimator, and a free website & SEO audit tool.",
+      "Free tools from VoiceAct: an open-source Next.js agency starter, project cost estimator, and website audit tool.",
     type: "website",
     url: `${company.website}/open-source`,
   },

@@ -66,6 +66,7 @@ export default function FreeAuditLeadMagnetPage() {
         </section>
 
         <section className="max-w-xl mx-auto px-6">
+          <h2 className="sr-only">Run your free website audit</h2>
           <form
             onSubmit={handleAudit}
             className="p-8 rounded-3xl border border-border/60 bg-card/60 space-y-4 shadow-xl"

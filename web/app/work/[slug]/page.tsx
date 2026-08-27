@@ -14,15 +14,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   try {
     const project = await getProjectBySlug(params.slug);
+    // Truncate description to ~155 chars to keep within Google's SERP snippet
+    // pixel limit (≈985px). The API may return long marketing descriptions.
+    const description = (project.description ?? "").slice(0, 155);
     return {
       title: project.title,
-      description: project.description,
+      description,
       alternates: {
         canonical: canonicalUrl,
       },
       openGraph: {
         title: project.title,
-        description: project.description,
+        description,
         url: canonicalUrl,
         images: project.image ? [{ url: project.image }] : [],
       },
@@ -89,7 +92,7 @@ export default async function ProjectPage({ params }: PageProps) {
           {project.services && project.services.length > 0 && (
             <div className="border-t border-border/60 pt-6">
               <h2 className="mb-3 text-sm uppercase tracking-[0.2em] text-muted-foreground">
-                Services
+                Services Delivered
               </h2>
               <div className="flex flex-wrap gap-2">
                 {project.services.map((service) => (

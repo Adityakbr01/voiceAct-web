@@ -85,49 +85,58 @@ const nextConfig: NextConfig = {
 
   // Security Headers
   async headers() {
-    return [
+    // Base header set — applied to all paths including /api, /_next assets,
+    // and 404s. This ensures Screaming Frog's "missing security header"
+    // warnings only flag internal diagnostic routes.
+    const allPathsHeaders = [
       {
-        source: "/:path*",
-        headers: [
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
-          },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=31536000; includeSubDomains",
-          },
-          {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              `script-src 'self' 'unsafe-inline' ${process.env.NODE_ENV === "development" ? "'unsafe-eval' " : ""}https://www.googletagmanager.com https://www.google-analytics.com https://us.i.posthog.com https://us-assets.i.posthog.com https://browser.sentry-cdn.com`,
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: blob: https: http:",
-              "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://us.i.posthog.com https://us-assets.i.posthog.com https://*.sentry.io https://*.ingest.sentry.io",
-              "frame-src 'self' https://www.google.com https://www.youtube.com",
-              "media-src 'self' blob: data:",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'self'",
-            ].join("; "),
-          },
-        ],
+        key: "X-Frame-Options",
+        value: "SAMEORIGIN",
       },
+      {
+        key: "X-Content-Type-Options",
+        value: "nosniff",
+      },
+      {
+        key: "Referrer-Policy",
+        value: "strict-origin-when-cross-origin",
+      },
+      {
+        key: "Permissions-Policy",
+        value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+      },
+      {
+        key: "Strict-Transport-Security",
+        value: "max-age=31536000; includeSubDomains",
+      },
+      {
+        key: "Content-Security-Policy",
+        value: [
+          "default-src 'self'",
+          `script-src 'self' 'unsafe-inline' ${process.env.NODE_ENV === "development" ? "'unsafe-eval' " : ""}https://www.googletagmanager.com https://www.google-analytics.com https://us.i.posthog.com https://us-assets.i.posthog.com https://browser.sentry-cdn.com`,
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+          "img-src 'self' data: blob: https: http:",
+          "font-src 'self' data: https://fonts.gstatic.com",
+          "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://us.i.posthog.com https://us-assets.i.posthog.com https://*.sentry.io https://*.ingest.sentry.io",
+          "frame-src 'self' https://www.google.com https://www.youtube.com",
+          "media-src 'self' blob: data:",
+          "object-src 'none'",
+          "base-uri 'self'",
+          "form-action 'self'",
+          "frame-ancestors 'self'",
+        ].join("; "),
+      },
+    ];
+
+    return [
+      // Public pages
+      { source: "/:path*", headers: allPathsHeaders },
+      // Explicit API routes — ensure headers also apply (the wildcard should
+      // cover these, but listing them defensively eliminates any false
+      // positive from Screaming Frog on /api/* URLs).
+      { source: "/api/:path*", headers: allPathsHeaders },
+      // _next/static assets
+      { source: "/_next/static/:path*", headers: allPathsHeaders },
     ];
   },
 };

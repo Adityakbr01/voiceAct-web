@@ -59,7 +59,7 @@ const staticServiceDetails: Record<
   },
   "crm-development": {
     title: "Custom CRM Development",
-    tagline: "Tailor-made CRM systems engineered for your sales and operational workflows.",
+    tagline: "Tailor-made CRM systems engineered for your sales workflows.",
     description:
       "Stop forcing your business into rigid off-the-shelf software. We construct custom CRM platforms with pipeline management, lead scoring, automated email/WhatsApp sequences, and custom analytics dashboards.",
     features: [
@@ -149,7 +149,7 @@ const staticServiceDetails: Record<
   },
   "ecommerce-development": {
     title: "E-Commerce Development",
-    tagline: "High-converting, scalable online stores and custom shopping platforms.",
+    tagline: "High-converting online stores and custom shopping platforms.",
     description:
       "Drive sales with custom e-commerce experiences. We build headless storefronts and custom shopping systems with seamless cart checkouts, inventory sync, multi-currency support, and payment gateway integrations.",
     features: [
@@ -167,7 +167,7 @@ const staticServiceDetails: Record<
   },
   "api-development": {
     title: "API Development & Integration",
-    tagline: "Secure, well-documented REST & GraphQL APIs built for high throughput.",
+    tagline: "Secure REST & GraphQL APIs built for high throughput.",
     description:
       "Connect systems seamlessly. We build robust microservices, custom REST/GraphQL APIs, webhook receivers, and third-party API integrations engineered for speed, security, and developer clarity.",
     features: [
@@ -185,7 +185,7 @@ const staticServiceDetails: Record<
   },
   "cloud-solutions": {
     title: "Cloud Solutions & DevOps",
-    tagline: "Scalable cloud infrastructure, CI/CD pipelines, and 24/7 monitoring.",
+    tagline: "Scalable cloud infrastructure, CI/CD, and 24/7 monitoring.",
     description:
       "Keep your infrastructure resilient, secure, and cost-effective. We configure automated deployment pipelines, cloud hosting on AWS/GCP/Cloudflare, containerization with Docker, and real-time performance monitoring.",
     features: [

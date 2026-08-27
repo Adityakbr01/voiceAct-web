@@ -79,6 +79,12 @@ export function Cta() {
   const [submitted, setSubmitted] = useState(false);
   const [countdown, setCountdown] = useState(10);
 
+  // TODO(prefill): URL params like ?service=X and ?hire=X reach the contact
+  // form from services/hire/location CTAs. To make those parameters
+  // functional (vs. decorative), read them via a Suspense-wrapped client
+  // boundary and prefill `projectType` here. Tracked because the SEO Spider
+  // currently flags the 31 parameter URLs as a low-priority warning.
+
   // Auto-reset form after 10 seconds of successful submission
   useEffect(() => {
     if (!submitted) return;

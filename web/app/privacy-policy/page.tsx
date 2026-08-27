@@ -5,11 +5,11 @@ import { PrivacyPolicyPage } from "@/modules/pages/privacy-policy";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Read the privacy policy for VoiceAct Solutions. Learn how we handle client data, analytics security, and protect your privacy rights.",
+    "How VoiceAct Solutions handles client data, analytics security, and protects your privacy rights.",
   openGraph: {
     title: "Privacy Policy",
     description:
-      "Read the privacy policy for VoiceAct Solutions. Learn how we handle client data and protect your privacy rights.",
+      "How VoiceAct Solutions handles client data, analytics security, and protects your privacy rights.",
     type: "website",
     url: `${company.website}/privacy-policy`,
   },

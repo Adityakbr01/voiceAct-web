@@ -4,23 +4,23 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { getBreadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: "Software Project Cost Estimator | Instant Pricing",
+  // Base: 34 chars → with template ` | VoiceAct Solutions` = 53 chars (under 60)
+  title: "Software Project Cost Estimator",
   description:
-    "Estimate your custom software development cost in 60 seconds. Transparent pricing for web applications, mobile apps, custom CRMs, and SaaS MVPs.",
+    "Estimate your custom software development cost in 60 seconds. Transparent pricing for web, mobile, CRM, and SaaS MVPs.",
   alternates: {
     canonical: `${company.website}/calculator`,
   },
   openGraph: {
     title: "Software Project Cost Estimator | VoiceAct Solutions",
     description:
-      "Estimate your custom software development cost in 60 seconds. Transparent pricing for web applications, mobile apps, custom CRMs, and SaaS MVPs.",
+      "Estimate your custom software development cost in 60 seconds. Transparent pricing for web, mobile, CRM, and SaaS MVPs.",
     url: `${company.website}/calculator`,
   },
   twitter: {
     card: "summary_large_image",
     title: "Software Project Cost Estimator | VoiceAct Solutions",
-    description:
-      "Instant project pricing estimator for web apps, mobile apps, custom CRMs, and SaaS MVPs.",
+    description: "Instant project pricing estimator for web, mobile, CRM, and SaaS MVPs.",
   },
 };
 
@@ -40,8 +40,7 @@ export default function CalculatorLayout({ children }: { children: React.ReactNo
     applicationCategory: "BusinessApplication",
     operatingSystem: "All",
     url: calcUrl,
-    description:
-      "Instant software and web application development cost calculator.",
+    description: "Instant software and web application development cost calculator.",
     offers: {
       "@type": "Offer",
       price: "0",
