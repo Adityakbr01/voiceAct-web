@@ -7,7 +7,8 @@ export const site = {
   tagline: company.tagline,
   description: company.description,
   email: company.contact.email,
-  location: `${company.address.city} · ${company.address.state} · India`,
+  // No verified physical address — surface the country only as a neutral region hint.
+  region: "India",
   socials: company.socialList,
 } as const;
 

@@ -1,5 +1,5 @@
 import { JsonLd } from "@/components/seo/json-ld";
-import { getBreadcrumbSchema, getLocalBusinessSchema, getServiceSchema } from "@/lib/seo/schema";
+import { getBreadcrumbSchema, getServiceSchema } from "@/lib/seo/schema";
 import { company } from "@/modules/company-data";
 import { Cta } from "@/modules/home/sections/cta";
 import { ArrowLeft, ArrowRight, CheckCircle2, MapPin, Sparkles } from "lucide-react";
@@ -162,7 +162,6 @@ export default async function CityServicePage({ params }: PageProps) {
   const baseUrl = company.website.replace(/\/$/, "");
   const pageUrl = `${baseUrl}/location/${citySlug}/${serviceSlug}`;
 
-  const localBizSchema = getLocalBusinessSchema(city.label);
   const serviceSchema = getServiceSchema({
     name: `${service.title} in ${city.label}`,
     description: service.description,
@@ -177,7 +176,7 @@ export default async function CityServicePage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
-      <JsonLd data={[localBizSchema, serviceSchema, breadcrumbsSchema]} />
+      <JsonLd data={[serviceSchema, breadcrumbsSchema]} />
       <main className="pt-24 pb-20">
         <div className="max-w-7xl mx-auto px-6 md:px-10 mb-8">
           <Link

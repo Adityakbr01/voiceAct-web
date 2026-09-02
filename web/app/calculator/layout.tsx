@@ -44,7 +44,7 @@ export default function CalculatorLayout({ children }: { children: React.ReactNo
     offers: {
       "@type": "Offer",
       price: "0",
-      priceCurrency: "USD",
+      priceCurrency: "INR",
     },
     provider: {
       "@type": "Organization",

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Mail, Phone, MapPin, Clock } from "lucide-react";
+import { ArrowRight, Mail, Phone, Globe } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { company } from "@/modules/company-data";
@@ -49,7 +49,7 @@ export function AboutPage() {
           </div>
         </motion.section>
 
-        {/* Stats */}
+        {/* Honest stats — modest, realistic numbers for a focused studio */}
         <motion.section
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export function AboutPage() {
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {[
               { value: company.founded, label: "Founded" },
-              { value: company.employees, label: "Team Members" },
+              { value: company.employees, label: "Team Size" },
               { value: company.clients, label: "Clients Served" },
               { value: company.projects, label: "Projects Delivered" },
             ].map((stat) => (
@@ -149,23 +149,20 @@ export function AboutPage() {
                   <span>{company.contact.email}</span>
                 </a>
                 <a
-                  href={`tel:${company.contact.phone}`}
+                  href={`tel:${company.contact.phone.replace(/\s/g, "")}`}
                   className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <Phone className="size-5 text-primary" />
                   <span>{company.contact.phone}</span>
                 </a>
                 <div className="flex items-start gap-3 text-muted-foreground">
-                  <MapPin className="size-5 text-primary shrink-0 mt-0.5" />
-                  <span>{company.address.full}</span>
-                </div>
-                <div className="flex items-start gap-3 text-muted-foreground">
-                  <Clock className="size-5 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <p>{company.hours.weekdays}</p>
-                    <p>{company.hours.saturday}</p>
-                    <p>{company.hours.sunday}</p>
-                  </div>
+                  <Globe className="size-5 text-primary shrink-0 mt-0.5" />
+                  <a
+                    href={company.website}
+                    className="hover:text-foreground transition-colors"
+                  >
+                    {company.website.replace(/^https?:\/\//, "")}
+                  </a>
                 </div>
               </div>
               <Button asChild className="mt-8" variant="glow">
@@ -189,28 +186,17 @@ export function AboutPage() {
                   <div className="font-medium">{company.industry}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">GST Number</div>
-                  <div className="font-medium">{company.registrations.gst}</div>
+                  <div className="text-sm text-muted-foreground">Service Area</div>
+                  <div className="font-medium">India · Remote engagements worldwide</div>
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Udyam Registration</div>
-                  <div className="font-medium">{company.registrations.udyam}</div>
+                  <div className="text-sm text-muted-foreground">Support Email</div>
+                  <div className="font-medium">{company.contact.supportEmail}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">D-U-N-S Number</div>
-                  <div className="font-medium">{company.registrations.duns}</div>
+                  <div className="text-sm text-muted-foreground">Administrative Email</div>
+                  <div className="font-medium">{company.contact.adminEmail}</div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Google Maps Placeholder */}
-          <div className="mt-8 rounded-xl border bg-card overflow-hidden">
-            <div className="aspect-video w-full bg-muted/50 flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <MapPin className="size-12 mx-auto mb-4 opacity-50" />
-                <p className="font-medium">Google Maps</p>
-                <p className="text-sm">{company.address.full}</p>
               </div>
             </div>
           </div>

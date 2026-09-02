@@ -183,23 +183,23 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-3">
               <Sparkles className="size-6 text-primary" />
-              <h3 className="font-bold text-lg">Senior Studio Squads</h3>
+              <h3 className="font-bold text-lg">Direct Collaboration</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Direct access to senior software architects without middle management layers.
+                You work directly with the engineers and designers building the product.
               </p>
             </div>
             <div className="space-y-3">
               <Zap className="size-6 text-amber-400" />
-              <h3 className="font-bold text-lg">8-Week Rapid Launch</h3>
+              <h3 className="font-bold text-lg">Iterative Shipping</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Streamlined MVP execution focused on shipping core user value quickly.
+                Scoped milestones with regular demos so progress is visible at every step.
               </p>
             </div>
             <div className="space-y-3">
               <Code2 className="size-6 text-emerald-400" />
-              <h3 className="font-bold text-lg">Zero Vendor Lock-in</h3>
+              <h3 className="font-bold text-lg">Full Code Ownership</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                100% intellectual property ownership with full source code handovers.
+                Complete source code and design files handed over to you from day one.
               </p>
             </div>
           </div>

@@ -5,8 +5,7 @@ import Link from "next/link";
 import {
   Mail,
   Phone,
-  MapPin,
-  Clock,
+  Globe,
   Check,
   Copy,
   MessageSquare,
@@ -15,7 +14,6 @@ import {
   Calendar,
   ShieldCheck,
   Zap,
-  FileCode2,
   CheckCircle2,
 } from "lucide-react";
 import { company } from "@/modules/company-data";
@@ -46,15 +44,15 @@ export function ContactPage() {
         <section className="px-6 md:px-10 pb-12 max-w-6xl mx-auto text-center space-y-4">
           <span className="glass inline-flex items-center gap-2 rounded-full border border-border/60 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
             <MessageSquare className="size-3.5 text-primary" aria-hidden />
-            Direct Technical Inquiry
+            Direct Inquiry
           </span>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-balance">
             Let&apos;s build your next{" "}
-            <span className="text-primary italic font-display">extraordinary</span> software product.
+            <span className="text-primary italic font-display">useful</span> software product.
           </h1>
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed text-pretty">
-            Have a project in mind, need a 30-minute architecture review, or want to discuss custom SaaS
-            and CRM workflows? Connect directly with our senior engineering team.
+            Have a project in mind or want to discuss a web or mobile idea? Reach out and we'll
+            get back with a clear, scoped response.
           </p>
         </section>
 
@@ -71,7 +69,7 @@ export function ContactPage() {
                   Fastest Option
                 </span>
                 <p className="text-base font-bold text-foreground">
-                  Book 20-Min Call
+                  Book a Call
                 </p>
               </div>
               <a
@@ -79,10 +77,10 @@ export function ContactPage() {
                 className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition shadow"
               >
                 <Zap className="size-3.5" />
-                Schedule on Calendar
+                Schedule a Call
               </a>
               <span className="text-[11px] text-muted-foreground font-medium">
-                Direct with Lead Architect
+                Direct conversation — no sales pressure
               </span>
             </div>
 
@@ -93,7 +91,7 @@ export function ContactPage() {
               </div>
               <div className="space-y-1">
                 <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
-                  Direct Studio Email
+                  Email
                 </span>
                 <a
                   href={`mailto:${company.contact.email}`}
@@ -116,7 +114,7 @@ export function ContactPage() {
               </button>
             </div>
 
-            {/* WhatsApp Direct */}
+            {/* Phone / WhatsApp */}
             <div className="p-6 rounded-2xl border border-border/60 bg-card/40 flex flex-col justify-between space-y-4">
               <div className="size-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 grid place-items-center text-emerald-400">
                 <Phone className="size-5" />
@@ -126,7 +124,7 @@ export function ContactPage() {
                   Call / WhatsApp
                 </span>
                 <a
-                  href={`tel:${company.contact.phone}`}
+                  href={`tel:${company.contact.phone.replace(/\s/g, "")}`}
                   className="text-base font-bold text-foreground hover:underline block truncate"
                 >
                   {company.contact.phone}
@@ -134,7 +132,7 @@ export function ContactPage() {
               </div>
               <a
                 href={`https://wa.me/${company.contact.phone.replace(/\D/g, "")}?text=${encodeURIComponent(
-                  `Hi ${company.name}! I'd like to discuss an engineering project with your team.`,
+                  `Hi ${company.name}! I'd like to discuss a project with your team.`,
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -145,21 +143,24 @@ export function ContactPage() {
               </a>
             </div>
 
-            {/* Studio Hours & Location */}
+            {/* Website */}
             <div className="p-6 rounded-2xl border border-border/60 bg-card/40 flex flex-col justify-between space-y-4">
               <div className="size-10 rounded-xl bg-blue-500/10 border border-blue-500/20 grid place-items-center text-blue-400">
-                <MapPin className="size-5" />
+                <Globe className="size-5" />
               </div>
               <div className="space-y-1">
                 <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
-                  Studio Location
+                  Website
                 </span>
-                <p className="text-xs font-semibold text-foreground leading-relaxed">
-                  {company.address.city}, {company.address.state}
-                </p>
+                <a
+                  href={company.website}
+                  className="text-base font-bold text-foreground hover:underline block truncate"
+                >
+                  {company.website.replace(/^https?:\/\//, "")}
+                </a>
               </div>
               <span className="text-[11px] text-muted-foreground font-medium">
-                IST Timezone · Mon–Sat (Response &lt; 4 Hours)
+                Remote engagements worldwide
               </span>
             </div>
           </div>
@@ -180,7 +181,8 @@ export function ContactPage() {
                   <span className="font-bold text-sm text-foreground">Initial Review</span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  We analyze your requirements, tech stack, and goals within 4 business hours.
+                  We look at your requirements and goals, then reply with relevant questions or a
+                  scoped response.
                 </p>
               </div>
 
@@ -192,7 +194,7 @@ export function ContactPage() {
                   <span className="font-bold text-sm text-foreground">Discovery Call</span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  A 20-minute technical architecture call directly with our Lead Architect (zero sales pressure).
+                  A short call to align on scope, timeline, and approach. No sales pressure.
                 </p>
               </div>
 
@@ -201,10 +203,10 @@ export function ContactPage() {
                   <span className="size-7 rounded-lg bg-primary/10 border border-primary/20 text-primary font-bold text-xs grid place-items-center">
                     03
                   </span>
-                  <span className="font-bold text-sm text-foreground">Scoped Roadmap</span>
+                  <span className="font-bold text-sm text-foreground">Scoped Proposal</span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  You receive a detailed technical roadmap with milestone estimates and deliverables within 24 hours.
+                  You receive a clear proposal with milestone estimates and deliverables.
                 </p>
               </div>
 
@@ -213,10 +215,10 @@ export function ContactPage() {
                   <span className="size-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold text-xs grid place-items-center">
                     04
                   </span>
-                  <span className="font-bold text-sm text-foreground">Sprint Kickoff</span>
+                  <span className="font-bold text-sm text-foreground">Build & Ship</span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Production code starts shipping in week one with weekly demoable milestones and a dedicated Slack channel.
+                  Iterative build with regular check-ins and demoable milestones.
                 </p>
               </div>
             </div>

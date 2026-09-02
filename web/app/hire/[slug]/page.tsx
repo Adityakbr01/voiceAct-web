@@ -34,10 +34,10 @@ const hirePagesData: Record<
 > = {
   "react-developers": {
     title: "Hire Dedicated React Developers",
-    roleName: "Senior React Engineers",
-    tagline: "Top 1% React.js Developers for High-Growth Startups & Enterprises",
+    roleName: "React Developers",
+    tagline: "Hire React Developers for Web Applications",
     description:
-      "Scale your web frontend engineering team with senior React developers who specialize in React 19, Redux, Zustand, Tailwind CSS, performance tuning, and complex web applications.",
+      "Bring in React developers who specialize in React 19, TypeScript, Tailwind CSS, performance tuning, and complex web applications.",
     skills: [
       "React 19 & Hooks",
       "TypeScript & State Management",
@@ -48,7 +48,7 @@ const hirePagesData: Record<
     models: [
       {
         title: "Dedicated Full-Time",
-        desc: "40 hrs/week dedicated exclusively to your product roadmap.",
+        desc: "Dedicated hours focused exclusively on your product roadmap.",
       },
       {
         title: "Project-Based",
@@ -56,21 +56,21 @@ const hirePagesData: Record<
       },
       {
         title: "Team Augmentation",
-        desc: "Embed senior frontend talent into your existing engineering team within 48 hours.",
+        desc: "Embed frontend talent into your existing engineering team.",
       },
     ],
     deliverables: [
-      "Sub-second page rendering & zero UI latency",
-      "Pixel-perfect responsive implementation from Figma",
+      "Fast, responsive implementation from Figma or design specs",
       "Clean, maintainable, fully typed TypeScript codebase",
+      "Performance-conscious component architecture",
     ],
   },
   "nextjs-developers": {
     title: "Hire Next.js Developers",
-    roleName: "Senior Next.js & Full-Stack Engineers",
-    tagline: "Architect High-Performance Full-Stack Next.js Applications",
+    roleName: "Next.js & Full-Stack Engineers",
+    tagline: "Architect Full-Stack Next.js Applications",
     description:
-      "Deploy battle-tested Next.js App Router applications. Our Next.js developers master React Server Components, ISR, Edge API routes, Turbopack, and automated SEO optimization.",
+      "Deploy Next.js App Router applications. Our developers work with React Server Components, ISR, Edge API routes, and SEO optimization.",
     skills: [
       "Next.js App Router",
       "React Server Components (RSC)",
@@ -81,26 +81,26 @@ const hirePagesData: Record<
     models: [
       {
         title: "Dedicated Full-Time",
-        desc: "Full-time Next.js experts taking ownership of your web architecture.",
+        desc: "Full-time Next.js developers taking ownership of your web architecture.",
       },
-      { title: "Project-Based", desc: "End-to-end build from discovery to Vercel/AWS deployment." },
+      { title: "Project-Based", desc: "End-to-end build from discovery to deployment." },
       {
         title: "Team Augmentation",
-        desc: "Accelerate your team's velocity with senior Next.js specialists.",
+        desc: "Accelerate your team's velocity with Next.js specialists.",
       },
     ],
     deliverables: [
-      "90+ Lighthouse score guarantee across all core routes",
+      "Performance-tuned routes and rendering strategy",
       "Dynamic metadata & JSON-LD schema integration",
       "Production-ready deployment pipelines on AWS/Cloudflare/Vercel",
     ],
   },
   "react-native-developers": {
     title: "Hire React Native Mobile Developers",
-    roleName: "Senior Mobile Engineers",
+    roleName: "Mobile Engineers",
     tagline: "Build Cross-Platform iOS & Android Apps from a Single Codebase",
     description:
-      "Ship native-feeling iOS and Android mobile apps fast. Our React Native engineers build fluid, 60 FPS mobile applications equipped with push notifications, offline sync, and App Store publication.",
+      "Build iOS and Android mobile apps from a single React Native codebase. Includes push notifications, offline sync, and App Store publication support.",
     skills: [
       "React Native & Expo",
       "Native Swift & Kotlin Bridges",
@@ -111,51 +111,51 @@ const hirePagesData: Record<
     models: [
       {
         title: "Dedicated Mobile Squad",
-        desc: "Dedicated mobile developers + QA engineers for ongoing feature delivery.",
+        desc: "Dedicated mobile developers for ongoing feature delivery.",
       },
-      { title: "Project-Based MVP", desc: "Launch your mobile app to the stores in 6 to 8 weeks." },
+      { title: "Project-Based MVP", desc: "Launch your mobile app to the stores." },
       {
         title: "App Optimization",
         desc: "Audit and optimize existing React Native apps for speed and stability.",
       },
     ],
     deliverables: [
-      "Simultaneous iOS & Android App Store release",
-      "60 FPS smooth gesture animations & native feel",
+      "iOS & Android App Store release support",
+      "Smooth gesture animations and native feel",
       "Offline data persistence and secure biometric authentication",
     ],
   },
   "ai-engineers": {
     title: "Hire AI & LLM Developers",
-    roleName: "AI Automation & LLM Specialists",
-    tagline: "Integrate Cutting-Edge AI Models, RAG Pipelines & Autonomous Agents",
+    roleName: "AI & LLM Engineers",
+    tagline: "Integrate AI Models, RAG Pipelines & Agent Workflows",
     description:
-      "Transform your product with custom AI capabilities. Our AI engineers build LLM integrations, RAG (Retrieval-Augmented Generation) document search, fine-tuned models, and smart automation workflows.",
+      "Add AI capabilities to your software. Our developers build LLM integrations, RAG (Retrieval-Augmented Generation) document search, and AI workflows.",
     skills: [
       "OpenAI, Claude & Gemini APIs",
-      "RAG & Vector Databases (Pinecone/Qdrant)",
+      "RAG & Vector Databases",
       "LangChain & LlamaIndex",
-      "Python, FastApi & Node.js",
+      "Python & Node.js",
       "AI Agent Workflow Design",
     ],
     models: [
       {
         title: "Dedicated AI Engineer",
-        desc: "Dedicated specialist embedding AI capabilities directly into your software.",
+        desc: "Specialist embedding AI capabilities directly into your software.",
       },
       {
         title: "AI MVP Sprint",
-        desc: "Build an AI chatbot or automated search workflow in 3 weeks.",
+        desc: "Build an AI feature or automated workflow.",
       },
       {
         title: "Consulting & Audit",
-        desc: "Architect custom LLM and RAG pipelines for your enterprise data.",
+        desc: "Architect custom LLM and RAG pipelines for your data.",
       },
     ],
     deliverables: [
-      "Custom RAG search over proprietary corporate documents",
-      "Real-time streaming AI text & voice conversational interfaces",
-      "Automated operational workflows reducing manual costs",
+      "Custom RAG search over proprietary documents",
+      "Streaming AI text and conversational interfaces",
+      "Automated workflows reducing manual costs",
     ],
   },
 };

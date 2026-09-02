@@ -134,44 +134,9 @@ export interface WorkItem {
   metrics: { value: string; label: string }[];
 }
 
-export const work: WorkItem[] = [
-  {
-    client: "Nordveil",
-    industry: "SaaS · Analytics",
-    title: "A B2B analytics dashboard rebuilt from the ground up",
-    outcome:
-      "Replaced a legacy dashboard with a React + Next.js app: 3× faster load, a cleaner design system, and a mobile companion app.",
-    metrics: [
-      { value: "3.1×", label: "Faster dashboard" },
-      { value: "+42%", label: "Weekly active users" },
-      { value: "12 wks", label: "Design to launch" },
-    ],
-  },
-  {
-    client: "Helia Finance",
-    industry: "Fintech · Mobile",
-    title: "A React Native banking app, live on iOS & Android",
-    outcome:
-      "Designed and shipped a consumer fintech app with card management, Plaid-linked accounts, and biometric auth in 14 weeks.",
-    metrics: [
-      { value: "4.8★", label: "App Store rating" },
-      { value: "180k", label: "Downloads in 6 mo" },
-      { value: "iOS+Android", label: "One codebase" },
-    ],
-  },
-  {
-    client: "Signal9 Market",
-    industry: "Marketplace · Web + Mobile",
-    title: "A two-sided marketplace, from Figma to production",
-    outcome:
-      "Full-stack build: seller web console, buyer mobile app, Stripe Connect payouts, and admin tooling — one team, one contract.",
-    metrics: [
-      { value: "$4.1M", label: "GMV first year" },
-      { value: "18k", label: "Active sellers" },
-      { value: "6 mo", label: "MVP to Series A" },
-    ],
-  },
-];
+// Work is sourced from the CMS. We deliberately keep this array empty so we
+// never render fabricated client names or unverifiable metrics as a fallback.
+export const work: WorkItem[] = [];
 
 export interface ProcessStep {
   step: string;
@@ -204,7 +169,7 @@ export const process: ProcessStep[] = [
     chapter: "Week 3–7 — the workshop",
     color: "#61DAFB",
     description:
-      "Senior engineers ship production-grade code from week one. Weekly demos, one Slack channel, no surprises.",
+      "Iterative build with regular check-ins and demoable milestones. One shared channel, no surprises.",
   },
   {
     step: "04",
@@ -250,37 +215,6 @@ export const stack: StackItem[] = [
   { name: "Razorpay", category: "Payments", icon: IconCreditCard, color: "#072654" },
 ];
 
-export interface Testimonial {
-  quote: string;
-  author: string;
-  role: string;
-  company: string;
-}
-
-export const testimonials: Testimonial[] = [
-  {
-    quote:
-      "voiceAct.in shipped our dashboard rebuild in twelve weeks — code we're still happy to read a year later. They feel like an in-house team, not a vendor.",
-    author: "Ingrid Solberg",
-    role: "VP Product",
-    company: "Nordveil",
-  },
-  {
-    quote:
-      "They designed and built our iOS and Android apps in one sprint. Senior engineers, senior designers, and a launch that actually happened on time.",
-    author: "Marco Reyes",
-    role: "Co-founder & CTO",
-    company: "Helia Finance",
-  },
-  {
-    quote:
-      "Rare studio: opinionated on architecture, humble on the details, obsessive about the user. Our marketplace went from Figma to Series A in six months.",
-    author: "Anaïs Laurent",
-    role: "Founder",
-    company: "Signal9 Market",
-  },
-];
-
 export const faqs = [
   {
     q: "How long does an app take to build?",
@@ -305,39 +239,28 @@ export const faqs = [
 ];
 
 export interface ShowcaseProject {
-  image: string;
+  image?: string;
   text: string;
 }
 
+// Generic categories of work — no fabricated client names, metrics, or logos.
 export const showcaseProjects: ShowcaseProject[] = [
   {
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-    text: "SaaS Analytics Dashboard",
+    text: "Web Applications",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-    text: "Fintech Mobile Wallet",
+    text: "Mobile Applications",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
-    text: "E-Commerce Platform",
+    text: "E-commerce Platforms",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80",
-    text: "AI Productivity Tool",
+    text: "Business Websites",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?auto=format&fit=crop&w=800&q=80",
-    text: "Healthcare Patient Portal",
+    text: "Custom Software",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=800&q=80",
-    text: "Real Estate Marketplace",
+    text: "UI/UX Design",
   },
 ];

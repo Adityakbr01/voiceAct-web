@@ -193,18 +193,15 @@ export const MobileMenu = memo(function MobileMenu({
               <hr className="border-t-2 border-foreground/80 dark:border-foreground/60 w-full" />
             </motion.div>
 
-            {/* Address & Contact Block */}
+            {/* Contact Block */}
             <motion.div variants={itemVariants} className="space-y-4">
               <div className="text-sm font-black uppercase tracking-wider text-foreground/90 leading-relaxed">
-                <p>{company.address.street},</p>
-                <p>
-                  {company.address.city}, {company.address.state},
-                </p>
-                <p>{company.address.pincode}</p>
+                <p>Remote engagements</p>
+                <p>India · Worldwide</p>
               </div>
               <div className="text-xs font-bold uppercase tracking-wider space-y-1 text-muted-foreground">
                 <a
-                  href={`tel:${company.contact.phone}`}
+                  href={`tel:${company.contact.phone.replace(/\s/g, "")}`}
                   className="block hover:text-primary transition-colors touch-manipulation"
                 >
                   {company.contact.phone}

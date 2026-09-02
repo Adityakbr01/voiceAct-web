@@ -156,16 +156,16 @@ export default async function WorkPage() {
           ) : (
             <div className="p-12 rounded-3xl border border-dashed border-border text-center space-y-4">
               <FolderGit2 className="size-10 text-muted-foreground mx-auto" />
-              <h3 className="text-xl font-bold">Featured Portfolio Case Studies</h3>
+              <h3 className="text-xl font-bold">Selected Work Coming Soon</h3>
               <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-                We've built over 120+ applications for startups and scaleups across web, mobile, and
-                cloud. Contact us for custom client references.
+                We're putting together a curated set of case studies from recent web, mobile, and
+                custom-software projects. Reach out and we'll share relevant examples.
               </p>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-xs font-semibold text-primary-foreground"
               >
-                Request Case Study Decks <ArrowRight className="size-3.5" />
+                Request Examples <ArrowRight className="size-3.5" />
               </Link>
             </div>
           )}

@@ -17,7 +17,7 @@ import { getBreadcrumbSchema } from "@/lib/seo/schema";
 const authorProfiles: Record<string, { url: string; sameAs: string[] }> = {
   "Aditya Kumar": {
     url: "https://www.linkedin.com/in/aditya-kbr-3b833731b/",
-    sameAs: ["https://www.linkedin.com/in/aditya-kbr-3b833731b/", company.socials.developer.href],
+    sameAs: ["https://www.linkedin.com/in/aditya-kbr-3b833731b/", company.socials.developerGithub.href],
   },
 };
 

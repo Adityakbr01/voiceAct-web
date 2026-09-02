@@ -127,7 +127,7 @@ export function PrivacyPolicyPage() {
         <h2 className="text-2xl font-semibold tracking-tight">Contact Information</h2>
         <p className="text-muted-foreground">
           If you have questions about this Privacy Policy, please contact us at{" "}
-          {company.contact.email} or write to us at {company.address.full}.
+          {company.contact.email}.
         </p>
       </section>
 

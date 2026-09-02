@@ -32,26 +32,26 @@ const assets = [
     badgeColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
     links: [
       { label: "Fork / Star on GitHub", href: company.socials.github.href },
-      { label: "Follow the author", href: company.socials.developer.href },
+      { label: "Follow the author", href: company.socials.developerGithub.href },
     ],
   },
   {
     icon: Calculator,
     title: "Software Cost Estimator",
     description:
-      "Get an instant, itemized estimate for a web app, mobile app, custom CRM, or SaaS MVP — no sales call, no spreadsheet math. Built so founders can budget before they even email us.",
+      "Get an instant, itemized estimate for a web app, mobile app, custom CRM, or SaaS MVP — no sales call, no spreadsheet math. Built so you can budget before you reach out.",
     badge: "Free Tool",
     badgeColor: "bg-purple-500/10 text-purple-400 border-purple-500/30",
     links: [{ label: "Try the estimator", href: "/calculator" }],
   },
   {
     icon: Gauge,
-    title: "Free Website & Technical Audit",
+    title: "Manual Website Review",
     description:
-      "A real (not vaporware) performance, SEO, accessibility, and security audit delivered within 24 hours — the same checklist we use before rebuilding a client site.",
+      "Request a manual review of your site on a real browser. We share a short, honest writeup by email covering performance, SEO, accessibility, and structure.",
     badge: "Free",
     badgeColor: "bg-amber-500/10 text-amber-400 border-amber-500/30",
-    links: [{ label: "Request a free audit", href: "/audit" }],
+    links: [{ label: "Request a review", href: "/audit" }],
   },
   {
     icon: Star,
@@ -177,7 +177,8 @@ export default function OpenSourcePage() {
 
         <section className="max-w-5xl mx-auto px-6 md:px-10 py-16 text-center">
           <p className="mx-auto max-w-2xl text-sm text-muted-foreground leading-relaxed">
-            Building something serious? We turn MVPs into production software in 6–8 weeks.{" "}
+            Have a project in mind? Get in touch and we'll talk through scope, timeline, and
+            approach.{" "}
             <Link
               href="/contact"
               className="font-semibold text-primary hover:text-primary/80 underline underline-offset-4"

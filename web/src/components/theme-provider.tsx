@@ -71,7 +71,8 @@ function getInitialTheme(): Theme {
   if (typeof window === "undefined") return "dark";
   const stored = window.localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
   if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  // Default to dark — explicit brand choice, independent of OS preference.
+  return "dark";
 }
 
 function loadPalette(key: string): CustomPalette | null {

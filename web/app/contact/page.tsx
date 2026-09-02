@@ -33,15 +33,15 @@ export default function Page() {
     { name: "Contact", url: `${baseUrl}/contact` },
   ]);
 
-  // ContactPage schema — helps Google understand this is a contact/lead page
+  // ContactPage schema — helps Google understand this is a contact/lead page.
+  // No verified postal address exists — only Organization contact details are surfaced.
   const contactPageSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     "@id": `${baseUrl}/contact/#webpage`,
     url: `${baseUrl}/contact`,
-    name: "Contact VoiceAct Solutions — Free Software Audit",
-    description:
-      "Claim a free 30-minute product audit and scoped development roadmap. No sales pressure — you keep the roadmap.",
+    name: `Contact ${company.name}`,
+    description: `Get in touch with ${company.name} to discuss web development, mobile apps, UI/UX design, or custom digital solutions.`,
     isPartOf: {
       "@type": "WebSite",
       "@id": `${baseUrl}/#website`,
@@ -52,14 +52,6 @@ export default function Page() {
       name: company.name,
       telephone: company.contact.phone,
       email: company.contact.email,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: company.address.street,
-        addressLocality: company.address.city,
-        addressRegion: company.address.state,
-        postalCode: company.address.pincode,
-        addressCountry: "IN",
-      },
     },
   };
 

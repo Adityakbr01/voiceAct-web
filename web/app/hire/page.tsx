@@ -7,13 +7,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Hire Senior Developers & AI Engineers",
+  title: "Hire Developers & AI Engineers",
   description:
-    "Hire senior React, Next.js, React Native developers & AI engineers. Pre-vetted talent, onboarded within 48 hours.",
+    "Hire React, Next.js, React Native developers and AI engineers for your project. Flexible engagement, clear deliverables.",
   openGraph: {
-    title: "Hire Senior Developers & AI Engineers",
+    title: "Hire Developers & AI Engineers",
     description:
-      "Pre-vetted React, Next.js, React Native & AI engineers, onboarded within 48 hours.",
+      "Hire React, Next.js, React Native developers and AI engineers for your project.",
     url: `${company.website}/hire`,
   },
   alternates: {
@@ -87,12 +87,12 @@ export default function HireMainPage() {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-            Hire Top 1% Senior Software Engineers & AI Specialists
+            Hire Developers for Your Project
           </h1>
 
           <p className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-3xl">
-            Scale your product development without the recruitment overhead. Onboard vetted React,
-            Next.js, Mobile, and AI developers into your workflow within 48 hours.
+            Bring in React, Next.js, mobile, and AI development help without the recruitment
+            overhead. Flexible engagement, clear deliverables.
           </p>
         </section>
 
@@ -136,23 +136,23 @@ export default function HireMainPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 rounded-2xl border border-border/60 bg-card/30 space-y-2">
               <ShieldCheck className="size-6 text-emerald-400" />
-              <h3 className="font-bold text-base">48-Hour Onboarding</h3>
+              <h3 className="font-bold text-base">Clear Onboarding</h3>
               <p className="text-xs text-muted-foreground">
-                Immediate integration into your Slack, Jira, and GitHub repositories.
+                Integration into your existing tools and repositories, scoped to your timeline.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-border/60 bg-card/30 space-y-2">
               <Code2 className="size-6 text-primary" />
-              <h3 className="font-bold text-base">100% IP Ownership</h3>
+              <h3 className="font-bold text-base">IP Ownership</h3>
               <p className="text-xs text-muted-foreground">
-                All code, commits, and assets are owned entirely by your company.
+                All code, commits, and assets remain with your company.
               </p>
             </div>
             <div className="p-6 rounded-2xl border border-border/60 bg-card/30 space-y-2">
               <Cpu className="size-6 text-blue-400" />
-              <h3 className="font-bold text-base">Zero Lock-in</h3>
+              <h3 className="font-bold text-base">Flexible Engagement</h3>
               <p className="text-xs text-muted-foreground">
-                Flexible monthly billing with trial periods and scale-as-you-grow terms.
+                Monthly terms with the option to scale up, down, or pause as your needs change.
               </p>
             </div>
           </div>

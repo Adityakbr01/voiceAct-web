@@ -58,10 +58,10 @@ For complex hardware integrations, custom Bluetooth LE protocols, or intensive r
     readTime: "7 min read",
     publishedAt: "July 26, 2026",
     author: {
-      name: "Sarah Chen",
-      role: "Senior Mobile Engineer",
+      name: "Aditya Kumar",
+      role: "Lead Systems Architect",
       avatar:
-        "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
     },
     coverImage:
       "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80",
@@ -86,10 +86,10 @@ Artificial intelligence is no longer just a gimmick — it is becoming a core fe
     readTime: "6 min read",
     publishedAt: "July 18, 2026",
     author: {
-      name: "Marcus Vance",
-      role: "AI & Cloud Specialist",
+      name: "Aditya Kumar",
+      role: "Lead Systems Architect",
       avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
     },
     coverImage:
       "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
@@ -114,10 +114,10 @@ A design system is not just a Figma UI kit — it is a living contract between p
     readTime: "4 min read",
     publishedAt: "July 10, 2026",
     author: {
-      name: "Elena Rostova",
-      role: "Head of Product Design",
+      name: "Aditya Kumar",
+      role: "Lead Systems Architect",
       avatar:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
     },
     coverImage:
       "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1200&q=80",

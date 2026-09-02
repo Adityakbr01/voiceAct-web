@@ -3,13 +3,12 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "./globals.css";
-import { APP, SOCIALS } from "@/config/constants";
+import { APP } from "@/config/constants";
 import { Providers } from "./providers";
 
 import { JsonLd } from "@/components/seo/json-ld";
 import {
   getOrganizationSchema,
-  getLocalBusinessSchema,
   getWebSiteSchema,
   getWebPageSchema,
 } from "@/lib/seo/schema";
@@ -74,13 +73,13 @@ export const metadata: Metadata = {
   },
   description: APP.seoDescription,
   keywords: [
-    "software development agency India",
-    "Next.js development company",
+    "web development company India",
+    "Next.js development",
     "React Native mobile app development",
-    "custom CRM development India",
-    "SaaS development Bangalore",
-    "MVP development company",
-    "web application development India",
+    "custom software development",
+    "UI/UX design services",
+    "web application development",
+    "mobile app development India",
   ],
   authors: [{ name: APP.name, url: APP.url }],
   creator: APP.name,
@@ -105,14 +104,12 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: `${APP.name} — Custom Next.js, React Native & CRM development studio in Bengaluru, India`,
+        alt: `${APP.name} — Web development, mobile apps, UI/UX design, and custom digital solutions`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    site: SOCIALS.twitter.handle,
-    creator: SOCIALS.twitter.handle,
     title: APP.seoTitle,
     description: APP.seoDescription,
     images: ["/og-image.png"],
@@ -137,7 +134,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     (process.env.NODE_ENV === "production" ? "G-D7ZC6EPVER" : undefined);
 
   const orgSchema = getOrganizationSchema();
-  const localBizSchema = getLocalBusinessSchema();
   const webSiteSchema = getWebSiteSchema();
   const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || APP.url || "https://voiceact.tech").replace(
     /\/$/,
@@ -184,12 +180,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning>
         <script
-          // ponytail: flash-free dark mode
+          // ponytail: flash-free theme — dark is the default
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var k='voiceact-theme';var t=localStorage.getItem(k);if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}var r=document.documentElement;if(t==='dark'){r.classList.add('dark');}r.style.colorScheme=t;}catch(e){}})();`,
+            __html: `(function(){try{var k='voiceact-theme';var t=localStorage.getItem(k);if(t!=='light'&&t!=='dark'){t='dark';}var r=document.documentElement;if(t==='dark'){r.classList.add('dark');}else{r.classList.remove('dark');}r.style.colorScheme=t;}catch(e){}})();`,
           }}
         />
-        <JsonLd data={[orgSchema, localBizSchema, webSiteSchema, webPageSchema]} />
+        <JsonLd data={[orgSchema, webSiteSchema, webPageSchema]} />
         <Providers>
           <a
             href="#main-content"

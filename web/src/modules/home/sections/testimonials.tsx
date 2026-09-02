@@ -1,69 +1,70 @@
 "use client";
 
-import { Quote } from "lucide-react";
+import { Globe, Smartphone, ShoppingCart, Layout, Code2, Palette } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
-import { testimonials } from "@/modules/services-data";
 
-// Duplicate for seamless loop
-const ITEMS = [...testimonials, ...testimonials, ...testimonials];
+const buildCategories = [
+  {
+    title: "Web Applications",
+    description: "Production Next.js, React, and TypeScript apps with strong SEO and performance.",
+    icon: Globe,
+  },
+  {
+    title: "Mobile Applications",
+    description: "Cross-platform iOS and Android apps from a single React Native codebase.",
+    icon: Smartphone,
+  },
+  {
+    title: "E-commerce Platforms",
+    description: "Storefronts and checkout flows for physical and digital products.",
+    icon: ShoppingCart,
+  },
+  {
+    title: "Business Websites",
+    description: "Marketing sites and landing pages that load fast and convert.",
+    icon: Layout,
+  },
+  {
+    title: "Custom Software",
+    description: "Internal tools, dashboards, and CRMs tailored to the way you actually work.",
+    icon: Code2,
+  },
+  {
+    title: "UI/UX Design",
+    description: "Research, flows, and design systems that translate into production code.",
+    icon: Palette,
+  },
+];
 
 export function Testimonials() {
   return (
-    <Section id="testimonials" className="overflow-hidden">
+    <Section id="what-we-build" className="overflow-hidden">
       <SectionHeader
-        eyebrow="Testimonials"
+        eyebrow="What We Build"
         title={
           <>
-            The teams we ship with,
+            Web and mobile products,
             <span className="font-display italic tracking-tight text-primary">
               {" "}
-              in their own words.
+              designed and built end-to-end.
             </span>
           </>
         }
       />
 
-      {/* Marquee track */}
-      <div className="relative mt-16">
-        {/* Left fade overlay */}
-        <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 md:w-48"
-          style={{
-            background:
-              "linear-gradient(to right, var(--background) 0%, transparent 100%)",
-          }}
-        />
-        {/* Right fade overlay */}
-        <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 md:w-48"
-          style={{
-            background:
-              "linear-gradient(to left, var(--background) 0%, transparent 100%)",
-          }}
-        />
-
-        {/* Scrolling strip */}
-        <div className="flex w-full overflow-hidden">
-          <div className="flex animate-marquee gap-4 py-2">
-            {ITEMS.map((t, i) => (
-              <figure
-                key={`${t.author}-${i}`}
-                className="relative flex w-[min(85vw,360px)] shrink-0 flex-col overflow-hidden rounded-3xl border border-border/60 bg-card p-6 shadow-[var(--shadow-card)]"
-              >
-                <Quote className="size-6 text-primary/60" />
-                <blockquote className="mt-4 flex-1 text-pretty text-sm leading-relaxed text-foreground/85 md:text-base">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <figcaption className="mt-6 border-t border-border/60 pt-4 text-sm">
-                  <div className="font-semibold text-foreground">{t.author}</div>
-                  <div className="text-muted-foreground">
-                    {t.role} · {t.company}
-                  </div>
-                </figcaption>
-              </figure>
-            ))}
+      <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {buildCategories.map((item) => (
+          <div
+            key={item.title}
+            className="rounded-2xl border border-border/60 bg-card p-6 transition-colors hover:border-primary/40"
+          >
+            <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <item.icon className="size-5" />
+            </div>
+            <h3 className="mt-4 font-display text-lg font-semibold">{item.title}</h3>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{item.description}</p>
           </div>
-        </div>
+        ))}
       </div>
     </Section>
   );

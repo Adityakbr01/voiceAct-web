@@ -116,7 +116,7 @@ export function TermsPage() {
         <p className="text-muted-foreground">
           These Terms and Conditions shall be governed by and construed in accordance with the laws
           of India. Any disputes arising under these terms shall be subject to the exclusive
-          jurisdiction of the courts in Bengaluru, Karnataka, India.
+          jurisdiction of the courts in India.
         </p>
       </section>
 
@@ -126,7 +126,7 @@ export function TermsPage() {
           Any disputes arising out of or relating to these terms shall first be attempted to be
           resolved through good-faith negotiation. If the dispute cannot be resolved through
           negotiation within 30 days, either party may submit the dispute to binding arbitration
-          under the Arbitration and Conciliation Act, 1996, in Bengaluru, India.
+          under the Arbitration and Conciliation Act, 1996.
         </p>
       </section>
 
@@ -134,7 +134,7 @@ export function TermsPage() {
         <h2 className="text-2xl font-semibold tracking-tight">Contact Information</h2>
         <p className="text-muted-foreground">
           For questions regarding these Terms & Conditions, please contact {company.name} at{" "}
-          {company.contact.email} or write to {company.address.full}.
+          {company.contact.email}.
         </p>
       </section>
     </PolicyLayout>

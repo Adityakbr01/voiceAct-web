@@ -48,11 +48,14 @@ export function PolicyLayout({ title, lastUpdated, children }: PolicyLayoutProps
                 {company.contact.email}
               </a>{" "}
               or call{" "}
-              <a href={`tel:${company.contact.phone}`} className="text-primary hover:underline">
+              <a
+                href={`tel:${company.contact.phone.replace(/\s/g, "")}`}
+                className="text-primary hover:underline"
+              >
                 {company.contact.phone}
               </a>
             </p>
-            <p className="mt-1">{company.address.full}</p>
+            <p className="mt-1">{company.website.replace(/^https?:\/\//, "")}</p>
           </div>
         </motion.div>
       </div>

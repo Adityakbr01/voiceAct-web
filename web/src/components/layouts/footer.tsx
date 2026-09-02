@@ -165,11 +165,7 @@ const staticFooterLinks: {
     { label: "Privacy Policy", href: company.legal.privacyPolicyUrl },
     { label: "Terms & Conditions", href: company.legal.termsUrl },
     { label: "Cookie Policy", href: company.legal.cookiePolicyUrl },
-    {
-      label: "Contact",
-      href: "/contact",
-      badge: { text: "24/7", color: "bg-rose-500/15 text-rose-400 border-rose-500/30" },
-    },
+    { label: "Contact", href: "/contact" },
   ],
 };
 
@@ -272,9 +268,10 @@ export function Footer() {
           {/* Company Info */}
           <div className="col-span-2 md:col-span-4">
             <div className="font-display text-xl font-semibold text-white">{company.name}</div>
-            <p className="mt-3 max-w-sm text-sm text-white/70">{company.tagline}</p>
+            <p className="mt-3 max-w-sm text-sm text-white/70">
+              Web and mobile solutions designed to help ideas move from concept to production.
+            </p>
             <div className="mt-6 space-y-2 text-sm text-white/60">
-              <p>{company.address.full}</p>
               <p>
                 <a
                   href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(company.contact.email)}`}
@@ -287,13 +284,13 @@ export function Footer() {
               </p>
               <p>
                 <a
-                  href={`tel:${company.contact.phone}`}
+                  href={`tel:${company.contact.phone.replace(/\s/g, "")}`}
                   className="hover:text-white transition-colors"
                 >
                   {company.contact.phone}
                 </a>
               </p>
-              <p className="text-xs text-white/50">{company.hours.weekdays}</p>
+              <p className="text-xs text-white/50">Remote engagements · India</p>
             </div>
           </div>
 

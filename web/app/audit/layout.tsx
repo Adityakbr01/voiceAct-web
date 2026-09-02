@@ -44,7 +44,7 @@ export default function AuditLayout({ children }: { children: React.ReactNode })
     offers: {
       "@type": "Offer",
       price: "0",
-      priceCurrency: "USD",
+      priceCurrency: "INR",
     },
     provider: {
       "@type": "Organization",

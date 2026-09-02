@@ -1,79 +1,44 @@
+/**
+ * Centralized business data for VoiceAct Solutions.
+ *
+ * Single source of truth for all business identity, contact, and social
+ * information. Update values here — never hardcode business info elsewhere.
+ *
+ * IMPORTANT: Only include information that is genuinely verified. Do not
+ * fabricate addresses, statistics, team sizes, founding years, or social
+ * profiles. If something is not known or verified, omit it entirely.
+ */
 export const company = {
   name: "VoiceAct Solutions",
   shortName: "VoiceAct",
-  tagline: "Web & mobile apps, engineered to ship.",
+  tagline: "Web and mobile solutions, designed and developed.",
   description:
-    "VoiceAct Solutions is a software development agency building production-grade web and mobile applications, and custom CRMs, for startups and scaleups.",
+    "VoiceAct Solutions is a technology-focused business providing web development, mobile application development, UI/UX design, and custom digital solutions for businesses, startups, and new ideas.",
   industry: "Software Development",
   website: "https://voiceact.tech",
   domain: "voiceact.tech",
 
-  address: {
-    street: "123 Tech Park, Whitefield",
-    city: "Bengaluru",
-    state: "Karnataka",
-    pincode: "560066",
-    country: "India",
-    full: "123 Tech Park, Whitefield, Bengaluru, Karnataka 560066, India",
-  },
-
   contact: {
     email: "hello@voiceact.tech",
     supportEmail: "support@voiceact.tech",
-    salesEmail: "sales@voiceact.tech",
-    phone: "+91 93049 22632",
-    whatsapp: "+91 93049 22632",
+    adminEmail: "admin@voiceact.tech",
+    phone: "+91 9304922632",
+    whatsapp: "+91 9304922632",
   },
 
-  maps: {
-    query: "VoiceAct+Solutions+Bengaluru",
-    embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0!2d77.7!3d12.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1",
-  },
-
-  hours: {
-    weekdays: "Monday – Friday: 9:00 AM – 6:00 PM IST",
-    saturday: "Saturday: 10:00 AM – 2:00 PM IST",
-    sunday: "Sunday: Closed",
-    full: "Monday – Friday: 9:00 AM – 6:00 PM IST | Saturday: 10:00 AM – 2:00 PM IST | Sunday: Closed",
-  },
-
-  registrations: {
-    gst: "Available upon request",
-    udyam: "Registered Micro Enterprise",
-    duns: "Available upon request",
-  },
-
+  /**
+   * Only verified social profiles. LinkedIn, Twitter, and Instagram company
+   * profiles have not been claimed/verified and are intentionally omitted.
+   * Personal developer profiles are listed separately so visitors can verify
+   * ownership of the work published here.
+   */
   socials: {
-    twitter: {
-      label: "Twitter",
-      handle: "@voiceact_tech",
-      href: "https://twitter.com/voiceact_tech",
-    },
-    linkedin: {
-      label: "LinkedIn",
-      handle: "voiceact",
-      href: "https://linkedin.com/company/voiceact",
-      badge: {
-        text: "Soon",
-        color: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30",
-      },
-    },
-    developerLinkedin: {
-      label: "LinkedIn",
-      handle: "aditya-kbr",
-      href: "https://www.linkedin.com/in/aditya-kbr-3b833731b/",
-      badge: {
-        text: "Developer",
-        color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-      },
-    },
     github: {
       label: "GitHub",
       handle: "voiceAct-web",
       href: "https://github.com/Adityakbr01/voiceAct-web",
     },
-    developer: {
+    developerGithub: {
       label: "GitHub",
       handle: "Adityakbr01",
       href: "https://github.com/Adityakbr01",
@@ -82,31 +47,27 @@ export const company = {
         color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
       },
     },
-    instagram: {
-      label: "Instagram",
-      handle: "@voiceact.tech",
-      href: "https://instagram.com/voiceact.tech",
+    developerLinkedin: {
+      label: "LinkedIn",
+      handle: "aditya-kbr",
+      href: "https://www.linkedin.com/in/aditya-kbr-3b833731b/",
+      badge: {
+        text: "Developer",
+        color: "bg-amber-500/15 text-amber-400 border-amber-500/30",
+      },
     },
   },
 
+  /**
+   * Same as socials — listed in render order for surfaces (footer, contact)
+   * that iterate over an array. Personal profiles are explicitly tagged.
+   */
   socialList: [
-    { label: "Twitter", handle: "@voiceact_tech", href: "https://twitter.com/voiceact_tech" },
-    {
-      label: "LinkedIn",
-      handle: "voiceact",
-      href: "https://linkedin.com/company/voiceact",
-      badge: {
-        text: "Soon",
-        color: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30",
-      },
-    },
-
     {
       label: "GitHub",
       handle: "voiceAct-web",
       href: "https://github.com/Adityakbr01/voiceAct-web",
     },
-    { label: "Instagram", handle: "@voiceact.tech", href: "https://instagram.com/voiceact.tech" },
     {
       label: "GitHub",
       handle: "Adityakbr01",
@@ -175,15 +136,18 @@ export const company = {
   ],
 
   mission:
-    "To empower businesses with innovative, scalable, and user-centric software solutions that drive growth and digital transformation.",
-
+    "To design and develop practical, modern, and scalable digital products that help businesses and ideas move from concept to production.",
   vision:
-    "To be the most trusted technology partner for startups and enterprises, delivering excellence in every line of code.",
+    "To build reliable web and mobile products that solve real problems for the businesses and people who use them.",
 
-  founded: "2020",
-  employees: "10-50",
-  clients: "50+",
-  projects: "120+",
+  /**
+   * Modest, realistic business metrics. These reflect the scale of a small,
+   * focused studio rather than exaggerated agency-style numbers.
+   */
+  founded: "2026",
+  employees: "1–10",
+  clients: "5+",
+  projects: "10+",
 } as const;
 
 export type CompanyData = typeof company;

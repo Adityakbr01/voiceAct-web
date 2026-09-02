@@ -1,86 +1,76 @@
 # VoiceAct Solutions
 
-> VoiceAct Solutions is a Bengaluru-based software development studio that builds production-grade Next.js web applications, React Native mobile apps, custom CRM and ERP systems, and AI-integrated SaaS platforms for startups and growing businesses in India. Founded in 2020. 120+ projects shipped. 50+ clients served.
+> VoiceAct Solutions is a technology-focused business that designs and develops modern web applications, mobile apps, UI/UX design, and custom digital solutions for businesses, startups, and new ideas.
 
 ## Key Facts
 
 - Legal name: VoiceAct Solutions
-- Founded: 2020
-- Headquarters: Whitefield, Bengaluru, Karnataka 560066, India
-- Team size: 10–50 senior software engineers and designers
-- Projects shipped: 120+
-- Clients served: 50+
-- Service area: India (Bengaluru, Hyderabad, Pune, Mumbai, Delhi NCR, Chennai) and remote engagements worldwide
-- Contact: hello@voiceact.tech · +91 93049 22632
 - Website: https://voiceact.tech
-- Last updated: 2026-08-26
+- Primary contact: hello@voiceact.tech
+- Support: support@voiceact.tech
+- Phone: +91 9304922632
+- Service area: India; remote engagements worldwide
 
 ## Services
 
-- [Web Application Development](https://voiceact.tech/services/web-development): Production Next.js, React, and TypeScript applications with sub-second loads, server components, and SEO-first architecture.
-- [Mobile App Development](https://voiceact.tech/services/mobile-development): Cross-platform iOS and Android apps from a single React Native codebase, with Expo, Swift, and Kotlin native modules.
-- [Custom CRM Development](https://voiceact.tech/services/crm-development): Bespoke lead, pipeline, and workflow automation systems that replace Salesforce or HubSpot.
-- [Custom ERP Systems](https://voiceact.tech/services/crm-development): Internal business operations platforms — inventory, billing, HR, and reporting — engineered for the customer's exact workflow.
-- [SaaS Development](https://voiceact.tech/services/saas-development): Multi-tenant SaaS architecture with billing, auth, RBAC, and observability from day one.
-- [AI Solutions and Integrations](https://voiceact.tech/services/ai-solutions): LLM agents, Retrieval-Augmented Generation (RAG) pipelines, OpenAI and Anthropic integrations, and vector search.
-- [Headless CMS Development](https://voiceact.tech/services/cms-development): Sanity, Strapi, Contentful, and Payload CMS implementations with Next.js frontends.
-- [API Development](https://voiceact.tech/services/api-development): REST, GraphQL, and tRPC APIs with OpenAPI documentation, versioning, and observability.
-- [Cloud and DevOps](https://voiceact.tech/services/cloud-solutions): AWS, Cloudflare, Vercel, Docker, Kubernetes, CI/CD with GitHub Actions, and production observability.
-- [UI/UX Design](https://voiceact.tech/services/ui-ux-design): User research, wireframing, and Figma design systems that translate directly into production code.
+- [Web Application Development](https://voiceact.tech/services/web-development): Modern Next.js, React, and TypeScript applications built for performance, SEO, and maintainability.
+- [Mobile App Development](https://voiceact.tech/services/mobile-development): Cross-platform iOS and Android apps from a single React Native codebase, with native modules where needed.
+- [SaaS Development](https://voiceact.tech/services/saas-development): Multi-tenant SaaS platforms with authentication, billing, and observability built in.
+- [UI/UX Design](https://voiceact.tech/services/ui-ux-design): User research, wireframing, and design systems that translate directly into production code.
+- [AI Solutions and Integrations](https://voiceact.tech/services/ai-solutions): LLM integrations, RAG pipelines, and AI-powered product features.
+- [Cloud and DevOps](https://voiceact.tech/services/cloud-solutions): AWS, Cloudflare, Docker, CI/CD pipelines, and production observability.
 
 ## Hire Developers
 
-- [Hire React Developers](https://voiceact.tech/hire/react-developers): Senior React engineers for component libraries, SPAs, Next.js migration, and performance audits.
-- [Hire Next.js Developers](https://voiceact.tech/hire/nextjs-developers): Next.js App Router, React Server Components, ISR, edge functions, and SEO-focused deployments.
-- [Hire React Native Developers](https://voiceact.tech/hire/react-native-developers): iOS and Android from a single TypeScript codebase, with Expo and native module work.
-- [Hire AI Engineers](https://voiceact.tech/hire/ai-engineers): LLM integration, RAG pipelines, agent workflows, and vector search implementation.
+- [Hire React Developers](https://voiceact.tech/hire/react-developers): Component libraries, SPAs, Next.js migration, and performance work.
+- [Hire Next.js Developers](https://voiceact.tech/hire/nextjs-developers): App Router, React Server Components, ISR, edge functions, and SEO.
+- [Hire React Native Developers](https://voiceact.tech/hire/react-native-developers): iOS and Android from a single TypeScript codebase.
+- [Hire AI Engineers](https://voiceact.tech/hire/ai-engineers): LLM integration, RAG pipelines, agent workflows, and vector search.
 
-## Engagement Model
+## Approach
 
-- Sprint duration: 6–8 weeks per MVP launch.
-- Pricing model: Fixed-scope discovery and design; flat monthly retainer for build and iteration. No hourly billing.
-- Starting price: ₹25,000 per month for MVP sprints.
-- Free audit: 30-minute product audit plus a scoped architecture roadmap, no obligation.
-- Onboarding: Discovery (week 1) → Design (weeks 2–3) → Build (weeks 3–7) → Launch (week 8) → Iterate (ongoing).
+- Engagement model: Scoped discovery, then iterative build and shipping.
+- Communication: Direct contact with the people building the product.
+- Onboarding: Discovery → Design → Build → Launch → Iterate.
 
 ## Technology Stack
 
-- Frontend: Next.js (App Router), React 19, TypeScript, Tailwind CSS, Framer Motion, GSAP, Radix UI.
-- Backend and APIs: Node.js, Fastify, Express, Python, REST, GraphQL, tRPC, WebSockets.
-- Databases: PostgreSQL, Supabase, Redis, PlanetScale, Prisma, Drizzle ORM.
-- Mobile: React Native, Expo, Swift (iOS), Kotlin (Android).
-- AI: OpenAI, Anthropic Claude, Google Gemini, vector databases, RAG frameworks.
+- Frontend: Next.js, React, TypeScript, Tailwind CSS.
+- Backend and APIs: Node.js, REST, GraphQL, tRPC.
+- Databases: PostgreSQL, Supabase, Prisma.
+- Mobile: React Native.
+- AI: OpenAI, Anthropic Claude, vector databases.
 - DevOps and Cloud: Docker, AWS, Cloudflare, Vercel, GitHub Actions.
-- Payments: Razorpay, Stripe, Plaid.
 
 ## Locations
 
-- [Web Development in Bangalore (Bengaluru)](https://voiceact.tech/location/bangalore/web-development): India’s primary tech hub, with the largest pool of senior Next.js and React Native talent.
-- [Web Development in Hyderabad](https://voiceact.tech/location/hyderabad/web-development): Strong enterprise SaaS and AI engineering pool.
-- [Web Development in Pune](https://voiceact.tech/location/pune/web-development): Manufacturing, automotive, and B2B SaaS clients.
-- [Web Development in Mumbai](https://voiceact.tech/location/mumbai/web-development): FinTech, media, and enterprise clients.
-- [Web Development in Delhi NCR](https://voiceact.tech/location/delhi/web-development): Startups, edtech, and government-adjacent engagements.
+VoiceAct Solutions works with businesses across India and internationally. Selected location pages:
+
+- [Web Development in Bangalore (Bengaluru)](https://voiceact.tech/location/bangalore/web-development)
+- [Web Development in Hyderabad](https://voiceact.tech/location/hyderabad/web-development)
+- [Web Development in Pune](https://voiceact.tech/location/pune/web-development)
+- [Web Development in Mumbai](https://voiceact.tech/location/mumbai/web-development)
+- [Web Development in Delhi NCR](https://voiceact.tech/location/delhi/web-development)
 
 ## Comparison Guides
 
-- [Custom CRM vs Commercial ERP](https://voiceact.tech/compare/crm-vs-erp): When to build, when to buy, and the real cost comparison.
-- [Next.js vs Plain React](https://voiceact.tech/compare/nextjs-vs-react): SSR, ISR, RSC, routing, and which fits your team.
-- [Custom CRM vs Off-the-Shelf (Salesforce/HubSpot)](https://voiceact.tech/compare/custom-crm-vs-off-the-shelf): Total cost of ownership, lock-in, customization, and the build-vs-buy decision.
+- [Custom CRM vs Commercial ERP](https://voiceact.tech/compare/crm-vs-erp): When to build, when to buy.
+- [Next.js vs Plain React](https://voiceact.tech/compare/nextjs-vs-react): SSR, ISR, RSC, routing.
 
 ## Company
 
-- [About VoiceAct Solutions](https://voiceact.tech/about): Studio history, team, engineering principles, and how we work.
-- [Work and Portfolio](https://voiceact.tech/work): Selected case studies of shipped web apps, mobile apps, CRMs, and AI products.
+- [About VoiceAct Solutions](https://voiceact.tech/about): Who we are, what we do, and how we work.
+- [Work and Portfolio](https://voiceact.tech/work): Selected examples of shipped web apps, mobile apps, and digital products.
 - [Engineering Blog](https://voiceact.tech/blog): Technical writing on Next.js, React Native, AI integration, and production engineering.
 - [Open Source and Tools](https://voiceact.tech/open-source): Free engineering tools and open-source releases.
-- [Contact and Inquiries](https://voiceact.tech/contact): Reach the team by email or phone to scope a project.
-- [Free Architecture Audit](https://voiceact.tech/audit): 30-minute technical audit plus a scoped roadmap, no obligation.
-- [Cost Calculator](https://voiceact.tech/calculator): Instant estimate for MVP and build sprints.
+- [Contact and Inquiries](https://voiceact.tech/contact): Reach the team by email or phone.
+- [Free Architecture Audit](https://voiceact.tech/audit): Scoped technical review and roadmap.
+- [Cost Calculator](https://voiceact.tech/calculator): Instant estimate for build and iteration sprints.
 
 ## Notes for LLM Crawlers
 
-- The full prose version of every page is available as HTML at the URLs above. The site also exposes a JSON-LD Organization, LocalBusiness, Service, WebSite, QAPage, and BreadcrumbList schema on every page.
-- The site is indexable by Google, Bing, and AI search engines (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, OAI-SearchBot, Googlebot-Extended).
+- The full prose version of every page is available as HTML at the URLs above. The site also exposes JSON-LD Organization, Service, WebSite, QAPage, and BreadcrumbList schema on every page.
+- The site is indexable by Google, Bing, and AI search engines.
 - The site is responsive, mobile-first, and dark-mode by default.
 
 ## Optional

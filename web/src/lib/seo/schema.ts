@@ -16,8 +16,8 @@ export interface ServiceSchemaInput {
   url: string;
   category?: string;
   image?: string;
-  /** City or region this service is being offered */
-  cityName?: string;
+  /** Optional regional hint for areaServed. */
+  regionName?: string;
 }
 
 export interface WebPageSchemaInput {
@@ -30,8 +30,6 @@ export interface WebPageSchemaInput {
   dateModified?: string;
   breadcrumbs?: BreadcrumbItem[];
 }
-
-const SERVICES_AREA = ["Bengaluru", "Hyderabad", "Pune", "Mumbai", "Delhi NCR", "Chennai", "India"];
 
 export const getOrganizationSchema = () => {
   const baseUrl = company.website.replace(/\/$/, "");
@@ -56,21 +54,15 @@ export const getOrganizationSchema = () => {
     foundingDate: company.founded,
     numberOfEmployees: {
       "@type": "QuantitativeValue",
-      minValue: 10,
-      maxValue: 50,
+      // Modest, realistic team size for a focused studio.
+      minValue: 1,
+      maxValue: 10,
     },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: company.address.street,
-      addressLocality: company.address.city,
-      addressRegion: company.address.state,
-      postalCode: company.address.pincode,
-      addressCountry: "IN",
+    // No verified physical address — omit PostalAddress entirely.
+    areaServed: {
+      "@type": "Country",
+      name: "India",
     },
-    areaServed: SERVICES_AREA.map((city) => ({
-      "@type": "City",
-      name: city,
-    })),
     knowsAbout: [
       "Web Application Development",
       "Mobile App Development",
@@ -94,85 +86,25 @@ export const getOrganizationSchema = () => {
         },
       })),
     },
-    sameAs: [
-      company.socials.linkedin.href,
-      company.socials.twitter.href,
-      company.socials.instagram?.href,
-      company.socials.github.href,
-    ].filter(Boolean),
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "09:00",
-        closes: "18:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Saturday",
-        opens: "10:00",
-        closes: "14:00",
-      },
-    ],
+    // Only include verified sameAs profiles.
+    sameAs: [company.socials.github.href, company.socials.developerGithub.href, company.socials.developerLinkedin.href].filter(
+      Boolean,
+    ),
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: company.contact.phone,
-        contactType: "sales",
-        email: company.contact.salesEmail,
+        email: company.contact.email,
+        contactType: "customer support",
         areaServed: "IN",
         availableLanguage: ["English", "Hindi"],
       },
       {
         "@type": "ContactPoint",
         email: company.contact.supportEmail,
-        contactType: "customer support",
+        contactType: "technical support",
         areaServed: "IN",
       },
     ],
-  };
-};
-
-export const getLocalBusinessSchema = (cityName?: string) => {
-  const baseUrl = company.website.replace(/\/$/, "");
-  const city = cityName || company.address.city;
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "@id": `${baseUrl}/#localbusiness-${city.toLowerCase().replace(/\s+/g, "-")}`,
-    name: `${company.name} — ${city}`,
-    url: baseUrl,
-    telephone: company.contact.phone,
-    email: company.contact.email,
-    priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: company.address.street,
-      addressLocality: city,
-      addressRegion: company.address.state,
-      postalCode: company.address.pincode,
-      addressCountry: "IN",
-    },
-    areaServed: SERVICES_AREA.map((c) => ({ "@type": "City", name: c })),
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "09:00",
-        closes: "18:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Saturday",
-        opens: "10:00",
-        closes: "14:00",
-      },
-    ],
-    servesCuisine: undefined, // not a restaurant
-    parentOrganization: {
-      "@id": `${baseUrl}/#organization`,
-    },
   };
 };
 
@@ -192,7 +124,10 @@ export const getServiceSchema = (service: ServiceSchemaInput) => {
     },
     serviceType: service.category || service.name,
     url: service.url,
-    areaServed: SERVICES_AREA.map((city) => ({ "@type": "City", name: city })),
+    areaServed: {
+      "@type": "Country",
+      name: "India",
+    },
     ...(service.image && { image: service.image }),
     offers: {
       "@type": "Offer",
