@@ -93,7 +93,7 @@ export type ServiceItem = (typeof services)[number]["items"][number] & {
 
 export const NAV_ITEMS = [
   { label: "Home", href: "/#hero" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
   { label: "Services", href: "/#services", hasDropdown: true },
   { label: "Work", href: "/#work" },
   { label: "Contact", href: "/contact" },
