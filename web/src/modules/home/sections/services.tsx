@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Globe } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
 import type { Service } from "@/modules/services-data";
 import { usePublicServices } from "@/hooks/use-public-cms";
@@ -55,7 +55,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
     card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
   };
 
-  const Icon = service.icon;
+  const Icon = service.icon || Globe;
   const isWide = service.span === "wide";
   const href = getServiceHref(service);
 
@@ -124,7 +124,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </p>
 
         <ul className="mt-5 flex flex-wrap gap-2">
-          {service.bullets.map((b) => (
+          {(service.bullets ?? []).map((b) => (
             <li
               key={b}
               className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background/50 px-3 py-1.5 text-xs font-medium text-muted-foreground"

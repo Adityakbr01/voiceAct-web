@@ -131,7 +131,9 @@ export interface WorkItem {
   industry: string;
   title: string;
   outcome: string;
-  metrics: { value: string; label: string }[];
+  metrics?: { value: string; label: string }[];
+  services?: string[];
+  url?: string;
 }
 
 // Work is sourced from the CMS. We deliberately keep this array empty so we

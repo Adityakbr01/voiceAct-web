@@ -63,7 +63,7 @@ export function Cta() {
   });
 
   const projectTypeOptions = useMemo(() => {
-    if (activeServices.length > 0) {
+    if (Array.isArray(activeServices) && activeServices.length > 0) {
       return activeServices.map((s) => s.title);
     }
     return cta.projectTypes;
