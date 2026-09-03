@@ -3,17 +3,15 @@
 import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeader } from "@/modules/home/components/section";
 import { usePublicProjects } from "@/hooks/use-public-cms";
-import { useDeferredVisibility } from "@/hooks/use-deferred-visibility";
 import ScrollStack, { ScrollStackItem } from "@/components/ui/scroll-stack";
 
 export function Work() {
-  const { ref, isNearViewport } = useDeferredVisibility<HTMLDivElement>();
-  const { data: rawWork = [] } = usePublicProjects({ enabled: isNearViewport });
+  const { data: rawWork = [] } = usePublicProjects();
   const work = rawWork.slice(0, 3);
 
   return (
     <Section id="work">
-      <div ref={ref}>
+      <div>
         <SectionHeader
           eyebrow="Selected work"
           title={

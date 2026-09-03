@@ -18,10 +18,21 @@ export function FigmaCursor() {
   const [isTouchDevice, setIsTouchDevice] = useState(true);
   const [clickRipples, setClickRipples] = useState<ClickRipple[]>([]);
   const nextRippleId = useRef(0);
-
-  // Direct 1:1 hardware coordinates (0ms latency, zero lag)
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
+  const isClickingRef = useRef(false);
+
+  // Sync has-custom-cursor class to html root
+  useEffect(() => {
+    if (isVisible && !isTouchDevice && cursorMode !== "text") {
+      document.documentElement.classList.add("has-custom-cursor");
+    } else {
+      document.documentElement.classList.remove("has-custom-cursor");
+    }
+    return () => {
+      document.documentElement.classList.remove("has-custom-cursor");
+    };
+  }, [isVisible, isTouchDevice, cursorMode]);
 
   useEffect(() => {
     // Check for touch / coarse pointer
@@ -36,10 +47,11 @@ export function FigmaCursor() {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      setIsVisible(true);
     };
 
     const handleMouseDown = (e: MouseEvent) => {
+      isClickingRef.current = true;
       setIsClicking(true);
 
       // Create subtle Figma click ripple
@@ -51,9 +63,24 @@ export function FigmaCursor() {
       setClickRipples((prev) => [...prev.slice(-3), newRipple]);
     };
 
-    const handleMouseUp = () => setIsClicking(false);
+    const handleMouseUp = () => {
+      isClickingRef.current = false;
+      setIsClicking(false);
+    };
+
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    };
+
+    const handleFocus = () => setIsVisible(true);
+    const handleBlur = () => setIsVisible(false);
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
@@ -78,7 +105,7 @@ export function FigmaCursor() {
         "[data-grab], .embla, .embla__container, .overflow-x-auto, input[type='range']"
       );
       if (isDraggable) {
-        setCursorMode(isClicking ? "grabbing" : "grab");
+        setCursorMode(isClickingRef.current ? "grabbing" : "grab");
         return;
       }
 
@@ -107,6 +134,9 @@ export function FigmaCursor() {
     window.addEventListener("mouseup", handleMouseUp);
     document.addEventListener("mouseleave", handleMouseLeave);
     document.addEventListener("mouseenter", handleMouseEnter);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
     window.addEventListener("mouseover", handleMouseOver, { passive: true });
 
     return () => {
@@ -115,9 +145,12 @@ export function FigmaCursor() {
       window.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
       window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, [mouseX, mouseY, isVisible, isClicking]);
+  }, [mouseX, mouseY]);
 
   const removeRipple = (id: number) => {
     setClickRipples((prev) => prev.filter((r) => r.id !== id));

@@ -352,39 +352,45 @@ footer .nav-pill-flip:hover .nav-pill-flip-next {
 
 /* ==========================================================================
    Figma Custom Cursor Mode
-   Hides the native OS cursor on desktop devices with mouse/trackpad
+   Custom Figma Cursor Support
+   Only hide native OS cursor when the custom cursor is actively mounted & visible
    ========================================================================== */
 @media (pointer: fine) {
-  html,
-  body,
-  a,
-  button,
-  [role="button"],
-  select,
-  summary,
-  .cursor-pointer,
-  .trusted-item,
-  div,
-  section,
-  main,
-  nav,
-  header,
-  footer,
-  span,
-  p,
-  h1, h2, h3, h4, h5, h6 {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor select,
+  html.has-custom-cursor summary,
+  html.has-custom-cursor .cursor-pointer,
+  html.has-custom-cursor .trusted-item,
+  html.has-custom-cursor div,
+  html.has-custom-cursor section,
+  html.has-custom-cursor main,
+  html.has-custom-cursor nav,
+  html.has-custom-cursor header,
+  html.has-custom-cursor footer,
+  html.has-custom-cursor span,
+  html.has-custom-cursor p,
+  html.has-custom-cursor h1,
+  html.has-custom-cursor h2,
+  html.has-custom-cursor h3,
+  html.has-custom-cursor h4,
+  html.has-custom-cursor h5,
+  html.has-custom-cursor h6 {
     cursor: none !important;
   }
 
   /* Allow native text selection cursor on text inputs & textareas */
-  input[type="text"],
-  input[type="email"],
-  input[type="number"],
-  input[type="password"],
-  input[type="tel"],
-  input[type="url"],
-  input[type="search"],
-  textarea {
+  html.has-custom-cursor input[type="text"],
+  html.has-custom-cursor input[type="email"],
+  html.has-custom-cursor input[type="number"],
+  html.has-custom-cursor input[type="password"],
+  html.has-custom-cursor input[type="tel"],
+  html.has-custom-cursor input[type="url"],
+  html.has-custom-cursor input[type="search"],
+  html.has-custom-cursor textarea {
     cursor: text !important;
   }
 }
